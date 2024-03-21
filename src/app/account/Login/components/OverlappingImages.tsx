@@ -34,18 +34,32 @@ const OverlappingImages = ({ images, transitionDuration, delay}:Ipropos) => {
   return (
     <>
       {images.map((image, index) => (
+        <>
         <Image
           key={index}
           src={image}
           alt={`Image ${index + 1}`}
-          className={`image ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}  absolute right-12 py-4 `}
+          className={`image ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}  absolute right-12 py-4 inline 2xl:hidden`}
           width={220} 
-          height={185}
+          height={200}
           style={{
             transition: `opacity ${transitionDuration / 1000}s ease`,
             transitionDelay: `${index * delay / 1000}s`
           }}
         />
+        <Image
+          key={index}
+          src={image}
+          alt={`Image ${index + 1}`}
+          className={`image ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}  absolute right-12 py-4 2xl:inline hidden`}
+          width={220} 
+          height={200}
+          style={{
+            transition: `opacity ${transitionDuration / 1000}s ease`,
+            transitionDelay: `${index * delay / 1000}s`
+          }}
+        />
+        </>
       ))}
     </>
   );
