@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FaFacebookSquare } from "react-icons/fa";
 import { MdOutlineVisibility,MdOutlineVisibilityOff } from "react-icons/md";
-
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Spin } from 'antd';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -21,23 +23,53 @@ type User={
 
 
 const LoginContainer = () => {
-
+  
     const [visible,setVisible]=useState<boolean>(false);
 
     const [userData,setUserData]=useState<User>({
       email:"",
       password:"",
     })
+    const [loading,setLoading]=useState<boolean>(false);
+    const router = useRouter();
 
+    const handleSubmit=async (e: React.FormEvent<HTMLFormElement>)=>{
+      e.preventDefault();
+      setLoading(true);
+    try{
+      const result=await  signIn("credentials", {
+        email: userData?.email,
+        password: userData?.password,
+        redirect: false,
+      })
+      console.log({result})
+      if(result?.ok){
+        setLoading(false)
+            router.push('/main');
+            router.refresh();
+            
+
+      }else{
+        alert('authentifcation avec refusée');
+        setLoading(false)
+
+      }
+    }catch(err){
+        console.error({err});
+        setLoading(false)
+
+    }
+     
+    }
+
+    
 
   return (
     <div className='w-full h-full p-1 pt-6 '>
         <div className="w-full h-full flex flex-col gap-3 ">
                <div className="flex-[0.6] w-full border-[1px] border-[#c1c1cb] rounded-sm py-8">
                       <form 
-                          onSubmit={(e: React.FormEvent<HTMLFormElement>)=>{
-                              e.preventDefault();
-                          }}
+                          onSubmit={handleSubmit}
                       className="w-full h-full flex flex-col gap-1 items-center ">
                                 <div className="py-6">
                                        <h1 className={`${croissant_One.className} text-4xl`}>Instagram</h1>
@@ -69,8 +101,13 @@ const LoginContainer = () => {
                                     
                                 </div> 
                                 <div className="w-full px-8 py-3">
-                                        <button className="w-full font-extrabold  box-border px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#5376e8]">
-                                              Se connecter
+                                        <button className="w-full font-extrabold  box-border  px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#9aadec]">
+                                             {
+                                              loading?
+                                              <Spin/>
+                                              :
+                                             "Se connecter"
+                                             } 
                                         </button>      
                                 </div>
                                 

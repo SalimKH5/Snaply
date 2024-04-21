@@ -1,9 +1,18 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
+  if(session){
+    redirect('/main')
+  }
   return (
     <div className="w-full h-full flex items-center justify-center py-8 lg:py-8 ">
           <div className="w-full h-full mx-auto max-w-md md:max-w-xl lg:max-w-4xl 2xl:max-w-4xl flex flex-col gap-8  ">
