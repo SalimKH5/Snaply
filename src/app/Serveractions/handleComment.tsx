@@ -1,0 +1,40 @@
+"use server"
+
+import { revalidateTag } from "next/cache";
+
+export const handleSubmitLike = async (userId: string, postId: string,e:FormData,) => {
+    'use server'
+    console.log("hello comment")
+    const TextComment=e.get('TextComment');
+    if(TextComment!=""){
+        
+        try {
+      const response = await fetch(`http://localhost:3000/api/posts/${postId}/commentPost`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          comment:{
+            TextComment:TextComment,
+            userId:userId
+          }
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+  
+      const updatedData = await response.json(); // Handle success response if needed
+      
+      e.set('TextComment'," ")
+      // Update local state or revalidate cached data here (if applicable)
+  
+      revalidateTag("posts"); // Revalidate cache tag
+    } catch (error) {
+      console.error("Error liking post:", error); // Handle errors gracefully
+    }
+    }
+    
+  };

@@ -1,8 +1,7 @@
 import React from "react";
 import AppDisplay from "./components/AppDisplay";
 import LoginContainer from "./components/LoginContainer";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 
 const page = async () => {
 

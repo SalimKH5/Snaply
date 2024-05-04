@@ -1,27 +1,57 @@
-import { CiHeart } from "react-icons/ci";
-import { FaRegComment } from "react-icons/fa6";
+
+
 import { IoShareSocialOutline } from "react-icons/io5";
-import { BsSave } from "react-icons/bs";
-import { BsFillSaveFill } from "react-icons/bs";
-const PostContent = () => {
+
+import LikeContainer from "./LikeContainer";
+import LikesModel from "./LikesModel";
+import TogglePost from "./TogglePost";
+import SavePost from "./SavePost";
+
+
+interface PostContent{
+    postId: string,
+    likes:any[],
+    title:string,
+    comments:any[],
+    src:string,
+    postby:{
+        _id: string,
+        username: string,
+    },
+      userId:string,
+}
+  
+
+const PostContent = ({postId,comments,src,title,likes,postby,userId}:PostContent) => {
     return (
         <div className="w-full flex flex-col gap-3">
+            
             <div className="w-full flex items-center justify-between">
                 <div className="flex gap-3 items-center font-bold ">
-                    <CiHeart size={25} className="cursor-pointer hover:text-[#adadad]" />
-                    <FaRegComment size={25} className="cursor-pointer hover:text-[#adadad]" />
+                    <LikeContainer likes={likes} userId={userId} postId={postId} comment_id={null}/>
+                    <TogglePost
+                        toggle={false}
+                        src={src}
+                        comments={comments}
+                        postby={postby}
+                        title={title}
+                        userId={userId}
+                        postId={postId}
+                        />
                     <IoShareSocialOutline size={25} className="cursor-pointer hover:text-[#adadad]" />
+                 
                 </div>
                 <div className="">
-                    <BsSave size={25} className="cursor-pointer hover:text-[#adadad]" />
+                    <SavePost userId={userId} postId={postId}/>
                 </div>
             </div>
-            <div className="w-full flex  gap-3">
+            <LikesModel likes={likes}/>
+            <div className="w-full flex  gap-3 py-2">
                 <div className="">
-                    <h1 className="font-bold">weathercaughtoncam</h1>
+                    <h1 className="font-bold cursor-pointer">{postby.username}</h1>
                 </div>
                 <div className="flex-1">
-                        <h1>Follow (us) @weathercaughtoncam for more crazy weather videos! 🌪️😳</h1>
+                        <h1>{title}</h1>
                 </div>
             </div>
         </div>

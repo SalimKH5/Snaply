@@ -42,7 +42,7 @@ const LoginContainer = () => {
         password: userData?.password,
         redirect: false,
       })
-      console.log({result})
+      
       if(result?.ok){
         setLoading(false)
             router.push('/main');

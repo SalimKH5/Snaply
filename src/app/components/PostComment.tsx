@@ -1,12 +1,82 @@
 import { Button, Input } from 'antd'
+import { revalidateTag } from 'next/cache';
 import React from 'react'
+import TogglePost from './TogglePost';
+import CommentAction from './CommentAction';
 
-const PostComment = () => {
+
+
+
+const handleSubmitLike = async (userId: string, postId: string,e:FormData,) => {
+    'use server'
+    console.log("hello comment")
+    const TextComment=e.get('TextComment');
+    if(TextComment!=""){
+        
+        try {
+      const response = await fetch(`http://localhost:3000/api/posts/${postId}/commentPost`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          comment:{
+            TextComment:TextComment,
+            userId:userId
+          }
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+  
+      const updatedData = await response.json(); // Handle success response if needed
+      
+      e.set('TextComment'," ")
+      // Update local state or revalidate cached data here (if applicable)
+  
+      revalidateTag("posts"); // Revalidate cache tag
+    } catch (error) {
+      console.error("Error liking post:", error); // Handle errors gracefully
+    }
+    }
+    
+  };
+  
+interface Comments{  
+  userId:string,
+  postId:string,
+  comments: any[],
+  src:string
+  title:string,
+  postby:{
+      _id: string,
+      username: string,
+  },
+}
+const PostComment = async({userId,postId,comments,src,postby,title}:Comments) => {
+
+
+    const updateComment=handleSubmitLike.bind(null,userId,postId)
     return (
-        <form className='w-full flex items-center gap-3 '>
-            <Input className=' flex-1  placeholder:text-black' placeholder='Add a comment' />
-            <Button>Post</Button> 
-        </form>
+    <div className="w-full py-2 flex gap-2 flex-col">
+      <TogglePost
+      toggle={true}
+      src={src}
+      comments={comments}
+      postby={postby}
+      title={title}
+      userId={userId}
+      postId={postId}
+      />
+       <CommentAction
+       postId={postId}
+       userId={userId}
+       />
+    </div>
+
+       
     )
 }
 

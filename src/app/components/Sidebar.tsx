@@ -11,7 +11,11 @@ import { signOut } from "next-auth/react"
 import { ChangeEvent, useState } from 'react';
 import {Modal } from 'antd';
 import { FaPhotoVideo } from "react-icons/fa";
-
+import ReactCrop, { Crop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css'
+import { revalidateTag } from 'next/cache';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 type ItemNavigation={
     text:string,
     icon:any,
@@ -28,7 +32,8 @@ interface UploadPost{
 
   
 const Sidebar = ({ token }: { token: string | undefined }) => {
-    const naigations_Items:ItemNavigation[]=[
+    
+  const naigations_Items:ItemNavigation[]=[
         {
           text:"Home",
           icon:<IoHome width={150}/>,
@@ -72,14 +77,14 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
           type:0,
         },
     ]
-
+    const router = useRouter();
       const [isModalOpen, setIsModalOpen] = useState(false);
-     
+      const [crop, setCrop] = useState<Crop>()
       const [formData,setFormData]=useState<UploadPost>({
         filePath:null,
         postTitle:""
       });
-      const [imageDipslay,setFormDataDisplay]=useState<string|undefined>();
+      const [imageDipslay,setImageDataDisplay]=useState<string|undefined>();
 
       const showModal = () => {
         setIsModalOpen(true);
@@ -91,6 +96,11 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
 
       const handleCancel = () => {
         setIsModalOpen(false);
+        setFormData({
+          filePath:null,
+          postTitle:""
+        })
+        setImageDataDisplay(undefined);
       };
     
 
@@ -101,7 +111,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
           const reader = new FileReader();
           reader.onload = (event) => {
             if (typeof event.target?.result === 'string') {
-              setFormDataDisplay(event.target.result);
+              setImageDataDisplay(event.target.result);
             }
           };
           reader.readAsDataURL(file);
@@ -119,7 +129,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
             const fd=new FormData();
             fd.append('file', formData.filePath); // Assuming 'logo' is the key for your file
             fd.append('postTitle', formData.postTitle); // Assuming 'logo' is the key for your file
-          const result =await fetch('http://localhost:3000/api/post/',{
+          const result =await fetch('http://localhost:3000/api/posts/',{
             method:"POST",
             headers:{
               Authorization: `Bearer ${token}`, // Fix typo in 'Authorization'
@@ -127,16 +137,18 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
             body:fd
           })
           if(result.ok){
-            console.log("great you upload a file")
+            handleCancel();
+            router.refresh()
+            revalidateTag("posts"); // Revalidate cache tag
+           
+            
           }else{
             console.log("bad did't  upload a the file succesfully");
 
           }
           }
-            
-
         }catch(error){
-
+          console.log({error});
         }
 
 
@@ -145,12 +157,16 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
 
     
   return (
-    <div className="w-full flex items-center lg:items-start flex-col gap-8 px-4 py-4">
-                  <Image onClick={() => signOut()} src="/instagram-logo-1-1024x366.svg" className='hidden cursor-pointer lg:inline' alt="" width={120} height={80}/>
+    <div className="w-full flex overflow-y-auto hide-scroll-bar items-center lg:items-start flex-col gap-8 px-4 py-4">
+                  <Link href="/main">
+                  <Image src="/instagram-logo-1-1024x366.svg" className='hidden cursor-pointer lg:inline' alt="" width={120} height={80}/>
                   <Image src="/instagram-logo.png" className='inline lg:hidden' alt="" width={30} height={30}/>
+                  </Link>
                   <div className="w-full flex flex-col gap-4 px-2">
                         {
+
                           naigations_Items.map((item:ItemNavigation,index:number)=>(
+                              
                             <div 
                             onClick={()=>{
                                 if(item.type===1){
@@ -166,11 +182,13 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                           ))
                         }
                   </div>
-                  <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  >
+                  <Modal open={isModalOpen} onOk={handleOk}   footer={null} onCancel={handleCancel}  >
                           <div  className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
                                   {formData.filePath ?
                                   <form  onSubmit={handleSubmit} className='flex flex-col gap-4'>
-                                          <img src={imageDipslay} alt="Selected" style={{ maxWidth: '100%' }} />
+                                            <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
+                                               <img src={imageDipslay} alt="Selected" style={{ maxWidth: '100%' }} />
+                                           </ReactCrop>
                                           <div className="w-full flex flex-col gap-5">
                                           <textarea 
                                                 value={formData.postTitle} 

@@ -1,9 +1,12 @@
 import Image from 'next/image'
 
-const PostPicture = () => {
+const PostPicture = ({src}:{src:string}) => {
   return (
-    <div className='w-full h-[26rem] relative'>
-            <Image src="/picture.jpg" alt="" fill objectFit='contain' />
+    <div className='w-full h-full min-h-[30rem] relative  '>
+            <Image src={`/assets/${src}`} 
+            alt={src} priority  fill 
+            
+            className="object-cover   w-full absolute left-0 right-0 h-full rounded-lg"/>
     </div>
   )
 }

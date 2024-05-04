@@ -4,6 +4,14 @@ const nextConfig = {
         NEXTAUTH_SECRET: 'dROsngz4XClmQ6FMBh99ouSdNzK8mYn4lDORqdmGxQhm4VTOrAgXDfP/vSHV',
         
       },
+      images: {
+        remotePatterns: [
+          {
+            protocol: 'http',
+            hostname: '**',
+          },
+        ],
+      },
    
 };
 
