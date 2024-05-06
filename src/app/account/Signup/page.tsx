@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 
 
-const page = () => {
+const Signup = () => {
 
   return (
     <div className='w-full h-full flex items-center justify-center  p-1 pt-6 '>
@@ -23,4 +23,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Signup

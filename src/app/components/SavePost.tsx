@@ -15,8 +15,6 @@ interface SavePost{
 
 
 
-
-
 const SavePost = ({userId,postId}:SavePost) => {
 
   const {data:session,update,status}=useSession();
