@@ -7,7 +7,6 @@ export const handleSubmitLike = async (userId: string, postId: string,e:FormData
     console.log("hello comment")
     const TextComment=e.get('TextComment');
     if(TextComment!=""){
-        
         try {
       const response = await fetch(`http://localhost:3000/api/posts/${postId}/commentPost`, {
         method: "PUT",
@@ -24,17 +23,23 @@ export const handleSubmitLike = async (userId: string, postId: string,e:FormData
   
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
-      }
-  
+      }else{
+           
       const updatedData = await response.json(); // Handle success response if needed
-      
+      console.log({updatedData});
       e.set('TextComment'," ")
       // Update local state or revalidate cached data here (if applicable)
   
       revalidateTag("posts"); // Revalidate cache tag
+      }
+  
     } catch (error) {
       console.error("Error liking post:", error); // Handle errors gracefully
     }
     }
     
   };
+
+
+
+    

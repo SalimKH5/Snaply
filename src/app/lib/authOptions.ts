@@ -68,6 +68,8 @@ pages:{
         token.token=user.token
         token.saveposts=user.saveposts
         token.username=user.username
+        token.followers=user.followers
+        token.follwing=user.follwing
       }
       if(trigger==="update"){
         return {...token,...session?.user}

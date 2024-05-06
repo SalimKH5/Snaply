@@ -6,6 +6,7 @@ import LikeContainer from "./LikeContainer";
 import LikesModel from "./LikesModel";
 import TogglePost from "./TogglePost";
 import SavePost from "./SavePost";
+import { FaRegComment } from "react-icons/fa";
 
 
 interface PostContent{
@@ -30,7 +31,7 @@ const PostContent = ({postId,comments,src,title,likes,postby,userId}:PostContent
                 <div className="flex gap-3 items-center font-bold ">
                     <LikeContainer likes={likes} userId={userId} postId={postId} comment_id={null}/>
                     <TogglePost
-                        toggle={false}
+                        toggle={ <FaRegComment  size={25} className="cursor-pointer hover:text-[#adadad]" />}
                         src={src}
                         comments={comments}
                         postby={postby}

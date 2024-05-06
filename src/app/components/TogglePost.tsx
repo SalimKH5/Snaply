@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import { FaRegComment } from "react-icons/fa6";
 import CommentAction from './CommentAction';
-const TogglePost = ({ toggle,userId,comments, src,title,postby,postId }: {toggle:boolean, userId:string,comments: any[], src: string,title:string,
+const TogglePost = ({ toggle,userId,comments, src,title,postby,postId }: {toggle:React.ReactNode, userId:string,comments: any[], src: string,title:string,
     postby:{
         _id: string,
         username: string,
@@ -108,14 +108,7 @@ const TogglePost = ({ toggle,userId,comments, src,title,postby,postId }: {toggle
 
     return (
         <>
-        {
-            toggle?
-            <div className="w-full">
-                <span onClick={showModal} className="text-gray-500 font-bold cursor-pointer">Review all  {comments.length} comments ...</span>
-            </div>
-            :
-            <FaRegComment  onClick={showModal} size={25} className="cursor-pointer hover:text-[#adadad]" />
-        }
+        {<div onClick={showModal}>{toggle}</div>}
           
 
             {isModalOpen && (

@@ -15,7 +15,9 @@ import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css'
 import { revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
+import { CiPower } from "react-icons/ci";
 import Link from 'next/link';
+import SingupContent from './SingupContent';
 type ItemNavigation={
     text:string,
     icon:any,
@@ -75,6 +77,12 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
           icon:<CiHeart width={150}/>,
           path:"/Notifications",
           type:0,
+        },
+        {
+          text:"Disconnect",
+          icon:<CiPower width={150}/>,
+          path:"",
+          type:4,
         },
     ]
     const router = useRouter();
@@ -141,6 +149,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
             router.refresh()
             revalidateTag("posts"); // Revalidate cache tag
            
+           
             
           }else{
             console.log("bad did't  upload a the file succesfully");
@@ -159,8 +168,11 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
   return (
     <div className="w-full flex overflow-y-auto hide-scroll-bar items-center lg:items-start flex-col gap-8 px-4 py-4">
                   <Link href="/main">
-                  <Image src="/instagram-logo-1-1024x366.svg" className='hidden cursor-pointer lg:inline' alt="" width={120} height={80}/>
-                  <Image src="/instagram-logo.png" className='inline lg:hidden' alt="" width={30} height={30}/>
+                    <div className="w-[30px] h-[30px] lg:w-[120px] lg:h-[80px] relative">
+                    <Image src="/instagram-logo-1-1024x366.svg" className='hidden cursor-pointer lg:inline' alt="" fill/>
+                     <Image src="/instagram-logo.png" className='inline hover:bg-[#e7e7e7] rounded-lg  p-[3px]  lg:hidden' alt="" fill/>
+                    </div>
+                 
                   </Link>
                   <div className="w-full flex flex-col gap-4 px-2">
                         {
@@ -171,10 +183,14 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                             onClick={()=>{
                                 if(item.type===1){
                                   showModal();
+                                }else if(item.type===4){
+                                  signOut()
                                 }
                               }
                             } 
-                            key={index} className="w-full flex text-2xl items-center gap-3 px-2 rounded-xl cursor-pointer py-2 hover:bg-[#e7e7e7]">
+                            key={index} className="w-full flex text-2xl items-center gap-3 px-2 rounded-xl cursor-pointer py-2 
+                            hover:scale-105
+                            hover:bg-[#e7e7e7]">
                                   {item.icon}
                                   <h1 className='hidden lg:inline text-base '>{item.text}</h1>
 

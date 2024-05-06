@@ -62,7 +62,11 @@ const PostComment = async({userId,postId,comments,src,postby,title}:Comments) =>
     return (
     <div className="w-full py-2 flex gap-2 flex-col">
       <TogglePost
-      toggle={true}
+      toggle={
+        <div className="w-full">
+                <span  className="text-gray-500 font-bold cursor-pointer">Review all  {comments.length} comments ...</span>
+        </div>
+      }
       src={src}
       comments={comments}
       postby={postby}

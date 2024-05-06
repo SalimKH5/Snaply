@@ -51,6 +51,7 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
   follwing: [
     {
       userId: { type: Schema.Types.ObjectId, ref: 'User' }
+      
     }
   ],
   saveposts: [

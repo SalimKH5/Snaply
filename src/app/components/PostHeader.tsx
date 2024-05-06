@@ -1,4 +1,5 @@
 
+import Link from "next/link";
 import { HiDotsHorizontal } from "react-icons/hi";
 
 
@@ -16,7 +17,7 @@ const PostHeader = ({username}:{username:String}) => {
                             <img src="/picture.jpg"  className='w-full h-full rounded-full object-cover  cursor-pointer  '  alt=""/>
                     </div>
                     <div className="flex flex-col ">
-                        <h1 className='text-sm font-bold'>{username}</h1>
+                        <Link href={`/${username}`}className='text-sm font-bold'>{username}</Link>
                       
                     </div>
         </div> 
