@@ -3,6 +3,7 @@ import { Spin } from 'antd';
 import { useSession } from 'next-auth/react';
 import { revalidateTag } from 'next/cache';
 import React from 'react'
+import actionGetUser from '../Serveractions/handleComment';
 
 
 const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: string }) => {
@@ -29,7 +30,7 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
             } else {
 
                 const data = await response.json();
-                console.log({data});
+               
                 update({
                     ...session,
                     user: {
@@ -38,8 +39,8 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
                     }
                 })
                 // Update local state or revalidate cached data here (if applicable)
-
-                revalidateTag("user"); // Revalidate cache tag
+                actionGetUser(); // Revalidate cache tag
+              
             }
 
         } catch (error) {

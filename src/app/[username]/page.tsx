@@ -59,7 +59,7 @@ interface Post {
 async function getUser(session: any, username: string) {
     const getuser = await fetch(`http://localhost:3000/api/User/${username}`, {
         method: "GET",
-        next: { tags: ['user'] },
+        next: { tags: ['users'] },
         cache: "no-cache"
     })
     if (getuser.ok) {
@@ -92,7 +92,7 @@ const page = async ({ params }: { params: { username: string } }) => {
 
         const user: User = await getUser(session, params.username);
 
-       
+       console.log({user});
 
         return (
             <div className="overflow-y-auto flex h-screen gap-5">

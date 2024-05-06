@@ -7,6 +7,7 @@ import { authOptions } from "@/app/lib/authOptions";
 import { redirect } from "next/navigation";
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 interface Posts{
@@ -85,8 +86,8 @@ const  MainComponent = async () => {
     
     </div>
     <div className=" h-full hidden min-[1200px]:flex lg:w-1/6 ">
-            <div className="w-full  flex py-8">
-              <div className="w-full h-full flex  gap-2">
+            <div className="w-full h-full flex py-8">
+              <Link  href={`/${session.user.username}`}  className="w-full  flex  gap-2">
                         <div className="w-16 h-12 relative  flex items-center justify-center">
                             <Image src="/profile.png" alt="" fill objectFit='cover' className='rounded-full border-[0.5px] border-[#000000] '/>
                         </div>
@@ -94,7 +95,7 @@ const  MainComponent = async () => {
                               <p>{session.user.username}</p>
                                 <p>{session.user.fullName}</p>
                         </div>
-              </div>
+              </Link>
                
                   
             </div>

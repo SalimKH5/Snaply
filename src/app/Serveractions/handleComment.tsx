@@ -41,5 +41,40 @@ export const handleSubmitLike = async (userId: string, postId: string,e:FormData
   };
 
 
+export const handleFollow = async (userId: string, FollowingUser: string, isFollow: boolean,e: React.MouseEvent<HTMLButtonElement>) => {
+  try {
+      e.preventDefault();
+      const response = await fetch(`http://localhost:3000/api/User/${userId}/following`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+                  userId: FollowingUser,
+                  following: !isFollow
+          }),
+      });
 
+      if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+      } else {
+
+          const data = await response.json();
+          revalidateTag("user"); // Revalidate cache tag
+          return data.user;
+          // Update local state or revalidate cached data here (if applicable)
+
+         
+      }
+
+  } catch (error) {
+      console.error("Error liking post:", error); // Handle errors gracefully
+  }
+}
     
+
+
+
+export default async function actionGetUser() {
+  revalidateTag("users");
+}
