@@ -168,7 +168,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
     
   return (
     <div className="w-full flex overflow-y-auto hide-scroll-bar items-center lg:items-start flex-col gap-8 px-4 py-4">
-                  <Link href="/s">
+                  <Link href="/">
                     <div className="w-[30px] h-[30px] lg:w-[120px] lg:h-[80px] relative">
                     <Image src="/instagram-logo-1-1024x366.svg" className='hidden cursor-pointer lg:inline' alt="" fill/>
                      <Image src="/instagram-logo.png" className='inline hover:bg-[#e7e7e7] rounded-lg  p-[3px]  lg:hidden' alt="" fill/>

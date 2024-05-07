@@ -1,9 +1,9 @@
 import Image from 'next/image'
-
+import api from "../ApiConfig"
 const PostPicture = ({src}:{src:string}) => {
   return (
     <div className='w-full h-full min-h-[30rem] relative  '>
-            <Image src={`/assets/${src}`} 
+            <Image src={`${api.BASE_URL}/assets/${src}`} 
             alt={src} priority  fill 
             
             className="object-cover   w-full absolute left-0 right-0 h-full rounded-lg"/>

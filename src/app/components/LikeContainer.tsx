@@ -24,7 +24,7 @@ const handleSubmitLike = async (liked: boolean, userId: string, postId: string) 
   'use server'
 
   try {
-    const response = await fetch(`${api.User+postId}/likePost`, {
+    const response = await fetch(`${api.posts+postId}/likePost`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

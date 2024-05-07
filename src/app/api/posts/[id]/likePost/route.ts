@@ -6,7 +6,8 @@ export const PUT=async (req: NextRequest,context:any )=>{
         
         const {userId,liked}=await req.json();
         const {params}=context;
-        
+        console.log({params})
+        console.log({userId,liked})
         await dbConnect();
         if(!liked){
             const result = await PostModel.findOneAndUpdate(
@@ -21,8 +22,7 @@ export const PUT=async (req: NextRequest,context:any )=>{
             console.log({result})
             return NextResponse.json({ Message: "successfully upload a post",id:params.id,result},{status: 200});
         }else{
-            console.log({params})
-        console.log({userId,liked})
+          
             const result = await PostModel.findOneAndUpdate(
                 { _id: params.id },
                 {

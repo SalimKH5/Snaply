@@ -8,7 +8,7 @@ export const handleSubmitLike = async (userId: string, postId: string,e:FormData
     const TextComment=e.get('TextComment');
     if(TextComment!=""){
         try {
-      const response = await fetch(`http://localhost:3000/api/posts/${postId}/commentPost`, {
+      const response = await fetch(`${Api.posts+postId}/commentPost`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

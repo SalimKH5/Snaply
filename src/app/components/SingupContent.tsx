@@ -6,6 +6,7 @@ import { MdOutlineVisibility,MdOutlineVisibilityOff } from "react-icons/md";
 import { Croissant_One } from 'next/font/google'
 import { useRouter } from 'next/navigation';
 import api from "../ApiConfig"
+import { Spin } from 'antd';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -22,7 +23,7 @@ type User={
 
 const SingupContent = () => {
   const [visible,setVisible]=useState<boolean>(false);
-
+  const [loading,setLoading]=useState<boolean>(false);
   const [userData,setUserData]=useState<User>(
     {
       email:"",
@@ -35,8 +36,13 @@ const SingupContent = () => {
 
     const onHandleSubmit=async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-
+      
+       
         try {
+         
+          setLoading(true);
+       
+         
               const result=await fetch(api.register_client,{
                 method:"POST",
                 headers:{
@@ -44,7 +50,9 @@ const SingupContent = () => {
                 },
                 body:JSON.stringify(userData)
               })
+              setLoading(false);
               if(result.ok){
+               
                   const data=await result.json();
                   alert('account succesfully created')
                   console.log({
@@ -56,11 +64,13 @@ const SingupContent = () => {
                    
               }else{
                 console.log('there is an error ');
+               
               }
 
           
         } catch (error) {
           console.log({error});
+         
         }
     }
 
@@ -71,7 +81,7 @@ const SingupContent = () => {
 
   return (
     <form 
-    onSubmit={(e: React.FormEvent<HTMLFormElement>)=>onHandleSubmit(e)}
+    onSubmit={onHandleSubmit}
     className="w-full h-full flex flex-col gap-1 items-center ">
     <div className="py-6 text-center px-8">
            <h1 className={`${croissant_One.className} text-4xl`}>Instagram</h1>
@@ -155,7 +165,11 @@ const SingupContent = () => {
    
     <div className="w-full px-8 py-3">
             <button className="w-full font-extrabold  box-border px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#5376e8]">
-                        S&apos;inscrire
+                       {
+                        loading?
+                        <Spin/>:
+                       " S'inscrire"
+                       } 
             </button>      
     </div>
 </form>
