@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6";
-
+import api from "../ApiConfig"
 interface Likes{
     userId:string
     postId:string
@@ -24,7 +24,7 @@ const handleSubmitLike = async (liked: boolean, userId: string, postId: string) 
   'use server'
 
   try {
-    const response = await fetch(`http://localhost:3000/api/posts/${postId}/likePost`, {
+    const response = await fetch(`${api.User+postId}/likePost`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -3,7 +3,7 @@ import { revalidateTag } from 'next/cache';
 import React from 'react'
 import TogglePost from './TogglePost';
 import CommentAction from './CommentAction';
-
+import Api from "../ApiConfig"
 
 
 
@@ -14,7 +14,7 @@ const handleSubmitLike = async (userId: string, postId: string,e:FormData,) => {
     if(TextComment!=""){
         
         try {
-      const response = await fetch(`http://localhost:3000/api/posts/${postId}/commentPost`, {
+      const response = await fetch(`${Api.posts+postId}/commentPost`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

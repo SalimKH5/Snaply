@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import { FaRegComment } from "react-icons/fa6";
 import CommentAction from './CommentAction';
+import Api from "../ApiConfig"
 const TogglePost = ({ toggle,userId,comments, src,title,postby,postId }: {toggle:React.ReactNode, userId:string,comments: any[], src: string,title:string,
     postby:{
         _id: string,
@@ -71,7 +72,7 @@ const TogglePost = ({ toggle,userId,comments, src,title,postby,postId }: {toggle
     
     const handleLikeComment=async(commentId:string,liked:boolean)=>{
         try {
-            const result=await fetch(`http://localhost:3000/api/posts/${postId}/likeComment`,{
+            const result=await fetch(`${Api.posts+postId}/likeComment`,{
                 method:"PUT",
                 headers:{
                     "Content-Type":"application/json"

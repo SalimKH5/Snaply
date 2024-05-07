@@ -2,13 +2,13 @@
 import Sidebar from '../components/Sidebar'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/authOptions';
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { signOut } from 'next-auth/react';
 import BodyContent from '../components/BodyContent';
 import Following from '../components/Following';
-
+import api from "../ApiConfig"
 
 
 
@@ -57,14 +57,16 @@ interface Post {
 
 
 async function getUser(session: any, username: string) {
-    const getuser = await fetch(`http://localhost:3000/api/User/${username}`, {
+    const getuser = await fetch(api.User+username, {
         method: "GET",
         next: { tags: ['users'] },
         cache: "no-cache"
     })
+  
     if (getuser.ok) {
         const result = await getuser.json();
-        console.log({user:result.user});
+       
+        
         return result?.user;
     } else if (getuser.status == 401) {
         signOut()
@@ -89,10 +91,11 @@ const page = async ({ params }: { params: { username: string } }) => {
         redirect('/account/Login')
     }
     if (session) {
-
+        console.log(params.username);
         const user: User = await getUser(session, params.username);
 
-       console.log({user});
+       if(user){
+        
 
         return (
             <div className="overflow-y-auto flex h-screen gap-5">
@@ -109,7 +112,7 @@ const page = async ({ params }: { params: { username: string } }) => {
                             </div>
                             <div className="flex-[0.6] h-full flex flex-col gap-8">
                                 <div className=" flex items-center justify-between gap-3 ">
-                                    <h1 className='pr-5'>{user.username}</h1>
+                                    <h1 className='pr-5'>{user?.username}</h1>
                                     {
                                         user.username===session?.user.username?
                                         <>
@@ -141,7 +144,7 @@ const page = async ({ params }: { params: { username: string } }) => {
                                     <h1><span className="font-bold">{user?.follwing?.length}</span> following</h1>
                                 </div>
                                 <div className="w-full">
-                                    <h1 className="font-bold">{session.user.fullName}</h1>
+                                    <h1 className="font-bold">{user?.fullName}</h1>
                                 </div>
                             </div>
 
@@ -153,8 +156,10 @@ const page = async ({ params }: { params: { username: string } }) => {
                 </div>
             </div>
 
-        )
+            )
+        }
     }
+
 }
 
 export default page

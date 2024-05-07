@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { revalidateTag } from 'next/cache';
 import React from 'react'
 import actionGetUser from '../Serveractions/handleComment';
-
+import Api from "../ApiConfig"
 
 const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: string }) => {
     const { data: session, update, status } = useSession();
@@ -14,7 +14,7 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
     const handleFollow = async (userId: string, FollowingUser: string, isFollow: boolean,e: React.MouseEvent<HTMLButtonElement>) => {
         try {
             e.preventDefault();
-            const response = await fetch(`http://localhost:3000/api/User/${userId}/following`, {
+            const response = await fetch(`${Api.User+userId}/following`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

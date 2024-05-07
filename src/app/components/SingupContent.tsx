@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { FaFacebookSquare } from "react-icons/fa";
 import { MdOutlineVisibility,MdOutlineVisibilityOff } from "react-icons/md";
 import { Croissant_One } from 'next/font/google'
+import { useRouter } from 'next/navigation';
+import api from "../ApiConfig"
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -29,12 +31,13 @@ const SingupContent = () => {
     username:"",
     }
   )
+  const router = useRouter();
 
     const onHandleSubmit=async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
 
         try {
-              const result=await fetch('http://localhost:3000/api/register/',{
+              const result=await fetch(api.register_client,{
                 method:"POST",
                 headers:{
                   "Content-type":"application/json"
@@ -47,6 +50,10 @@ const SingupContent = () => {
                   console.log({
                     data
                   })
+                  router.push('/account/Login')
+                  router.refresh();
+              
+                   
               }else{
                 console.log('there is an error ');
               }

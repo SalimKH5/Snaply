@@ -45,7 +45,7 @@ const LoginContainer = () => {
       
       if(result?.ok){
         setLoading(false)
-            router.push('/main');
+            router.push('/');
             router.refresh();
             
 

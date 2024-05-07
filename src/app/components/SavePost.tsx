@@ -5,11 +5,14 @@ import React, { useEffect, useState } from 'react'
 import { BsFillSaveFill } from "react-icons/bs";
 import { SessionProvider, useSession } from 'next-auth/react';
 import { BsSave } from "react-icons/bs";
+import api from "../ApiConfig"
 interface SavePost{
     userId:string
     postId:string
     
 }
+
+
 
 
 
@@ -31,7 +34,7 @@ const SavePost = ({userId,postId}:SavePost) => {
 
   const handeSavePost=async ()=>{
       try {
-        const result=await fetch(`http://localhost:3000/api/User/${userId}`,{
+        const result=await fetch(api+userId,{
           method:"PUT",
           headers:{
             "Content-type":"application/json"

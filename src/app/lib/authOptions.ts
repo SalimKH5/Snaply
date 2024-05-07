@@ -1,6 +1,7 @@
 
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import api from "../ApiConfig"
 type User={
     email:string,
     password:string
@@ -27,7 +28,7 @@ providers: [
     async authorize(credentials, req) {
         const {email,password} = credentials as User;
        
-        const result=await fetch('http://localhost:3000/api/Login/',{
+        const result=await fetch(api.login_client,{
             method:"POST",
             headers:{
               "Content-Type": "application/json",

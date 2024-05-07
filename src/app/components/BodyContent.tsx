@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../lib/authOptions';
 import TogglePost from './TogglePost'
 import Image from 'next/image'
-
+import api from "../ApiConfig"
 interface Post {
     _id: string,
     PathFile: string,
@@ -42,7 +42,7 @@ interface Post {
 
 
 async function getPosts(session: any, username: string) {
-    const getposts = await fetch(`http://localhost:3000/api/User/${username}/posts`, {
+    const getposts = await fetch(`${api.User+username}/posts`, {
         method: "GET",
         //   headers:{
         //     Authorization: `Bearer ${session?.user?.token}`, // Fix typo in 'Authorization'
@@ -52,6 +52,7 @@ async function getPosts(session: any, username: string) {
     })
     if (getposts.ok) {
         const result = await getposts.json();
+     
         return result?.posts;
     } else if (getposts.status == 401) {
         signOut()
@@ -75,6 +76,8 @@ const BodyContent = async ({username}:{username:string}) => {
     }
     if (session) {
     const posts: Post[] = await getPosts(session,username);
+
+    console.log({posts});
   return (
     <div className="w-full py-5">
                             <hr />

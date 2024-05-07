@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import Api from "../ApiConfig"
 
 interface Posts{
   username: string,
@@ -26,7 +26,7 @@ interface Posts{
 
 
 async function getPosts(session:any){
-  const getPosts=await fetch('http://localhost:3000/api/posts/',{
+  const getPosts=await fetch(Api.posts,{
     method:"GET",
     headers:{
       Authorization: `Bearer ${session?.user?.token}`, // Fix typo in 'Authorization'

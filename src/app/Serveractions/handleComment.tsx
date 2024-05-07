@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidateTag } from "next/cache";
-
+import Api from '../ApiConfig';
 export const handleSubmitLike = async (userId: string, postId: string,e:FormData,) => {
     'use server'
     console.log("hello comment")
@@ -44,7 +44,7 @@ export const handleSubmitLike = async (userId: string, postId: string,e:FormData
 export const handleFollow = async (userId: string, FollowingUser: string, isFollow: boolean,e: React.MouseEvent<HTMLButtonElement>) => {
   try {
       e.preventDefault();
-      const response = await fetch(`http://localhost:3000/api/User/${userId}/following`, {
+      const response = await fetch(`${Api.User+userId}/following`, {
           method: "PUT",
           headers: {
               "Content-Type": "application/json",
