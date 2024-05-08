@@ -34,7 +34,7 @@ const SavePost = ({userId,postId}:SavePost) => {
 
   const handeSavePost=async ()=>{
       try {
-        const result=await fetch(api+userId,{
+        const result=await fetch(api.User+userId,{
           method:"PUT",
           headers:{
             "Content-type":"application/json"
@@ -44,8 +44,9 @@ const SavePost = ({userId,postId}:SavePost) => {
             savePost:!saveP
           })
         })
+        console.log("hello wolrd")
         if(result.ok){
-
+          
           const data=await result.json();
           update({
             ...session,
@@ -63,10 +64,15 @@ const SavePost = ({userId,postId}:SavePost) => {
         }
 
       } catch (error) {
-        
+        console.error({error});
       }
   }
-  console.log({user:session?.user})
+
+  console.log(JSON.stringify({
+    postId:postId,
+    savePost:!saveP
+  }))
+ 
   return (
     saveP?
     <BsFillSaveFill 

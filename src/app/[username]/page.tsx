@@ -98,47 +98,47 @@ const page = async ({ params }: { params: { username: string } }) => {
         
 
         return (
-            <div className="overflow-y-auto flex h-screen gap-5">
+            <div className="overflow-y-auto flex h-screen gap-5 py-2">
                 <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6 border-[1px] ">
                     <Sidebar token={session?.user?.token} />
                 </div>
-                <div className="w-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center  lg:max-w-4xl mx-auto flex-col">
-                    <div className='w-full h-full py-10 flex flex-col gap-16  mx-auto'>
-                        <div className="w-full flex items-center justify-between max-w-2xl gap-8">
+                <div className="w-full h-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center  lg:max-w-4xl mx-auto flex-col">
+                    <div className='w-full h-full  py-10 flex flex-col gap-5 lg:gap-16  mx-auto'>
+                        <div className="w-full flex items-center justify-between max-w-xl lg:max-w-2xl gap-4 lg:gap-8">
                             <div className="flex-[0.4] flex items-center justify-center ">
-                                <div className="border-[#C13584] rounded-full  border-[2px] p-[1px] flex items-center justify-center w-36 h-36  ">
+                                <div className="border-[#C13584] rounded-full  border-[2px] p-[1px] flex items-center justify-center 
+                                w-16 h-16
+                                lg:w-36 lg:h-36  ">
                                     <img src="/picture.jpg" className='w-full h-full rounded-full object-cover  cursor-pointer  ' alt="" />
                                 </div>
                             </div>
-                            <div className="flex-[0.6] h-full flex flex-col gap-8">
-                                <div className=" flex items-center justify-between gap-3 ">
-                                    <h1 className='pr-5'>{user?.username}</h1>
+                            <div className="flex-[0.6] h-full flex flex-col gap-4 lg:gap-8">
+                                <div className=" flex flex-col md:flex-row items-center justify-between gap-3 lg:gap-3 ">
+                                    <h1 className='pr-5 text-sm'>{user?.username}</h1>
                                     {
                                         user.username===session?.user.username?
-                                        <>
-                                        <button className='bg-gray-300 text-sm hover:bg-gray-500 py-1 px-5 rounded-md'>Edite</button>
-                                        <button className='bg-gray-300   text-sm hover:bg-gray-500 py-1 px-6 rounded-md'>view archive</button>
-                                        <button className='bg-gray-300  hover:bg-gray-500 py-2 px-2 rounded-md'>
-                                            <IoPersonAddOutline size={15} />
-                                        </button>
-                                        </>
+                                        <div className='flex items-center flex-row gap-2 lg:gap-3'>
+                                                <button className='bg-gray-300 text-[8px] lg:text-sm hover:bg-gray-500 py-1 px-2 rounded-md'>Edite</button>
+                                                <button className='bg-gray-300 text-[8px] box-border  lg:text-sm hover:bg-gray-500 py-1 px-2 rounded-md'>view archive</button>
+                                                
+                                        </div>
                                         :
-                                        <>
+                                        <div className='flex items-center flex-row gap-2 lg:gap-3'>
                                        <Following
                                        FollowingUser={user._id}
                                        
                                        userId={session.user._id}
                                        />
                                         <button className='bg-gray-300  hover:bg-gray-500 py-1 px-5 rounded-md'>Message</button>
-                                        <button className='bg-gray-300  hover:bg-gray-500 py-2 px-2 rounded-md'>
-                                            <IoPersonAddOutline size={15} />
-                                        </button>
-                                        </>
+                                       
+                                        </div>
                                     }
-                                    
-                                    <HiDotsHorizontal size="" className="cursor-pointer" />
+                                    <button className='bg-gray-300 hidden lg:flex  hover:bg-gray-500 py-2 px-2 rounded-md'>
+                                                    <IoPersonAddOutline size={15}  />
+                                                </button>
+                                    <HiDotsHorizontal size="" className="cursor-pointer hidden lg:flex " />
                                 </div>
-                                <div className="w-full flex items-center  gap-5 ">
+                                <div className="w-full  items-center  gap-5 hidden lg:flex">
                                     <h1><span className="font-bold">924</span> posts</h1>
                                     <h1><span className="font-bold">{user?.followers?.length}</span> followers</h1>
                                     <h1><span className="font-bold">{user?.follwing?.length}</span> following</h1>

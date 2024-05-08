@@ -1,5 +1,6 @@
 "use client"
-import { Spin } from 'antd';
+import { ConfigProvider, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useSession } from 'next-auth/react';
 import { revalidateTag } from 'next/cache';
 import React from 'react'
@@ -69,8 +70,18 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
 
             <button
                 
-                className={`bg-[#1877F2] text-white hover:bg-gray-500 py-1 px-5 rounded-md`}>
-                        <Spin size='large'/>
+                className={`bg-gray-300 text-white  hover:bg-gray-500 py-2 flex items-center justify-center px-5 rounded-md`}>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                            /* here is your global tokens */
+                            colorBgContainer:"#FFFFF"
+                            },
+                        }}
+                        >
+                            <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                        </ConfigProvider>
+                        
                 </button>
         )
         

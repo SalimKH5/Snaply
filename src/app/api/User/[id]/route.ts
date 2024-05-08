@@ -27,7 +27,8 @@ export const PUT=async(req:NextRequest,context:any)=>{
     
           
         }else{
-            const user = await UserModel.findOneAndUpdate(
+            
+            const user = await User.findOneAndUpdate(
                 { _id: params.id, },
                     {
                         $pull: {
@@ -36,14 +37,17 @@ export const PUT=async(req:NextRequest,context:any)=>{
                     },
                 { new: true }
             ).populate('saveposts.postId');
-            console.log({user});
-            return NextResponse.json({ Message: "success save post",user},{status: 200});
+            
+            return NextResponse.json({ Message: "success removing asave post",user},{status: 200});
+    
+
+        
     
           
         }
       
         
-    } catch (error) {
+    } catch (error:any) {
         return NextResponse.json({ Message: "error saving a post",error},{status: 500});
     }
 };
