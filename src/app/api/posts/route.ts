@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import dbConnect from "@/app/lib/mongodb";
 const UserModel =require("@/app/lib/model/User");
 import PostModel from "@/app/lib/model/Post";
+import { put } from "@vercel/blob";
 
 export const POST = async (req: NextRequest,) => {
  
@@ -40,26 +41,36 @@ export const POST = async (req: NextRequest,) => {
        dbConnect();
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
+        const filename=Date.now()+file.name
+        // const path=join(process.cwd(),'public/assets',file.name);
 
-        const path=join(process.cwd(),'public/assets',file.name);
+        // await writeFile(path,buffer);
 
-        await writeFile(path,buffer);
-        const Post = PostModel;
-        const post= await Post.create({
-            PathFile: file.name,
-            title: postTitle,
-            likes: [],
-            comments: [],
-            created:Date.now().toString(),
-            postby:decode?.user?._id
-          });
-
-
-        await post?.save();
-       
-
-      return NextResponse.json({ Message: "successfully upload a post",posts:post },{status: 200});
-
+        const blob = await put(filename, file, {
+          access: 'public',
+        });
+        if(blob){
+          const Post = PostModel;
+          const post= await Post.create({
+              PathFile: blob.downloadUrl,
+              title: postTitle,
+              likes: [],
+              comments: [],
+              created:Date.now().toString(),
+              postby:decode?.user?._id
+            });
+  
+  
+          await post?.save();
+         
+  
+        return NextResponse.json({ Message: "successfully upload a post",posts:post,blob },{status: 200});
+  
+        }else{
+          
+        return NextResponse.json({ Message: "did't upload the post succesfully", },{status: 400});
+        }
+        
     } catch (error) {
       console.log("Error occurred ", error);
       return NextResponse.json({ Message: "Failed", error:error },{status: 500});

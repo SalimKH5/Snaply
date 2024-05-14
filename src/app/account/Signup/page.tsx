@@ -1,11 +1,11 @@
 
 import SingupContent from '@/app/components/SingupContent';
 import Link from 'next/link';
-
+import api from "../../ApiConfig"
 
 
 const Signup = () => {
-
+  console.log({BASE_URL:api.BASE_URL})
   return (
     <div className='w-full h-full flex items-center justify-center  p-1 pt-6 '>
         <div className="w-full h-full max-w-xs flex flex-col gap-3 ">

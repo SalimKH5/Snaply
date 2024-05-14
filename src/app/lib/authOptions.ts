@@ -27,7 +27,7 @@ providers: [
     },
     async authorize(credentials, req) {
         const {email,password} = credentials as User;
-       
+        console.log({url:api.login_client});
         const result=await fetch(api.login_client,{
             method:"POST",
             headers:{

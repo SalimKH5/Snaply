@@ -3,7 +3,7 @@ import api from "../ApiConfig"
 const PostPicture = ({src}:{src:string}) => {
   return (
     <div className='w-full h-full min-h-[30rem] relative  '>
-            <Image src={`${api.BASE_URL}/assets/${src}`} 
+            <Image src={`${src}`} 
             alt={src} priority  fill 
             
             className="object-cover   w-full absolute left-0 right-0 h-full rounded-lg"/>

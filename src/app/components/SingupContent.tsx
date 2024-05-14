@@ -76,7 +76,7 @@ const SingupContent = () => {
 
 
 
-
+    console.log({register_client:api.register_client})
 
 
   return (

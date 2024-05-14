@@ -9,7 +9,7 @@ import { CiHeart } from "react-icons/ci";
 import { MdOutlineExplore } from "react-icons/md";
 import { signOut } from "next-auth/react"
 import { ChangeEvent, useState } from 'react';
-import {Modal } from 'antd';
+import {Modal, Spin } from 'antd';
 import { FaPhotoVideo } from "react-icons/fa";
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css'
@@ -89,6 +89,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
     const router = useRouter();
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [crop, setCrop] = useState<Crop>()
+      const [loading,setLoading]=useState<boolean>(false);
       const [formData,setFormData]=useState<UploadPost>({
         filePath:null,
         postTitle:""
@@ -133,8 +134,10 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
 
       const handleSubmit=async (event: React.FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
+        
         try{
           if(formData.filePath &&  formData.postTitle){
+            setLoading(true);
             const fd=new FormData();
             fd.append('file', formData.filePath); // Assuming 'logo' is the key for your file
             fd.append('postTitle', formData.postTitle); // Assuming 'logo' is the key for your file
@@ -145,7 +148,9 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
             },
             body:fd
           })
+          
           if(result.ok){
+            setLoading(false);  
             handleCancel();
             router.refresh()
             revalidateTag("posts"); // Revalidate cache tag
@@ -153,11 +158,13 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
            
             
           }else{
+            setLoading(false);
             console.log("bad did't  upload a the file succesfully");
 
           }
           }
         }catch(error){
+          setLoading(false);
           console.log({error});
         }
 
@@ -204,7 +211,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                                   {formData.filePath ?
                                   <form  onSubmit={handleSubmit} className='flex flex-col gap-4'>
                                             <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
-                                               <img src={imageDipslay} alt="Selected" style={{ maxWidth: '100%' }} />
+                                               <img src={imageDipslay} alt="Selected" className='object-contain' style={{ maxWidth: '100%' }} />
                                            </ReactCrop>
                                           <div className="w-full flex flex-col gap-5">
                                           <textarea 
@@ -220,7 +227,8 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                                                 placeholder='écrivez un poste'
                                               ></textarea>
 
-                                                      <button className='bg-blue-800 text-white'>Post</button>
+                                                      <button className='bg-blue-800 text-white'>
+                                                        {loading?<Spin/>:"Post"}</button>
                                               </div>
                                   </form>
                                     :
