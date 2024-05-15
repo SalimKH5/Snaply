@@ -7,9 +7,14 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import "swiper/css/effect-coverflow"
 import "swiper/css/autoplay"
+import { useState } from 'react';
+import ToggleStory from './ToggleStory';
 const StoryContainer = () => {
+  const [toggleStory,setToggleStory]=useState<boolean>(false)
   return (
+    <>
     <div className="w-full py-4">
+    {toggleStory && <ToggleStory/>}
                <Swiper
     autoplay={true}
    
@@ -35,24 +40,22 @@ const StoryContainer = () => {
     
     
   >
-       <SwiperSlide ><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
-       <SwiperSlide><Story /></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
+      
       
   </Swiper>
     </div>
-   
+    </>
   )
 }
 
