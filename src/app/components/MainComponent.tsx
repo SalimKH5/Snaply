@@ -62,11 +62,11 @@ const  MainComponent = async () => {
       
   return (
     <div className="overflow-y-auto flex h-screen gap-5">
-    <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6 border-[1px] ">
+    <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6  ">
          <Sidebar token={session?.user?.token}/>
     </div>
-    <div className="w-full md:ml-[13%] lg:ml-[20%] flex-grow flex items-center max-w-[650px] lg:max-w-2xl mx-auto flex-col">
-      <div className="w-full md:max-w-2xl">
+    <div className="w-full md:ml-[13%] -z-10 lg:ml-[20%] flex-grow flex items-center max-w-[650px] lg:max-w-2xl mx-auto flex-col">
+      <div className="w-full md:max-w-2xl flex justify-center items-center flex-col ">
             <StoryContainer/>
             <div className="w-full  flex justify-center items-center">
                   <div className="w-full h-full max-w-lg p-1 md:p-3 flex flex-col  justify-center gap-6">

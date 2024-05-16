@@ -68,11 +68,7 @@ const SavePost = ({userId,postId}:SavePost) => {
       }
   }
 
-  console.log(JSON.stringify({
-    postId:postId,
-    savePost:!saveP
-  }))
- 
+  
   return (
     saveP?
     <BsFillSaveFill 

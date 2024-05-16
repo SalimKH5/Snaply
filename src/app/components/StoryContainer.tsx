@@ -9,12 +9,47 @@ import "swiper/css/effect-coverflow"
 import "swiper/css/autoplay"
 import { useState } from 'react';
 import ToggleStory from './ToggleStory';
+
+interface StoryType{
+  img:string
+}
+
+
+
 const StoryContainer = () => {
   const [toggleStory,setToggleStory]=useState<boolean>(false)
+  const [storyIndex,setStoryIndex]=useState<number>(2);
+
+  const stories:StoryType[]=[
+    {
+      img:"/picture.jpg",
+
+    },
+    {
+      img:"/assets/IMG_20220215_105914.jpg",
+
+    },
+    {
+      img:"/assets/IMG_20220215_102736.jpg",
+
+    },
+    {
+      img:"/picture.jpg",
+
+    },
+    {
+      img:"/picture.jpg",
+
+    },
+    {
+      img:"/picture.jpg",
+
+    },
+  ]
   return (
-    <>
-    <div className="w-full py-4">
-    {toggleStory && <ToggleStory/>}
+    <div className='w-full z-10 flex items-center justify-center '>
+    <div className="w-full py-4 ">
+    {toggleStory && <ToggleStory setStoryIndex={setStoryIndex} toggleStory={toggleStory} setToggleStory={setToggleStory} storyIndex={storyIndex} stories={stories}/>}
                <Swiper
     autoplay={true}
    
@@ -33,29 +68,25 @@ const StoryContainer = () => {
         spaceBetween:15
       },
     }}
-    className=' px-16  mySwiper'
+    className='w-full px-16 -z-50  mySwiper  '
    
     modules={[Navigation,]}
     pagination={{ clickable: true }}
     
     
   >
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-       <SwiperSlide ><Story setToggleStory={setToggleStory} toggleStory={toggleStory}/></SwiperSlide>
-      
-      
-  </Swiper>
+    {
+      stories.map((story:StoryType,index:number)=>(
+        <SwiperSlide 
+        className='-z-10'
+        key={index}
+        ><Story storyindex={index} setStoryIndex={setStoryIndex} setToggleStory={setToggleStory} toggleStory={toggleStory} story={story} /></SwiperSlide>
+      ))
+    }
+       
+              </Swiper>
     </div>
-    </>
+    </div>
   )
 }
 
