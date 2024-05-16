@@ -10,8 +10,6 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex}:{togg
   setStoryIndex: Dispatch<SetStateAction<number>>,storyindex:number
 }) => {
 
-    
-
       const handleToggleStory=()=>{
         console.log(toggleStory)
           setToggleStory((prev:boolean)=>true)
@@ -25,7 +23,7 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex}:{togg
    
     <div  
     onClick={()=>handleToggleStory()}
-    className="w-full z-10 flex flex-col items-center gap-1">
+    className="w-full -z-10 flex flex-col items-center gap-1">
      
               <div 
              

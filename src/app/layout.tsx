@@ -5,6 +5,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { Providers } from "./components/provider";
+import { ToggleProvider } from "./components/SearchToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  
+
   return (
     <html lang="en">
       <body className={`${inter.className} w-full h-full `}>
-      <Providers>{children}</Providers>
+        <Providers>
+          <ToggleProvider>{children}</ToggleProvider>
+        </Providers>
       </body>
     </html>
   );

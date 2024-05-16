@@ -9,6 +9,7 @@ import "swiper/css/effect-coverflow"
 import "swiper/css/autoplay"
 import { useState } from 'react';
 import ToggleStory from './ToggleStory';
+import { useToggleState } from './SearchToggle';
 
 interface StoryType{
   img:string
@@ -46,6 +47,8 @@ const StoryContainer = () => {
 
     },
   ]
+
+  
   return (
     <div className='w-full z-10 flex items-center justify-center '>
     <div className="w-full py-4 ">
@@ -68,7 +71,7 @@ const StoryContainer = () => {
         spaceBetween:15
       },
     }}
-    className='w-full px-16 -z-50  mySwiper  '
+    className='w-full px-16 z-10  mySwiper  '
    
     modules={[Navigation,]}
     pagination={{ clickable: true }}
@@ -78,7 +81,7 @@ const StoryContainer = () => {
     {
       stories.map((story:StoryType,index:number)=>(
         <SwiperSlide 
-        className='-z-10'
+        className=''
         key={index}
         ><Story storyindex={index} setStoryIndex={setStoryIndex} setToggleStory={setToggleStory} toggleStory={toggleStory} story={story} /></SwiperSlide>
       ))

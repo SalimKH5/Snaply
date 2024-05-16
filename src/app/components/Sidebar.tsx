@@ -20,6 +20,7 @@ import Link from 'next/link';
 import SingupContent from './SingupContent';
 import Api from '../ApiConfig';
 import SearchContainer from './SearchContainer';
+import { useToggleState } from './SearchToggle';
 type ItemNavigation = {
   text: string,
   icon: any,
@@ -72,7 +73,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
     postTitle: ""
   });
 
-  const [searchToggle, setSearchToggle] = useState<boolean>(false);
+  
   const [imageDipslay, setImageDataDisplay] = useState<string | undefined>();
 
   const showModal = () => {
@@ -149,88 +150,90 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
 
 
   }
+  const {toggle,setToggle}=useToggleState();
 
-
-
+  console.log({toggle});
   return (
-    <div className="w-full z-50 h-full flex items-center">
-       <div className={` ${searchToggle ?"w-32":"w-full"} h-full flex overflow-y-auto border-[1px] relative hide-scroll-bar items-center lg:items-center flex-col gap-8 px-4 py-4`}>
-      <Link href="/" className="w-full px-4 min-h-[80px] flex items-center">
-        <div className={`${searchToggle ? "w-[30px] h-[30px] px-2 " : " w-[30px] h-[30px] lg:w-[120px] lg:h-[80px]"} flex  relative`}>
-          <Image src="/instagram-logo-1-1024x366.svg" className={`${searchToggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
-          <Image src="/instagram-logo.png" className={`${searchToggle ? "inline" : "inline lg:hidden"} hover:bg-[#e7e7e7] rounded-lg  p-[3px]  `} alt="" fill />
-        </div>
-      </Link>
-      <div className="w-full flex flex-col gap-4 px-2">
-        {
+    <div className={`hidden md:flex fixed  ${toggle ?"z-[9999]":""}  top-0 bottom-0 h-full w-[11%] lg:w-1/6  `}>
+      <div className="w-full  h-full flex items-center">
+        <div className={` ${toggle ?"w-20 border-r-[2px]":"w-full  border-[1px]"} h-full flex overflow-y-auto relative hide-scroll-bar items-center lg:items-center flex-col gap-8  py-4`}>
+        <Link href="/" className="w-full px-2 md:px-4 min-h-[80px] flex items-center">
+          <div className={`${toggle ? "w-[35px] h-[30px] " : " w-[60px] h-[30px] lg:w-[120px] lg:h-[80px]"} flex  relative`}>
+            <Image src="/instagram-logo-1-1024x366.svg" className={`${toggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
+            <Image src="/instagram-logo.png" className={`${toggle ? "inline" : "inline lg:hidden"} hover:bg-[#e7e7e7] rounded-lg  p-[3px]  `} alt="" fill />
+          </div>
+        </Link>
+        <div className="w-full flex flex-col gap-4 px-2">
+          {
 
-          naigations_Items.map((item: ItemNavigation, index: number) => (
+            naigations_Items.map((item: ItemNavigation, index: number) => (
 
-            <div
-              onClick={() => {
-                if (item.type === 1) {
-                  showModal();
-                } else if (item.type === 4) {
-                  signOut()
-                }
-                if (item.type === 0) {
-                  router.push('/');
-                  router.refresh();
-                }
-                if(item.type===2){
-                  setSearchToggle((prev:boolean)=>!prev)
-                }
-              }
-              }
-              key={index} className="w-full flex text-2xl items-center gap-3 px-2 rounded-xl cursor-pointer py-2 
-                            hover:scale-105
-                            hover:bg-[#e7e7e7]">
-              {item.icon}
-              <h1 className={`${searchToggle ? "hidden" : "hidden lg:inline"} text-base `}>{item.text}</h1>
-
-            </div>
-          ))
-        }
-      </div>
-      <Modal open={isModalOpen} onOk={handleOk} footer={null} onCancel={handleCancel}  >
-        <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
-          {formData.filePath ?
-            <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-              <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
-                <img src={imageDipslay} alt="Selected" className='object-contain' style={{ maxWidth: '100%' }} />
-              </ReactCrop>
-              <div className="w-full flex flex-col gap-5">
-                <textarea
-                  value={formData.postTitle}
-                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                    setFormData((prev: UploadPost) => ({
-                      ...prev,
-                      postTitle: e.target.value,
-                    }))
+              <div
+                onClick={() => {
+                  if (item.type === 1) {
+                    showModal();
+                  } else if (item.type === 4) {
+                    signOut()
                   }
-                  rows={6}
-                  className='w-full p-2'
-                  placeholder='écrivez un poste'
-                ></textarea>
+                  if (item.type === 0) {
+                    router.push('/');
+                    router.refresh();
+                  }
+                  if(item.type===2){
+                    setToggle((prev:boolean)=>!prev)
+                  }
+                }
+                }
+                key={index} className="w-full flex text-2xl items-center gap-3 px-2 rounded-xl cursor-pointer py-2 
+                              hover:scale-105
+                              hover:bg-[#e7e7e7]">
+                {item.icon}
+                <h1 className={`${toggle ? "hidden" : "hidden lg:inline"} text-base `}>{item.text}</h1>
 
-                <button className='bg-blue-800 text-white'>
-                  {loading ? <Spin /> : "Post"}</button>
               </div>
-            </form>
-            :
-            <>
-              <FaPhotoVideo size={130} />
-              <input type="file" accept="image/*" onChange={handleFileSelect} />
-            </>
-
+            ))
           }
         </div>
-      </Modal>
-      </div>  
-      {
-        searchToggle &&  <SearchContainer/>   
-      }
-     
+        <Modal open={isModalOpen} onOk={handleOk} footer={null} onCancel={handleCancel}  >
+          <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
+            {formData.filePath ?
+              <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+                <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
+                  <img src={imageDipslay} alt="Selected" className='object-contain' style={{ maxWidth: '100%' }} />
+                </ReactCrop>
+                <div className="w-full flex flex-col gap-5">
+                  <textarea
+                    value={formData.postTitle}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                      setFormData((prev: UploadPost) => ({
+                        ...prev,
+                        postTitle: e.target.value,
+                      }))
+                    }
+                    rows={6}
+                    className='w-full p-2'
+                    placeholder='écrivez un poste'
+                  ></textarea>
+
+                  <button className='bg-blue-800 text-white'>
+                    {loading ? <Spin /> : "Post"}</button>
+                </div>
+              </form>
+              :
+              <>
+                <FaPhotoVideo size={130} />
+                <input type="file" accept="image/*" onChange={handleFileSelect} />
+              </>
+
+            }
+          </div>
+        </Modal>
+        </div>  
+        {
+          toggle &&  <SearchContainer/>   
+        }
+      
+      </div>
     </div>
 
     

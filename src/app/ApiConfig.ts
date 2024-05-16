@@ -10,12 +10,16 @@ const register_client=API_BASE_URL+"/register"
 const User=API_BASE_URL+"/User/"
 
 const posts=API_BASE_URL+"/posts/"
+
+
+const SearchUser=API_BASE_URL+"/Search"
 export default {
     API_BASE_URL,
     login_client,
     register_client,
     posts,
     User,
-    BASE_URL
+    BASE_URL,
+    SearchUser
     
 }
