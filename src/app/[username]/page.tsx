@@ -98,7 +98,7 @@ const page = async ({ params }: { params: { username: string } }) => {
         
 
         return (
-            <div className="overflow-y-auto flex h-screen gap-5 py-2">
+            <div className="overflow-y-auto flexc z-10 h-screen gap-5 py-2">
                 <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6 border-[1px] ">
                     <Sidebar token={session?.user?.token} />
                 </div>

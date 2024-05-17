@@ -184,7 +184,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                   }
                 }
                 }
-                key={index} className="w-full flex text-2xl items-center gap-3 px-2 rounded-xl cursor-pointer py-2 
+                key={index} className="w-full flex text-2xl items-center gap-3 px-1 rounded-xl cursor-pointer py-2 
                               hover:scale-105
                               hover:bg-[#e7e7e7]">
                 {item.icon}
