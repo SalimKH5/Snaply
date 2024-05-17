@@ -67,8 +67,9 @@ const {toggle,setToggle}=useToggleState();
                         <div className="w-full py-2 flex flex-col gap-3 border-t-[1px]">
                           {
                             users.length>0?
-                            users.map((user:User)=>(
+                            users.map((user:User,index:number)=>(
                               <Link 
+                              key={index}
                               onClick={()=>{
                                 setToggle(false);
                               }}
