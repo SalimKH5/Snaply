@@ -7,50 +7,100 @@ import jwt from "jsonwebtoken"
 import dbConnect from "@/app/lib/mongodb";
 const UserModel =require("@/app/lib/model/User");
 import PostModel from "@/app/lib/model/Post";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import multer from "multer";
+import {storage} from "../../lib/firebase"
+import { initializeApp } from "firebase/app";
 
 
-export const POST = async (req: NextRequest) => {
+
+
+
+
+
+const giveCurrentDateTime = () => {
+  const today = new Date();
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const dateTime = date + ' ' + time;
+  return dateTime;
+}
+
+
+
+export const POST = async (req: NextRequest,) => {
+ 
   try {
-      const authHeader = req.headers.get('authorization');
-      const token = authHeader?.split("Bearer ")[1];
-      if (!authHeader || !token) {
-          return NextResponse.json({ error: "Token not found" }, { status: 401 });
+    const auth_header =  req.headers.get('authorization');
+    const token : string|undefined=auth_header?.split("Bearer ")[1];
+    if (!auth_header && !token)
+      {
+      return NextResponse.json({error: "token not found"},{status:401});
+
       }
 
-      const decode = jwt.verify(token, "your-secret-key") as jwt.JwtPayload;
-      if (!decode?.user?._id) {
-          return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+      const decode:string | jwt.JwtPayload|null|undefined =decrypt(token);
+      
+      dbConnect();
+    
+      if(!decode || typeof(decode)=="string"){
+        return NextResponse.json({error: "not authorized"},{status:401});
       }
 
-      const formData = await req.formData();
-      const file = formData.get("file") as File;
-      const postTitle = formData.get("postTitle") as string;
-      if (!file || !postTitle) {
-          return NextResponse.json({ error: "No files received or post title missing." }, { status: 400 });
-      }
 
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      const filename = Date.now() + "-" + file.name;
-      const filePath = join(__dirname, '..', 'media_files', filename);
+    const formData = await req.formData();
+        
+        const file: File | null = formData.get("file") as unknown as File; // Type assertion to File or null
 
-      await writeFile(filePath, buffer);
+        const postTitle:string= formData.get("postTitle") as unknown as string; // Type assertion to File or null
+        if (!file || !postTitle) {
+          return NextResponse.json({ error: "No files received." }, { status: 400 });
+        }
+         
+       dbConnect();
+        const bytes = await file.arrayBuffer();
+        const dateTime = giveCurrentDateTime();
 
-      const Post = PostModel;
-      const post = await Post.create({
-          PathFile: filename,
-          title: postTitle,
-          likes: [],
-          comments: [],
-          created: Date.now().toString(),
-          postby: decode.user._id
-      });
+        
+        
+        // Initialize Cloud Storage and get a reference to the service
+       
+        const storageRef = ref(storage, `images/${file.name + "       " + dateTime}`);
+         // Create file metadata including the content type
+     // Upload the file in the bucket storage
+     console.log({storageRef});
 
-      return NextResponse.json({ message: "Successfully uploaded a post", post }, { status: 200 });
-  } catch (error) {
+
+       const snapshot = await uploadBytes(storageRef, file)
+        
+       const downloadURL = await getDownloadURL(snapshot.ref);
+       
+
+          if(downloadURL){
+            const Post = PostModel;
+            const post= await Post.create({
+                PathFile: downloadURL,
+                title: postTitle,
+                likes: [],
+                comments: [],
+                created:Date.now().toString(),
+                postby:decode?.user?._id
+              });
+    
+    
+            await post?.save();
+           
+    
+          return NextResponse.json({ Message: "successfully upload a post",posts:post},{status: 200});
+    
+          }
+         
+        
+        
+    } catch (error) {
       console.log("Error occurred ", error);
-      return NextResponse.json({ message: "Failed to upload post", error }, { status: 500 });
-  }
+      return NextResponse.json({ Message: "Failed", error:error },{status: 500});
+    }
 };
 
 export const GET = async (req: NextRequest,) => {
