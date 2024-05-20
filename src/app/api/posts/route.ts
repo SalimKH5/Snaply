@@ -7,76 +7,51 @@ import jwt from "jsonwebtoken"
 import dbConnect from "@/app/lib/mongodb";
 const UserModel =require("@/app/lib/model/User");
 import PostModel from "@/app/lib/model/Post";
-import { put } from "@vercel/blob";
 
-export const POST = async (req: NextRequest,) => {
- 
+
+export const POST = async (req: NextRequest) => {
   try {
-    const auth_header =  req.headers.get('authorization');
-    const token : string|undefined=auth_header?.split("Bearer ")[1];
-    if (!auth_header && !token)
-      {
-      return NextResponse.json({error: "token not found"},{status:401});
-
+      const authHeader = req.headers.get('authorization');
+      const token = authHeader?.split("Bearer ")[1];
+      if (!authHeader || !token) {
+          return NextResponse.json({ error: "Token not found" }, { status: 401 });
       }
 
-      const decode:string | jwt.JwtPayload|null|undefined =decrypt(token);
-      
-      dbConnect();
-    
-      if(!decode || typeof(decode)=="string"){
-        return NextResponse.json({error: "not authorized"},{status:401});
+      const decode = jwt.verify(token, "your-secret-key") as jwt.JwtPayload;
+      if (!decode?.user?._id) {
+          return NextResponse.json({ error: "Not authorized" }, { status: 401 });
       }
 
-      console.log({decode})
-    const formData = await req.formData();
-        
-        const file: File | null = formData.get("file") as unknown as File; // Type assertion to File or null
-        const postTitle:string= formData.get("postTitle") as unknown as string; // Type assertion to File or null
-        if (!file || !postTitle) {
-          return NextResponse.json({ error: "No files received." }, { status: 400 });
-        }
-        
-      
-       dbConnect();
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        const filename=Date.now()+file.name
-        // const path=join(process.cwd(),'public/assets',file.name);
+      const formData = await req.formData();
+      const file = formData.get("file") as File;
+      const postTitle = formData.get("postTitle") as string;
+      if (!file || !postTitle) {
+          return NextResponse.json({ error: "No files received or post title missing." }, { status: 400 });
+      }
 
-        // await writeFile(path,buffer);
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const filename = Date.now() + "-" + file.name;
+      const filePath = join(__dirname, '..', 'media_files', filename);
 
-        const blob = await put(filename, file, {
-          access: 'public',
-        });
-        if(blob){
-          const Post = PostModel;
-          const post= await Post.create({
-              PathFile: blob.downloadUrl,
-              title: postTitle,
-              likes: [],
-              comments: [],
-              created:Date.now().toString(),
-              postby:decode?.user?._id
-            });
-  
-  
-          await post?.save();
-         
-  
-        return NextResponse.json({ Message: "successfully upload a post",posts:post,blob },{status: 200});
-  
-        }else{
-          
-        return NextResponse.json({ Message: "did't upload the post succesfully", },{status: 400});
-        }
-        
-    } catch (error) {
+      await writeFile(filePath, buffer);
+
+      const Post = PostModel;
+      const post = await Post.create({
+          PathFile: filename,
+          title: postTitle,
+          likes: [],
+          comments: [],
+          created: Date.now().toString(),
+          postby: decode.user._id
+      });
+
+      return NextResponse.json({ message: "Successfully uploaded a post", post }, { status: 200 });
+  } catch (error) {
       console.log("Error occurred ", error);
-      return NextResponse.json({ Message: "Failed", error:error },{status: 500});
-    }
+      return NextResponse.json({ message: "Failed to upload post", error }, { status: 500 });
+  }
 };
-
 
 export const GET = async (req: NextRequest,) => {
  
