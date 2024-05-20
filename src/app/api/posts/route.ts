@@ -68,7 +68,7 @@ export const POST = async (req: NextRequest,) => {
         const storageRef = ref(storage, `images/${file.name + "       " + dateTime}`);
          // Create file metadata including the content type
      // Upload the file in the bucket storage
-     console.log({storageRef});
+    
 
 
        const snapshot = await uploadBytes(storageRef, file)
