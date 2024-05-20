@@ -40,3 +40,7 @@ public/assets
 
 
 .env
+
+cypress/
+
+cypress.config.ts

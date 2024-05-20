@@ -56,7 +56,7 @@ interface Post {
 
 
 
-async function getUser(session: any, username: string) {
+async function getUser(username: string) {
     const getuser = await fetch(api.User+username, {
         method: "GET",
         next: { tags: ['users'] },
@@ -91,18 +91,14 @@ const page = async ({ params }: { params: { username: string } }) => {
         redirect('/account/Login')
     }
     if (session) {
-        console.log(params.username);
-        const user: User = await getUser(session, params.username);
+       
+        const user: User = await getUser(params.username);
 
        if(user){
-        
 
         return (
-            <div className="overflow-y-auto flexc z-10 h-screen gap-5 py-2">
-                <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6 border-[1px] ">
-                    <Sidebar token={session?.user?.token} />
-                </div>
-                <div className="w-full h-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center  lg:max-w-4xl mx-auto flex-col">
+            
+                <div className="w-full h-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center  lg:max-w-4xl mx-auto flex-col ">
                     <div className='w-full h-full  py-10 flex flex-col gap-5 lg:gap-16  mx-auto'>
                         <div className="w-full flex items-center justify-between max-w-xl lg:max-w-2xl gap-4 lg:gap-8">
                             <div className="flex-[0.4] flex items-center justify-center ">
@@ -154,7 +150,7 @@ const page = async ({ params }: { params: { username: string } }) => {
 
                     </div>
                 </div>
-            </div>
+         
 
             )
         }

@@ -21,6 +21,7 @@ import SingupContent from './SingupContent';
 import Api from '../ApiConfig';
 import SearchContainer from './SearchContainer';
 import { useToggleState } from './SearchToggle';
+import { BsInstagram } from "react-icons/bs";
 type ItemNavigation = {
   text: string,
   icon: any,
@@ -156,14 +157,14 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
   return (
     <div className={`hidden md:flex fixed  ${toggle ?"z-[9999]":""}  top-0 bottom-0 h-full w-[11%] lg:w-1/6  `}>
       <div className="w-full  h-full flex items-center">
-        <div className={` ${toggle ?"w-20 border-r-[2px]":"w-full  border-[1px]"} h-full flex overflow-y-auto relative hide-scroll-bar items-center lg:items-center flex-col gap-8  py-4`}>
-        <Link href="/" className="w-full px-2 md:px-4 min-h-[80px] flex items-center">
-          <div className={`${toggle ? "w-[35px] h-[30px] " : " w-[60px] h-[30px] lg:w-[120px] lg:h-[80px]"} flex  relative`}>
-            <Image src="/instagram-logo-1-1024x366.svg" className={`${toggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
-            <Image src="/instagram-logo.png" className={`${toggle ? "inline" : "inline lg:hidden"} hover:bg-[#e7e7e7] rounded-lg  p-[3px]  `} alt="" fill />
+        <div className={` ${toggle ?"w-20 border-r-[2px]":"w-full  border-[1px]"}  h-full flex overflow-y-auto relative hide-scroll-bar items-center lg:items-center flex-col gap-8  py-4 px-2 `}>
+        <Link href="/" className="w-full  ">
+          <div className={`w-[120px] h-[80px] flex items-center  relative`}>
+            <Image src="/instagram-logo-1-1024x366.svg" className={`object-contain  ${toggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
+           <BsInstagram size={25} className={`${toggle? "inline":"inline lg:hidden"} `}/> 
           </div>
         </Link>
-        <div className="w-full flex flex-col gap-4 px-2">
+        <div className="w-full flex flex-col gap-4 ">
           {
 
             naigations_Items.map((item: ItemNavigation, index: number) => (
@@ -184,7 +185,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                   }
                 }
                 }
-                key={index} className="w-full flex text-2xl items-center gap-3 px-1 rounded-xl cursor-pointer py-2 
+                key={index} className="w-full flex text-2xl   gap-3  rounded-xl cursor-pointer py-2 
                               hover:scale-105
                               hover:bg-[#e7e7e7]">
                 {item.icon}

@@ -71,6 +71,10 @@ pages:{
         token.username=user.username
         token.followers=user.followers
         token.follwing=user.follwing
+        token.gender=user.gender
+        token.bio=user.bio
+        token.thumbnail=user.thumbnail
+      
       }
       if(trigger==="update"){
         return {...token,...session?.user}

@@ -11,7 +11,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   if(session){
-    redirect('/main')
+    redirect('/')
   }
   return (
     <div className="w-full h-full flex items-center justify-center py-8 lg:py-8 ">

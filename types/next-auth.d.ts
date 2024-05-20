@@ -10,7 +10,10 @@ declare module "next-auth" {
       saveposts:any[]
       username:string
       followers:any[]
-      follwing:any[]
+      follwing:any[],
+      gender:string,
+      bio:string,
+      thumbnail:string,
       }
     }
   
@@ -23,6 +26,9 @@ declare module "next-auth" {
       username:string
       followers:any[]
       follwing:any[]
+      gender:string,
+      bio:string,
+      thumbnail:string,
 
     }
 
@@ -37,6 +43,9 @@ declare module "next-auth/jwt" {
     username:string
     followers:any[]
     follwing:any[]
+    gender:string,
+      bio:string,
+      thumbnail:string,
 
   }
   interface User {
@@ -49,6 +58,9 @@ declare module "next-auth/jwt" {
     username:string
     followers:any[]
     follwing:any[]
+    gender:string,
+    bio:string,
+    thumbnail:string,
 
 
   }

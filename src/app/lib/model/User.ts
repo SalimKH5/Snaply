@@ -7,6 +7,9 @@ export interface IUser extends Document {
   fullName: string;
   username: string;
   token?: string;
+  thumbnail?: string;
+  gender?: string;
+  bio?: string;
   saveposts: SavedPost[];
   followers: Followers[];
   follwing: Follwing[];
@@ -54,6 +57,18 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
       
     }
   ],
+  thumbnail: {
+    type: String,
+    default:"/profile-icon.png"
+  },
+  bio: {
+    type: String,
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female'],
+  },
+
   saveposts: [
     {
       postId: { type: Schema.Types.ObjectId, ref: 'Post' }

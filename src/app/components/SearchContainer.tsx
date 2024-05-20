@@ -20,12 +20,13 @@ const SearchContainer = () => {
 
   const [username,setUsername]=useState<string>("");
   const [users,setUsers]=useState<User[]>([]);
+  const [loading,setLoading]=useState<boolean>(false);
   const handleSearch=async(e: ChangeEvent<HTMLInputElement>)=>{
     setUsername(e.target.value)
     if(e.target.value===""){
       setUsers([])
     }else{
-     
+      setLoading(true);
     try {
         const result=await fetch(`${Api.SearchUser}?username=${e.target.value}`,{
           method:"GET",
@@ -38,10 +39,12 @@ const SearchContainer = () => {
           const data=await result.json();
           console.log({data});
           setUsers(data.users);
+
         }
     } catch (error) {
         console.log({error});
     }
+    setLoading(false);
     }
 
     
@@ -66,7 +69,17 @@ const {toggle,setToggle}=useToggleState();
                         className='bg-gray-100 text-lg' allowClear placeholder='Search'/>                       
                         <div className="w-full py-2 flex flex-col gap-3 border-t-[1px]">
                           {
+                            loading?
+                            <div className='w-full flex flex-col gap-3'>
+                                <div className='w-full animate-pulse bg-slate-400 py-2'></div>
+                                <div className='w-full animate-pulse bg-slate-400 py-2'></div>
+                                <div className='w-full animate-pulse bg-slate-400 py-2'></div>
+                                <div className='w-full animate-pulse bg-slate-400 py-2'></div>
+                                <div className='w-full animate-pulse bg-slate-400 py-2'></div>    
+                            </div>
+                            :
                             users.length>0?
+
                             users.map((user:User,index:number)=>(
                               <Link 
                               key={index}
@@ -76,8 +89,6 @@ const {toggle,setToggle}=useToggleState();
                               href={`/${user.username}`} className="w-full hover:bg-slate-400 py-1 px-2 rounded-xl hover:text-white flex items-center">
                                 <div className="flex flex-col gap-3">
                                      <p>{user.username}</p>
-                                     
-
                                 </div>
                               </Link>
                             ))

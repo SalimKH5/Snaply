@@ -100,7 +100,7 @@ const BodyContent = async ({username}:{username:string}) => {
                                     posts.map((post: Post,index:number) => (
                                         <div 
                                         key={index}
-                                        className='w-full relative h-32 lg:h-60 cursor-pointer '>
+                                        className='w-full -z-10 relative h-32 lg:h-60 cursor-pointer '>
                                             <TogglePost
 
                                                 toggle={<Image src={`${post.PathFile}`} className='rounded-sm object-cover ' alt="" fill />}
