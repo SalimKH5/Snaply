@@ -27,11 +27,11 @@ const StoryContainer = () => {
 
     },
     {
-      img:"/assets/IMG_20220215_105914.jpg",
+      img:"/picture.jpg",
 
     },
     {
-      img:"/assets/IMG_20220215_102736.jpg",
+      img:"/picture.jpg",
 
     },
     {
