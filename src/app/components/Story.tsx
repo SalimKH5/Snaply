@@ -1,21 +1,26 @@
 "use client"
 import Image from 'next/image'
-import{ Dispatch, SetStateAction } from 'react'
+import{ Dispatch, SetStateAction, useState } from 'react'
 import ToggleStory from './ToggleStory';
 
 interface StoryType{
-  img:string
+  img:string,
+  views:boolean,
 }
-const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex}:{toggleStory:boolean,setToggleStory:Dispatch<SetStateAction<boolean>>,story:StoryType,
-  setStoryIndex: Dispatch<SetStateAction<number>>,storyindex:number
+const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex,setStories}:{toggleStory:boolean,setToggleStory:Dispatch<SetStateAction<boolean>>,story:StoryType,
+  setStoryIndex: Dispatch<SetStateAction<number>>,storyindex:number,setStories:Dispatch<SetStateAction<StoryType[]>>
 }) => {
 
       const handleToggleStory=()=>{
         console.log(toggleStory)
           setToggleStory((prev:boolean)=>true)
           setStoryIndex(storyindex)
+          setStoryOnClick(true);
           
       }
+
+
+      const [storyOnClick,setStoryOnClick]=useState<boolean>(false);
 
   return (  
     <>
@@ -27,8 +32,8 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex}:{togg
      
               <div 
              
-              className="border-[#C13584] rounded-full  border-[2px] p-[1px] flex items-center justify-center w-14 h-14  ">
-                <img src={story.img}  className='w-full h-full rounded-full object-cover  cursor-pointer  '  alt=""/>
+              className={`${!storyOnClick?"bg-gradient-to-tr from-yellow-400 to-fuchsia-600":"bg-gray-300"} rounded-full p-[2px] flex items-center justify-center w-16 h-16  `}>
+                <img src={story.img}  className='w-full h-full rounded-full p-[2px] hover:rotate-6 bg-white object-cover  cursor-pointer  '  alt=""/>
               </div>
             <p>Picture</p>
                

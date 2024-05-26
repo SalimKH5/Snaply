@@ -2,12 +2,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-
 import { getServerSession } from "next-auth";
-import { Providers } from "../components/provider";
-import { ToggleProvider } from "../components/SearchToggle";
 import Sidebar from "../components/Sidebar";
+import { redirect } from "next/navigation";
 import { authOptions } from '../lib/authOptions';
+import BottmNavigation from "../components/BottmNavigation";
+import Navbar from "../components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,15 +22,24 @@ export default async function RootLayout({
 }>) {
 
     const session = await getServerSession(authOptions);
-    return (
 
-        <div className="overflow-y-auto flexc z-10 h-screen gap-5 py-2">
-            <div className="hidden md:flex fixed top-0 bottom-0 h-full w-[11%] lg:w-1/6 border-[1px] ">
-                <Sidebar token={session?.user?.token} />
+    if (!session) {
+        redirect('/account/Login')
+      }else{
+       
+        return (
+
+            <div className="overflow-y-auto flex z-10 h-screen gap-5 py-2">
+                    <Navbar/>
+                    <Sidebar token={session?.user?.token} />
+                    <BottmNavigation  token={session?.user?.token}/>
+                
+                {children}
             </div>
-            {children}
-        </div>
+              );
+    
+      }
+    
 
-
-    );
+  
 }

@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import StoryPost from './StoryPost';
@@ -19,6 +19,20 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
     const handleModalClose = () => {
         setToggleStory(false);
     };
+
+
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
 
 
     const modalRef = useRef<HTMLDivElement>(null);
@@ -59,32 +73,45 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
                 className="w-full h-full transition-all  ease-in-out  fixed top-0 left-0 flex gap-1 sm:px-4 sm:gap-4 py-5 items-center justify-center">
 
                 {
-                    stories.map((story: StoryType, index: number) => (
-                        <>
-                            {
-                                index === storyIndex ?
+                    stories.map((story: StoryType, index: number) => {
+                        const isCurrentStory = index === storyIndex;
+                        const isWithinOneStory = index < storyIndex + 2 && index > storyIndex - 2;
+                        const isWithinThreeStories = index < storyIndex + 3 && index > storyIndex - 3;
+
+                        return (
+                            <React.Fragment key={index}>
+                                {isCurrentStory ? (
                                     <StoryPost
                                         story={story}
-                                        key={index}
                                         lengthStories={stories.length}
                                         setStoryIndex={setStoryIndex}
                                         indexStory={index}
                                     />
-                                    :
-                                    index < storyIndex + 3 && index > storyIndex - 3 ?
+                                ) : (
+                                    width < 800 && isWithinOneStory  ? (
                                         <Storywait
                                             story={story}
-                                            key={index}
                                             storyIndex={index}
                                             lengthStories={stories.length}
                                             setStoryIndex={setStoryIndex}
                                         />
-                                        :
-                                        ""
-                            }
-                        </>
-                    ))
+                                    ) : 
+                                    ( width > 800 && isWithinThreeStories  ? 
+                                        <Storywait
+                                            story={story}
+                                            storyIndex={index}
+                                            lengthStories={stories.length}
+                                            setStoryIndex={setStoryIndex}
+                                        />
+                                    :
+                                    "" 
+                                    )
+                                )}
+                            </React.Fragment>
+                        );
+                    })
                 }
+
 
 
 
