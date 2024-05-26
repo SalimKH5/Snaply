@@ -12,6 +12,7 @@ import { useToggleState } from './SearchToggle'
 import { FaPhotoVideo } from 'react-icons/fa'
 import ApiConfig from '../ApiConfig'
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 type ItemNavigation = {
     text: string,
     icon: any,
@@ -147,7 +148,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
 
 
     return (
-        <div className='w-full iniline md:hidden p-3 fixed bottom-0 bg-white shadow-lg'>
+        <div className='w-full iniline md:hidden z-[999] border-t-[1px] border-gray-500 p-3 fixed bottom-0 bg-white shadow-lg'>
             <div className="flex w-full px-5  items-center justify-between">
                 {
 
@@ -179,12 +180,15 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
                 }
             </div>
             <Modal open={isModalOpen} onOk={handleOk} footer={null} onCancel={handleCancel}  >
-                <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
+                <div className="w-full min-h-32 flex items-center flex-col justify-center cursor-pointer">
                     {formData.filePath ?
-                        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-                            <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
-                                <img src={imageDipslay} alt="Selected" className='object-contain' style={{ maxWidth: '100%' }} />
-                            </ReactCrop>
+                        <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4'>
+                           <ReactCrop className='w-full h-48 relative' crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
+                  {
+                    imageDipslay &&  <Image src={imageDipslay} alt="Selected" fill className='object-contain' style={{ maxWidth: '100%' }} />
+                  }
+                 
+                </ReactCrop>
                             <div className="w-full flex flex-col gap-5">
                                 <textarea
                                     value={formData.postTitle}
@@ -205,7 +209,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
                         </form>
                         :
                         <>
-                            <FaPhotoVideo size={130} />
+                            <FaPhotoVideo size={60} />
                             <input type="file" accept="image/*" onChange={handleFileSelect} />
                         </>
 

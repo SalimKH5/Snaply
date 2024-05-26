@@ -9,6 +9,7 @@ import { signOut } from 'next-auth/react';
 import BodyContent from '../components/BodyContent';
 import Following from '../components/Following';
 import api from "../ApiConfig"
+import Link from 'next/link';
 
 
 
@@ -98,12 +99,12 @@ const page = async ({ params }: { params: { username: string } }) => {
 
         return (
             
-                <div className="w-full h-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center  lg:max-w-4xl mx-auto flex-col ">
+                <div className="w-full h-full md:ml-[13%] lg:ml-[25%] px-2 flex-grow flex items-center justify-center py-8  lg:max-w-4xl mx-auto flex-col ">
                     <div className='w-full h-full  py-10 flex flex-col gap-5 lg:gap-16  mx-auto'>
                         <div className="w-full flex items-center justify-between max-w-xl lg:max-w-2xl gap-4 lg:gap-8">
                             <div className="flex-[0.4] flex items-center justify-center ">
                                 <div className="border-[#C13584] rounded-full  border-[2px] p-[1px] flex items-center justify-center 
-                                w-16 h-16
+                                w-20 h-20
                                 lg:w-36 lg:h-36  ">
                                     <img src="/picture.jpg" className='w-full h-full rounded-full object-cover  cursor-pointer  ' alt="" />
                                 </div>
@@ -114,7 +115,7 @@ const page = async ({ params }: { params: { username: string } }) => {
                                     {
                                         user.username===session?.user.username?
                                         <div className='flex items-center flex-row gap-2 lg:gap-3'>
-                                                <button className='bg-gray-300 text-[8px] lg:text-sm hover:bg-gray-500 py-1 px-2 rounded-md'>Edite</button>
+                                                <Link href={`/${user.username}/Edite`} className='bg-gray-300 text-[8px] lg:text-sm hover:bg-gray-500 py-1 px-2 rounded-md'>Edite</Link>
                                                 <button className='bg-gray-300 text-[8px] box-border  lg:text-sm hover:bg-gray-500 py-1 px-2 rounded-md'>view archive</button>
                                                 
                                         </div>

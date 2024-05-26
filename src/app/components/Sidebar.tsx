@@ -2,11 +2,9 @@
 import Image from 'next/image'
 import { IoHome } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
-import { RxVideo } from "react-icons/rx";
-import { AiOutlineMessage } from "react-icons/ai";
+
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { CiHeart } from "react-icons/ci";
-import { MdOutlineExplore } from "react-icons/md";
+
 import { signOut } from "next-auth/react"
 import { ChangeEvent, useState } from 'react';
 import { Modal, Spin } from 'antd';
@@ -17,7 +15,7 @@ import { revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 import { CiPower } from "react-icons/ci";
 import Link from 'next/link';
-import SingupContent from './SingupContent';
+
 import Api from '../ApiConfig';
 import SearchContainer from './SearchContainer';
 import { useToggleState } from './SearchToggle';
@@ -198,9 +196,12 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
         <Modal open={isModalOpen} onOk={handleOk} footer={null} onCancel={handleCancel}  >
           <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
             {formData.filePath ?
-              <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-                <ReactCrop crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
-                  <img src={imageDipslay} alt="Selected" className='object-contain' style={{ maxWidth: '100%' }} />
+              <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4'>
+                <ReactCrop className='w-full h-64 relative' crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
+                  {
+                    imageDipslay &&  <Image src={imageDipslay} alt="Selected" fill className='object-contain' style={{ maxWidth: '100%' }} />
+                  }
+                 
                 </ReactCrop>
                 <div className="w-full flex flex-col gap-5">
                   <textarea

@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { Providers } from "./components/provider";
 import { ToggleProvider } from "./components/SearchToggle";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} w-full h-full `}>
         <Providers>
-          <ToggleProvider>{children}</ToggleProvider>
+          <ToggleProvider>      <AntdRegistry>{children}</AntdRegistry></ToggleProvider>
         </Providers>
       </body>
     </html>

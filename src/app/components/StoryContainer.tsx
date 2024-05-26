@@ -42,9 +42,37 @@ const StoryContainer = () => {
       img: "/picture.jpg",
       views: false,
     },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
+    {
+      img: "/picture.jpg",
+      views: false,
+    },
   ]);
-
-
+ 
+  
 
   return (
     <div className='w-full z-10 flex items-center justify-center '>
@@ -63,9 +91,9 @@ const StoryContainer = () => {
 
             },
             "768": {
-              slidesPerView: 8,
+              slidesPerView: stories.length>=10?8:5,
               autoplay: true,
-              spaceBetween: 15
+              spaceBetween: 13
             },
           }}
           className='w-full px-16 z-10  mySwiper  flex items-center justify-center'
