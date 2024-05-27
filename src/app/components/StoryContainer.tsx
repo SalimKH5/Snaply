@@ -20,56 +20,72 @@ interface StoryType {
 
 const StoryContainer = () => {
   const [toggleStory, setToggleStory] = useState<boolean>(false)
-  const [storyIndex, setStoryIndex] = useState<number>(2);
+  const [storyIndex, setStoryIndex] = useState<number>(0);
   const [stories, setStories] = useState<StoryType[]>([
     {
       img: "/picture.jpg",
       views: false,
     },
+    
     {
-      img: "/picture.jpg",
+      img: "/53342199main-des-juifs-jpg.jpg",
       views: false,
     },
     {
       img: "/picture.jpg",
       views: false,
     },
+    
     {
-      img: "/picture.jpg",
+      img: "/53342199main-des-juifs-jpg.jpg",
       views: false,
     },
     {
       img: "/picture.jpg",
       views: false,
     },
+      
     {
-      img: "/picture.jpg",
+      img: "/53342199main-des-juifs-jpg.jpg",
       views: false,
     },
     {
       img: "/picture.jpg",
       views: false,
     },
+      
     {
-      img: "/picture.jpg",
+      img: "/53342199main-des-juifs-jpg.jpg",
       views: false,
     },
     {
       img: "/picture.jpg",
       views: false,
     },
+      
     {
-      img: "/picture.jpg",
+      img: "/53342199main-des-juifs-jpg.jpg",
       views: false,
     },
     {
       img: "/picture.jpg",
       views: false,
     },
+      
+    {
+      img: "/53342199main-des-juifs-jpg.jpg",
+      views: false,
+    },
     {
       img: "/picture.jpg",
       views: false,
     },
+      
+    {
+      img: "/53342199main-des-juifs-jpg.jpg",
+      views: false,
+    },
+    
   ]);
  
   

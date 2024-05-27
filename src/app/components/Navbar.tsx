@@ -48,7 +48,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className='w-full iniline md:hidden z-[99] px-3 py-2 fixed top-0 border-b-[1px] border-gray-400 bg-white shadow-lg'>
+        <div className='w-full iniline md:hidden z-[10] px-3 py-2 fixed top-0 border-b-[1px] border-gray-400 bg-white shadow-lg'>
             <div className="flex w-full px-5  items-center justify-between">
                 <div className="flex-[0.4]">
                     <div className={`w-[80px] h-[40px] flex items-center  relative`}>

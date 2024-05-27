@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+   swcMinify: true,
     env: {
         NEXTAUTH_SECRET: 'dROsngz4XClmQ6FMBh99ouSdNzK8mYn4lDORqdmGxQhm4VTOrAgXDfP/vSHV',
         
@@ -26,6 +27,7 @@ const nextConfig = {
         ],
         unoptimized: true,
       },
+      reactStrictMode: false,
    
 };
 

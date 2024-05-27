@@ -151,7 +151,6 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
   }
   const {toggle,setToggle}=useToggleState();
 
-  console.log({toggle});
   return (
     <div className={`hidden md:flex fixed  ${toggle ?"z-[9999]":""}  top-0 bottom-0 h-full w-[11%] lg:w-1/6  `}>
       <div className="w-full  h-full flex items-center">
@@ -170,6 +169,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
               <div
                 onClick={() => {
                   if (item.type === 1) {
+                    setToggle(false)
                     showModal();
                   } else if (item.type === 4) {
                     signOut()

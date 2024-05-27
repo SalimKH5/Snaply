@@ -42,7 +42,10 @@ const Storywait = ({ setStoryIndex, lengthStories, storyIndex, story }: { setSto
     return (
         <div
             onClick={() => {
-                setStoryIndex(storyIndex);
+                if(storyIndex<lengthStories){
+                    setStoryIndex(storyIndex);
+                }
+               
             }}
             className="w-24 lg:w-40 cursor-pointer sm:h-[38vh] hidden sm:flex items-center justify-center">
             <div className="w-full h-[50vh]  relative bg-[#d2d2d611]">

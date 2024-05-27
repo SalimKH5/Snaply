@@ -58,7 +58,7 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
 
 
     return (
-        <div className='w-screen h-screen py-2 z-[999999] fixed top-0 bottom-0 left-0 right-0 bg-[#0f0202] '>
+        <div className='w-screen h-screen py-2 z-[99999999] fixed top-0 bottom-0 left-0 right-0 bg-[#0f0202] '>
             <div className="w-full py-2 hidden sm:flex items-center justify-between ">
                 <Link href="/" >
                     <Image src="/instagram-logo-white.png" alt="" width={120} height={60} />
@@ -79,7 +79,7 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
                         const isWithinThreeStories = index < storyIndex + 3 && index > storyIndex - 3;
 
                         return (
-                            <React.Fragment key={index}>
+                            <>
                                 {isCurrentStory ? (
                                     <StoryPost
                                         story={story}
@@ -88,26 +88,26 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
                                         indexStory={index}
                                     />
                                 ) : (
-                                    width < 800 && isWithinOneStory  ? (
+                                    width < 800 && isWithinOneStory ? (
                                         <Storywait
                                             story={story}
                                             storyIndex={index}
                                             lengthStories={stories.length}
                                             setStoryIndex={setStoryIndex}
                                         />
-                                    ) : 
-                                    ( width > 800 && isWithinThreeStories  ? 
-                                        <Storywait
-                                            story={story}
-                                            storyIndex={index}
-                                            lengthStories={stories.length}
-                                            setStoryIndex={setStoryIndex}
-                                        />
-                                    :
-                                    "" 
-                                    )
+                                    ) :
+                                        (width > 800 && isWithinThreeStories ?
+                                            <Storywait
+                                                story={story}
+                                                storyIndex={index}
+                                                lengthStories={stories.length}
+                                                setStoryIndex={setStoryIndex}
+                                            />
+                                            :
+                                            ""
+                                        )
                                 )}
-                            </React.Fragment>
+                            </>
                         );
                     })
                 }

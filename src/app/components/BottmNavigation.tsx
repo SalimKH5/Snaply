@@ -148,7 +148,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
 
 
     return (
-        <div className='w-full iniline md:hidden z-[999] border-t-[1px] border-gray-500 p-3 fixed bottom-0 bg-white shadow-lg'>
+        <div className='w-full iniline md:hidden z-[10] border-t-[1px] border-gray-500 p-3 fixed bottom-0 bg-white shadow-lg'>
             <div className="flex w-full px-5  items-center justify-between">
                 {
 

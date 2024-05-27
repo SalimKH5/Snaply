@@ -45,6 +45,7 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   followers: [
     {

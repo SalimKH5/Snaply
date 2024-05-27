@@ -12,6 +12,7 @@ import Api from "../ApiConfig"
 import { useToggleState } from './SearchToggle'
 import Navbar from './Navbar'
 import BottmNavigation from './BottmNavigation'
+import { Spin } from 'antd'
 
 interface Posts {
   username: string,
@@ -28,7 +29,8 @@ interface Posts {
 }
 
 
-async function getPosts(session: any) {
+async function getPosts(session: any,loading:boolean) {
+  loading=true;
   const getPosts = await fetch(Api.posts, {
     method: "GET",
     headers: {
@@ -40,10 +42,15 @@ async function getPosts(session: any) {
     cache: "no-cache"
   })
   if (getPosts.ok) {
+    loading=false
     const result = await getPosts.json();
+
     return result?.posts;
   } else if (getPosts.status == 401) {
-    signOut()
+    loading=false
+    signOut();
+  }else if(getPosts.status==500){
+    loading=false
   }
 
   return [];
@@ -52,7 +59,7 @@ async function getPosts(session: any) {
 
 const MainComponent = async () => {
 
-
+  const loading:boolean=false
 
   const session = await getServerSession(authOptions);
 
@@ -61,7 +68,7 @@ const MainComponent = async () => {
   }
   if (session) {
 
-    let posts: Posts[] = await getPosts(session);
+    let posts: Posts[] = await getPosts(session,loading);
 
     return (
       <div className="overflow-y-auto flex h-screen gap-5">
@@ -69,11 +76,14 @@ const MainComponent = async () => {
                     <BottmNavigation  token={session?.user?.token}/>
         <Sidebar token={session?.user?.token} />
         <div className="w-full md:ml-[13%]  lg:ml-[20%] flex-grow flex items-center max-w-[650px] lg:max-w-2xl mx-auto flex-col">
-          <div className="w-full md:max-w-[43rem] flex justify-center items-center flex-col py-9 ">
+          <div className="w-full md:max-w-[46rem] flex justify-center items-center flex-col py-9 ">
             <StoryContainer />
             <div className="w-full  flex justify-center items-center">
               <div className="w-full h-full max-w-lg p-1 md:p-3 flex flex-col  justify-center gap-6">
                 {
+                  loading?
+                  <Spin/>:
+                  
                   posts?.map((post: Posts, index: number) => (
                     <Post
                       userID={session.user._id}

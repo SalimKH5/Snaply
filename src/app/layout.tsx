@@ -26,7 +26,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} w-full h-full `}>
         <Providers>
-          <ToggleProvider>      <AntdRegistry>{children}</AntdRegistry></ToggleProvider>
+          <ToggleProvider><AntdRegistry>{children}</AntdRegistry></ToggleProvider>
         </Providers>
       </body>
     </html>
