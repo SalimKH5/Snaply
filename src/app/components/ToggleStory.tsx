@@ -82,6 +82,7 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
                             <>
                                 {isCurrentStory ? (
                                     <StoryPost
+                                        setToggleStory={setToggleStory}
                                         story={story}
                                         lengthStories={stories.length}
                                         setStoryIndex={setStoryIndex}

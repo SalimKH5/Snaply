@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from 'react-icons/io'
 import { getImageSize, useImageSize } from 'react-image-size'
 
 
@@ -16,7 +16,7 @@ interface StoryType {
 
 
 
-const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story }: { setStoryIndex: Dispatch<SetStateAction<number>>, lengthStories: number, indexStory: number ,story:StoryType}) => {
+const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story,setToggleStory }: { setToggleStory: Dispatch<SetStateAction<boolean>>,setStoryIndex: Dispatch<SetStateAction<number>>, lengthStories: number, indexStory: number ,story:StoryType}) => {
 
 
 
@@ -43,6 +43,11 @@ const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story }: { setSto
        
     },[])
 
+
+
+    const handleModalClose = () => {
+        setToggleStory(false);
+    };
 
 
     useEffect(() => {
@@ -74,23 +79,38 @@ const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story }: { setSto
                 </div>
 
             </div>
-            <div className="w-full sm:w-52 lg:w-72  h-screen sm:h-screen py-1 sm:rounded-lg  relative bg-[#d2d2d611] ">
-                <div className="w-full absolute top-1 z-50 h-5 sm:h-16 py-2 flex flex-col gap-3  items-center ">
+            <div className="w-full sm:w-52 lg:w-72 flex h-screen sm:h-screen py-1 sm:rounded-lg  relative bg-[#d2d2d611] ">
+            <div 
+             onClick={() => {
+                setStoryIndex((prev: number) => {
+                    if (prev > 0) {
+                        return prev - 1;
+                    }
+                    return prev; // Return prev without modification if prev is already 0
+                });
+            }}
+
+            className={`h-full sm:hidden z-[120]  absolute left-0 w-8    ${indexStory === 0 ? "sm:hidden" : "sm:flex"} items-center justify-center`}>
+                
+
+            </div>
+                <div className="w-full absolute top-1 z-[999] h-5 sm:h-16 py-2 flex flex-col gap-3  items-center ">
                     <div className="w-full flex items-center gap-[1px]">
                         <div className="w-full   bg-gray-400 h-[2px]">
                             <div className="bg-white h-full" style={{ width: `${progress}%` }}></div>
                         </div>
-                        <div className="w-full   bg-gray-400 h-[2px]">
-                            <div className="bg-white h-full" style={{ width: `${progress}%` }}></div>
-                        </div>
+                       
                     </div>
 
-                    <div className="w-full flex items-center justify-between">
+                    <div className="w-full  flex items-center justify-between">
                         <div className="w-full  flex items-center gap-2">
                             <div className="h-8 w-8 rounded-full relative ">
                                 <Image src="/picture.jpg" alt="" fill className='object-cover rounded-full  ' />
                             </div>
                             <p className='text-white '>SalimKhadir</p>
+                        </div>
+                        <div onClick={() => handleModalClose()} className="w-8 h-8   rounded-full cursor-pointer justify-center  flex sm:hidden items-center bg-white">
+                            <IoIosClose size={30} />
                         </div>
                     </div>
 
@@ -101,6 +121,20 @@ const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story }: { setSto
                     <Image src={story.img} alt="" fill className={` object-center 
                          ${height>600 && width<=height? "object-cover" : "object-contain"}`} />
                 </div>
+                <div 
+                onClick={() => {
+                    setStoryIndex((prev: number) => {
+                        if (prev < lengthStories - 1) {
+                            return prev + 1;
+                        }
+                        return prev; // Return prev without modification if prev is already 0
+                    });
+                }}
+
+            className={`h-full absolute sm:hidden  z-[120] right-0 top-0 bottom-0 cursor-pointer w-8   ${indexStory === 0 ? "sm:hidden" : "sm:flex"} items-center justify-center`}>
+                
+
+            </div>
             </div>
             <div className={`h-full w-8 hidden  ${indexStory === lengthStories - 1 ? "sm:hidden" : "sm:flex"} items-center justify-center`}>
                 <div
