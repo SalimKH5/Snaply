@@ -10,6 +10,7 @@ type User={
 export const authOptions:NextAuthOptions  = {
     session: {
         strategy: 'jwt',
+        maxAge:60*24*60,
       },
 
 
@@ -57,6 +58,8 @@ pages:{
     signOut: "/account/Login",
     
   },
+  
+
   callbacks: {
     async jwt({ token, account,user,trigger,session }) {
       // Persist the OAuth access_token to the token right after signin

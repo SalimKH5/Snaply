@@ -91,7 +91,7 @@ const StoryContainer = () => {
   
 
   return (
-    <div className='w-full z-10 flex items-center justify-center '>
+    <div className='w-full flex items-center justify-center '>
       <div className="w-full py-6 ">
         {toggleStory && <ToggleStory setStoryIndex={setStoryIndex} toggleStory={toggleStory} setToggleStory={setToggleStory} storyIndex={storyIndex} stories={stories} />}
         <Swiper
