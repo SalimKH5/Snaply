@@ -4,43 +4,80 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import { FaCreativeCommonsShare } from "react-icons/fa6";
+import ApiConfig from '../ApiConfig';
+interface User
+{
+  _id: string,
+  email: string,
+  fullName: string,
+  username: string
+}
+
+
+
 const Navbar = () => {
 
     const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-    const searchResult = (query: string) =>
-        new Array(getRandomInt(5))
-            .join('.')
-            .split('.')
-            .map((_, idx) => {
-                const category = `${query}${idx}`;
-                return {
-                    value: category,
-                    label: (
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <span>
-                                Found {query} on{' '}
-                                <a
-                                    href={`https://s.taobao.com/search?q=${query}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {category}
-                                </a>
-                            </span>
-                            <span>{getRandomInt(200, 100)} results</span>
-                        </div>
-                    ),
-                };
+    const searchResult =  async (query: string) =>{
+        try {
+            const result=await fetch(`${ApiConfig.SearchUser}?username=${query}`,{
+              method:"GET",
+              headers:{
+                "Content-Type":"Application/json"
+              }
             });
+    
+            if(result.ok){
+              const data=await result.json();
+              console.log({data});
+            const res=data.users.map((user:User) => {
+                  
+                  return {
+                      value: user.username,
+                      label: (
+                          <a
+                            href={`/${user.username}`}
+                            rel="noopener noreferrer"
+                              style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                              }}
+                          >
+                              <span>
+                                  
+                                  <div
+                                      
+                                      className='w-full flex items-center gap-3'
+
+                                  >
+                                        <div className="border-[#C13584] rounded-full  border-[2px] p-[1px] flex items-center justify-center 
+                                w-12 h-12
+                               ">
+                                    <img src="/picture.jpg" className='w-full h-full rounded-full object-cover  cursor-pointer  ' alt="" />
+                                </div>
+
+                                      {user.username}
+                                  </div>
+                              </span>
+                             
+                          </a>
+                      ),
+                  };
+              });
+               
+            setOptions(res);
+            }
+        } catch (error) {
+            console.log({error});
+        }
+
+       
+        }
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
-    const handleSearch = (value: string) => {
-        setOptions(value ? searchResult(value) : []);
+    const handleSearch =async (value: string) => {
+        const result=await searchResult(value);
+        
     };
 
     const onSelect = (value: string) => {
@@ -60,7 +97,7 @@ const Navbar = () => {
                     style={{ width: 300 }}
                     options={options}
                     onSelect={onSelect}
-                    onSearch={handleSearch}
+                    onSearch={(value:string)=>searchResult(value)}
                     size="large"
                     className='flex-[0.6] '
                 >
