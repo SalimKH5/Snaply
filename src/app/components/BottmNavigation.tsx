@@ -35,12 +35,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
             path: "/Home",
             type: 0,
         },
-        {
-            text: "Search",
-            icon: <CiSearch width={150} />,
-            path: "/Search",
-            type: 2,
-        },
+        
         {
             text: "Create",
             icon: <IoMdAddCircleOutline width={150} />,
