@@ -197,12 +197,12 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
           <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">
             {formData.filePath ?
               <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4'>
-                <ReactCrop className='w-full h-64 relative' crop={crop} onChange={(crop, percentCrop) => setCrop(crop)} >
+                <div className='w-full h-64 relative'  >
                   {
-                    imageDipslay &&  <Image src={imageDipslay} alt="Selected" fill className='object-contain' style={{ maxWidth: '100%' }} />
+                    imageDipslay &&  <Image src={imageDipslay} alt="Selected" fill className='object-fill' style={{ maxWidth: '100%' }} />
                   }
                  
-                </ReactCrop>
+                </div>
                 <div className="w-full flex flex-col gap-5">
                   <textarea
                     value={formData.postTitle}
