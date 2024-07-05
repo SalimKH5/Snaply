@@ -10,7 +10,7 @@ import ApiConfig from '../ApiConfig';
 import { useRouter } from "next/navigation";
 const ResetPass = () => {
 
-    
+
 
     const [error, setError] = useState<boolean>(false);
     const [OTP, setOTP] = useState("");
@@ -89,7 +89,7 @@ const ResetPass = () => {
             setLoading(false);
         }
     }
-    if(!email){
+    if (!email) {
         router.push('/account/Login');
     }
 
@@ -128,14 +128,14 @@ const ResetPass = () => {
 
 
 
-                                    <button type='submit' className='w-full text-sm bg-blue-600 py-[1.3px] text-white hover:bg-white hover:text-blue-600 hover:border-blue-600 hover:border-[1px] rounded-md'>{
-                                        loading ?
-                                            <div className="w-full flex-items-center justify-center">
-                                                <Spin />
-                                            </div>
+                                <button type='submit' className='w-full text-sm bg-blue-600 py-[1.3px] text-white hover:bg-white hover:text-blue-600 hover:border-blue-600 hover:border-[1px] rounded-md'>{
+                                    loading ?
+                                        <div className="w-full flex-items-center justify-center">
+                                            <Spin />
+                                        </div>
 
-                                            :
-                                            "Reset Password"}</button>
+                                        :
+                                        "Reset Password"}</button>
                             </form>
                             :
                             <form onSubmit={handleSubmit} className='w-full flex flex-col gap-8'>
@@ -164,7 +164,7 @@ const ResetPass = () => {
                     {
                         error &&
                         <p className="text-red-400">
-                            Credentials does't exist
+                            Credentials does&apost exist
                         </p>
 
                     }

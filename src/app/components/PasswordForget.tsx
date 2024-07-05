@@ -53,7 +53,7 @@ const PasswordForget = () => {
                         </div>
                     </div>
                     <h3 className='font-bold'>Trouble logging in?</h3>
-                    <p className='text-sm '>Enter your email, phone, or username and we'll send you a link to get back into your account.</p>
+                    <p className='text-sm '>Enter your email, phone, or username and we&apos;ll send you a link to get back into your account.</p>
                     <form onSubmit={handleSubmit} className='w-full flex flex-col gap-3'>
                         <Input type='email' required onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             setError(false);
@@ -72,7 +72,7 @@ const PasswordForget = () => {
                     {
                         error &&
                         <p className="text-red-400">
-                            Credentials does't exist
+                            Credentials does&apost exist
                         </p>
 
                     }
