@@ -13,6 +13,7 @@ export interface IUser extends Document {
   saveposts: SavedPost[];
   followers: Followers[];
   follwing: Follwing[];
+  code?:string;
 
 }
 
@@ -69,14 +70,16 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
     type: String,
     enum: ['Male', 'Female'],
   },
-
+  code:{
+    type:String,
+    
+  },
   saveposts: [
     {
       postId: { type: Schema.Types.ObjectId, ref: 'Post' }
     },
   ],
   token: String,
-
 });
 
 

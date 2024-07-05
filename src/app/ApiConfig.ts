@@ -13,6 +13,11 @@ const posts=API_BASE_URL+"/posts/"
 
 
 const SearchUser=API_BASE_URL+"/Search"
+
+const FindUser=API_BASE_URL+"/verification"
+
+const CodeVerfication=API_BASE_URL+"/CodeVerfication"
+const ResetPassword=API_BASE_URL+"/passwordReset"
 export default {
     API_BASE_URL,
     login_client,
@@ -20,6 +25,9 @@ export default {
     posts,
     User,
     BASE_URL,
-    SearchUser
+    SearchUser,
+    FindUser,
+    CodeVerfication,
+    ResetPassword
     
 }

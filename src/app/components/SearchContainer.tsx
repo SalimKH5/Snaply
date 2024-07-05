@@ -1,6 +1,6 @@
 "use client"
 import { Input } from 'antd'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import Api from "../ApiConfig"
 import Link from 'next/link'
 import { useToggleState } from './SearchToggle'
@@ -20,35 +20,51 @@ const SearchContainer = () => {
   const [username, setUsername] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value)
-    if (e.target.value === "") {
-      setUsers([])
-    } else {
-      setLoading(true);
-      try {
-        const result = await fetch(`${Api.SearchUser}?username=${e.target.value}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json"
-          }
-        });
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
-        if (result.ok) {
-          const data = await result.json();
-          console.log({ data });
-          setUsers(data.users);
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUsername(value);
 
-        }
-      } catch (error) {
-        console.log({ error });
-      }
-      setLoading(false);
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
     }
 
+    if (value === "") {
+      setUsers([]);
+      setLoading(false);
+    } else {
+      setLoading(true);
+      searchTimeout.current = setTimeout(async () => {
+        try {
+          const result = await fetch(`${Api.SearchUser}?username=${value}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "Application/json"
+            }
+          });
 
-  }
+          if (result.ok) {
+            const data = await result.json();
+            console.log({ data });
+            setUsers(data.users);
+          }
+        } catch (error) {
+          console.log({ error });
+        } finally {
+          setLoading(false);
+        }
+      }, 100000); // 500 milliseconds debounce time
+    }
+  };
 
+  useEffect(() => {
+    return () => {
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current);
+      }
+    };
+  }, []);
 
 
 
@@ -71,7 +87,7 @@ const SearchContainer = () => {
             loading ?
               <div className='w-full flex flex-col gap-3'>
                 <div className="w-full flex items-center gap-5">
-                  <div className='w-10 h-10 rounded-full bg-slate-400 animate-pulse  py-2'>
+                  <div className='w-12 h-12 rounded-full bg-slate-400 animate-pulse '>
 
                   </div>
                   <div className='w-full pr-5 flex flex-col gap-2'>

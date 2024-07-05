@@ -14,10 +14,10 @@ export default async function RootLayout({
     redirect('/')
   }
   return (
-    <div className="w-full h-full flex items-center justify-center py-8 lg:py-8 ">
-          <div className="w-full h-full mx-auto max-w-md md:max-w-xl lg:max-w-4xl 2xl:max-w-4xl flex flex-col gap-8  ">
+    <div className="w-full h-full flex items-center justify-center  ">
+          <div className="w-full h-full  flex flex-col gap-8  ">
             {children}
-            <div className="flex-[0.3] w-full">
+            <div className="flex-[0.3] 2xl:flex-[0.2] w-full">
               <ul style={{color:"rgb(115, 115, 115)"}} className="w-full flex items-center justify-center flex-wrap gap-3 text-[10.5px] 2xl:text-[11px] py-2">
                 <li>Meta</li>
                 <li>À propos</li>

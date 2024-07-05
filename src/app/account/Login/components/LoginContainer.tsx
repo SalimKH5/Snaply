@@ -104,24 +104,16 @@ const LoginContainer = () => {
                                         <button className="w-full font-extrabold  box-border  px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#9aadec]">
                                              {
                                               loading?
-                                              <Spin/>
+                                              <Spin />
                                               :
                                              "Se connecter"
                                              } 
                                         </button>      
                                 </div>
                                 
-                                <div className="w-full px-8 py-1 flex items-center">
-                                           <hr className='w-full'/>
-                                           <h1 className='px-3'>OR</h1> 
-                                           <hr className='w-full' /> 
-                                </div>
-                                <div className="w-full px-8 py-1  cursor-pointer  text-lg text-center flex items-center gap-2 justify-center text-[#385185]">
-                                    <FaFacebookSquare/>
-                                    <span className='font-bold text-xs'>Se connecter avec Facebook</span>
-                                </div>
+                              
                                 <div className="w-full px-8 pt-4 cursor-pointer text-xs text-center flex items-center gap-2 justify-center text-[#385185]">
-                                   <span>Mot de passe oublié?</span>
+                                   <Link href="/account/ForgetPassword">Mot de passe oublié?</Link>
                                 </div>
 
                                
