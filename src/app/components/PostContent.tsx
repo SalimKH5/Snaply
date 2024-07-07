@@ -9,18 +9,7 @@ import SavePost from "./SavePost";
 import { FaRegComment } from "react-icons/fa";
 
 
-interface PostContent{
-    postId: string,
-    likes:any[],
-    title:string,
-    comments:any[],
-    src:string,
-    postby:{
-        _id: string,
-        username: string,
-    },
-      userId:string,
-}
+
   
 
 const PostContent = ({postId,comments,src,title,likes,postby,userId}:PostContent) => {
@@ -38,6 +27,7 @@ const PostContent = ({postId,comments,src,title,likes,postby,userId}:PostContent
                         title={title}
                         userId={userId}
                         postId={postId}
+                        likes={likes}
                         />
                     <IoShareSocialOutline size={25} className="cursor-pointer hover:text-[#adadad]" />
                  

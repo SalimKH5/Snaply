@@ -65,7 +65,6 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
   ]
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [crop, setCrop] = useState<Crop>()
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<UploadPost>({
     filePath: null,
@@ -149,7 +148,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
 
 
   }
-  const {toggle,setToggle}=useToggleState();
+  const {toggle,setToggle,searchToggle}=useToggleState();
 
   return (
     <div className={`hidden md:flex fixed  ${toggle ?"z-[9999]":""}  top-0 bottom-0 h-full w-[11%] lg:w-1/6  `}>
@@ -179,7 +178,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                     router.refresh();
                   }
                   if(item.type===2){
-                    setToggle((prev:boolean)=>!prev)
+                    setToggle(true)
                   }
                 }
                 }

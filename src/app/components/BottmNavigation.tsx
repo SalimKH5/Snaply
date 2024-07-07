@@ -138,7 +138,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
     }
     const { toggle, setToggle } = useToggleState();
 
-    console.log({ toggle });
+  
 
 
 

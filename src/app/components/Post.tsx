@@ -6,23 +6,10 @@ import PostComment from './PostComment'
 import { getServerSession } from 'next-auth'
 import { authOptions } from "@/app/lib/authOptions";
 
-interface Posts{
-  username: string,
-  PathFile: string,
-  _id: string,
-  postId: string,
-  title:string,
-  likes: any[],
-  comments: any[];
-  postby:{
-    _id: string,
-    username: string,
-  }
-}
 
 
 
-const Post = async ({post,userID}:{post:Posts,userID:string}) => {
+const Post =  ({post,userID}:{post:Post,userID:string}) => {
  
   
   return (  
@@ -35,6 +22,7 @@ const Post = async ({post,userID}:{post:Posts,userID:string}) => {
         userId={userID}
         postId={post._id} likes={post.likes} title={post.title} postby={post.postby}/>
         <PostComment
+        likes={post.likes}
         comments={post.comments}
         userId={userID}
         src={post.PathFile}

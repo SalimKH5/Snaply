@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
-import { Button, Input, Modal } from 'antd';
+
 import Image from 'next/image';
 import PostHeader from './PostHeader';
 import { CiHeart } from "react-icons/ci";
@@ -13,7 +13,10 @@ import CommentAction from './CommentAction';
 import Api from "../ApiConfig"
 import LikeContainer from './LikeContainer';
 import { IoShareSocialOutline } from 'react-icons/io5';
-const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
+const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes }: {
+
+    likes?:any[],
+    
     toggle: React.ReactNode, userId: string, comments: any[], src: string, title: string,
     postby: {
         _id: string,
@@ -22,11 +25,14 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
+   
     const showModal = () => {
+        
         setIsModalOpen(true);
     };
 
     const handleModalClose = () => {
+        console.log({isModalOpen})
         setIsModalOpen(false);
     };
 
@@ -110,14 +116,16 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
         }
     }
 
-
     return (
-        <>
-            {<div onClick={showModal}>{toggle}</div>}
+        <div className='w-full h-full relative cursor-pointer ' onClick={showModal}>
+        
+                    
+                    {toggle}
+                   
 
 
             {isModalOpen && (
-                <div className="fixed inset-0 bg-[#0000005b] flex items-center p-8 lg:py-7 lg:px-28 justify-center z-[1000]">
+                <div className="fixed inset-0 bg-[#0000005b] w-screen h-screen flex items-center p-8 lg:py-7 lg:px-28 justify-center z-[1000]">
                     <div ref={modalRef} className='w-full h-full rounded-xl bg-white flex flex-row'>
                         <div className=" hidden  md:flex-[0.6] md:flex relative bg-[#00005]">
                             <Image src={`${src}`} alt="" fill className=' bg-black object-contain md:object-fill lg:aspect-[16/11] rounded-l-xl h-full w-full ' />
@@ -135,7 +143,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
                                     <div className="w-full flex flex-col gap-1">
                                         <div className="w-full flex gap-2">
                                             <p className='font-bold text-lg'>{comment.userId.username}</p>
-                                            <p className='w-full'>{comment.TextComment}</p>
+                                            <p className='w-full font-light'>{comment.TextComment}</p>
                                         </div>
                                         <div className="w-full flex gap-3 items-center text-sm">
                                             <p className='text-gray-400 hover:text-gray-300 cursor-pointer '>{comment.likes.length} likes</p>
@@ -157,7 +165,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
                             ))}
                             <hr />
                             <div className="flex gap-3 items-center font-bold ">
-                                <CiHeart size={25} className="cursor-pointer hover:text-[#adadad]" />
+                                <LikeContainer likes={likes} userId={userId} postId={postId} comment_id={null}/>
                                 <IoShareSocialOutline size={25} className="cursor-pointer hover:text-[#adadad]" />
                             </div>
                             <CommentAction
@@ -168,7 +176,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId }: {
                     </div>
                 </div>
             )}
-        </>
+       </div>
     )
 }
 

@@ -22,11 +22,10 @@ const SavePost = ({userId,postId}:SavePost) => {
 
   const {data:session,update,status}=useSession();
   const [saveP,setSaveP]=useState<boolean>(false);
+ 
   useEffect(()=>{
     if(status==="authenticated"){
-          if(session?.user?.saveposts.find((savepost:any)=>savepost?.postId._id===postId)){
-            
-          
+          if(session?.user?.saveposts.find((savepost:any)=>savepost?.postId?._id===postId)){
             setSaveP(true)
           }
     }

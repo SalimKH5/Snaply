@@ -1,83 +1,21 @@
-import { signOut } from 'next-auth/react'
+
 import React from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
-import { ImPlay2 } from 'react-icons/im'
 import { LiaTableSolid } from 'react-icons/lia'
-import { redirect, useSearchParams } from "next/navigation";
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../lib/authOptions';
 import TogglePost from './TogglePost'
-import Image from 'next/image'
-import api from "../ApiConfig"
-interface Post {
-    _id: string,
-    PathFile: string,
-    title: string,
-    likes: [
-        {
-            userId: string,
-            _id: string,
-        },
-    ],
-    postby: {
-        _id: string,
-        username: string
-    },
-    comments: [
-        {
-            TextComment: string,
-            userId: string,
-            _id: string,
-            likes: [
-                {
-                    userId: string,
-                    _id: string,
-                }
-            ]
-        },
-    ],
-    created: string,
-}
-
-
-
-async function getPosts(session: any, username: string) {
-    const getposts = await fetch(`${api.User+username}/posts`, {
-        method: "GET",
-        //   headers:{
-        //     Authorization: `Bearer ${session?.user?.token}`, // Fix typo in 'Authorization'
-        //   },
-        next: { tags: ['posts'] },
-        cache: "no-cache"
-    })
-    if (getposts.ok) {
-        const result = await getposts.json();
-     
-        return result?.posts;
-    } else if (getposts.status == 401) {
-        signOut()
-    }
-
-    return [];
-
-}
+import ImageHover from './ImageHover';
 
 
 
 
 
 
-const BodyContent = async ({username}:{username:string}) => {
-    const session = await getServerSession(authOptions);
+
+const BodyContent =  ({username,posts,session}:{username:string,posts: Post[],session:any}) => {
 
     
-    if (!session) {
-        redirect('/account/Login')
-    }
-    if (session) {
-    const posts: Post[] = await getPosts(session,username);
-
-    console.log({posts});
+ 
+    
   return (
     <div className="w-full py-16 md:py-5">
                             <hr />
@@ -100,10 +38,10 @@ const BodyContent = async ({username}:{username:string}) => {
                                     posts.map((post: Post,index:number) => (
                                         <div 
                                         key={index}
-                                        className='w-full -z-10 relative h-32 lg:h-60 cursor-pointer '>
+                                        className='w-full  relative h-32 lg:h-60 cursor-pointer '>
                                             <TogglePost
-
-                                                toggle={<Image src={`${post.PathFile}`} className='rounded-sm object-cover ' alt="" fill />}
+                                                likes={post.likes}        
+                                                toggle={<ImageHover likes={post.likes}  comments={post.comments} PathFile={post.PathFile}  />}
                                                 src={post.PathFile}
                                                 comments={post.comments}
                                                 postby={post.postby}
@@ -122,7 +60,7 @@ const BodyContent = async ({username}:{username:string}) => {
 
                         </div>
   )
-}
+
 
 }
 

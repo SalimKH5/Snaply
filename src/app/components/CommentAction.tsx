@@ -1,19 +1,16 @@
-
+"use client"
 import {  Input } from 'antd'
-import { revalidateTag } from 'next/cache';
-import { handleSubmitLike } from '../Serveractions/handleComment';
+
+import { handleSubmitComment } from '../Serveractions/handleComment';
 
 
 
-  interface Commented{
 
-    userId:string,
-    postId:string
-  }
+
 
 
 const CommentAction =  ({userId,postId}:Commented) => {
-    const updateComment=handleSubmitLike.bind(null,userId,postId)
+    const updateComment=handleSubmitComment.bind(null,userId,postId)
   return (
     <form action={updateComment}  className='w-full flex items-center gap-3 '>
         <Input

@@ -56,7 +56,7 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
             <button
                 onClick={(e) => handleFollow(userId, FollowingUser, isFollow,e)}
                 name="btn-Following"
-                className={`${isFollow ? "bg-gray-300" : "bg-[#1877F2] text-white"} hover:bg-gray-500 py-1 px-5 rounded-md`}>
+                className={`${isFollow ? "bg-gray-300" : "bg-[#1877F2] text-white"} hover:bg-gray-500  cursor-pointer py-1 px-5 rounded-md`}>
                 {
                     isFollow ?
                         "Following" :

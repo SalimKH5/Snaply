@@ -4,7 +4,6 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import Api from "../ApiConfig"
 import Link from 'next/link'
 import { useToggleState } from './SearchToggle'
-import { FaLaptopHouse } from 'react-icons/fa'
 
 interface User {
   _id: string,
@@ -54,7 +53,7 @@ const SearchContainer = () => {
         } finally {
           setLoading(false);
         }
-      }, 100000); // 500 milliseconds debounce time
+      }, 10); // 500 milliseconds debounce time
     }
   };
 
@@ -68,14 +67,14 @@ const SearchContainer = () => {
 
 
 
-  console.log({ users });
-  const { toggle, setToggle } = useToggleState();
+
+  const { setToggle, searchToggle } = useToggleState();
 
 
 
 
   return (
-    <div className='fixed left-[4.5rem] border-l-[2px]   z-[99999] h-full shadow-xl w-72 md:w-96  bg-white'>
+    <div ref={searchToggle} className='fixed left-[4.5rem] border-l-[2px]   z-[99999] h-full shadow-xl w-72 md:w-96  bg-white'>
       <div className="w-full h-full py-3 px-2 flex flex-col gap-5">
         <h1>Search</h1>
         <Input
@@ -86,11 +85,11 @@ const SearchContainer = () => {
           {
             loading ?
               <div className='w-full flex flex-col gap-3'>
-                <div className="w-full flex items-center gap-5">
-                  <div className='w-12 h-12 rounded-full bg-slate-400 animate-pulse '>
+                <div className="w-full flex items-center gap-2">
+                  <div className='w-12 h-12 rounded-[100%] bg-slate-400 animate-pulse '>
 
                   </div>
-                  <div className='w-full pr-5 flex flex-col gap-2'>
+                  <div className='w-full  flex flex-col gap-2'>
                     <div className='w-full h-2 bg-slate-400 animate-pulse rounded-md  py-2'>
 
                     </div>
@@ -100,9 +99,6 @@ const SearchContainer = () => {
                   </div>
 
                 </div>
-
-
-
               </div>
               :
               users.length > 0 ?
