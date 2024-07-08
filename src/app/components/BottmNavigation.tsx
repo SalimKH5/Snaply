@@ -125,7 +125,7 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
 
                 } else {
                     setLoading(false);
-                    console.log("bad did't  upload a the file succesfully");
+                  console.log("bad did't  upload a the file succesfully");
 
                 }
             }

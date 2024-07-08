@@ -28,7 +28,7 @@ providers: [
     },
     async authorize(credentials, req) {
         const {email,password} = credentials as User;
-        console.log({url:api.login_client});
+       
         const result=await fetch(api.login_client,{
             method:"POST",
             headers:{
@@ -41,8 +41,7 @@ providers: [
         })
         if(result.ok){
             const data=await result.json();
-        console.log({data});
-
+      
          
             return data?.user;
         }else{
@@ -65,7 +64,7 @@ pages:{
       // Persist the OAuth access_token to the token right after signin
     
       if (account) {
-        console.log({token})
+      
         token._id=user._id
         token.fullName=user.fullName
         token.email=user.email

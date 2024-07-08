@@ -9,8 +9,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
         const {postId,savePost}=await req.json();
         const {params}=context;
 
-        console.log({postId})
-        console.log({params})
+       
         if(savePost){
             const user = await User.findOneAndUpdate(
                 { _id: params.id, },
@@ -22,7 +21,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
                 { new: true }
             ).populate('saveposts.postId');
 
-            console.log({user});
+          
             return NextResponse.json({ Message: "success save post",user},{status: 200});
     
           

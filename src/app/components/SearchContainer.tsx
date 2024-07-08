@@ -45,7 +45,7 @@ const SearchContainer = () => {
 
           if (result.ok) {
             const data = await result.json();
-            console.log({ data });
+       
             setUsers(data.users);
           }
         } catch (error) {

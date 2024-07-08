@@ -13,8 +13,8 @@ export const GET=async(req:NextRequest,context:any)=>{
         const user=await User.findOne({ username: { $regex: new RegExp('^' + params.id + '$', 'i') }});
       
                 if(user){
-                    console.log({user:user._id})
-                    const posts=await Post.find({ postby: user._id},).populate('postby','_id username').sort({ created: -1 }); ;
+                    
+                    const posts=await Post.find({ postby: user._id},).populate('postby','_id username').populate('likes.userId',"_id username").sort({ created: -1 }); ;
                     
                     
                     

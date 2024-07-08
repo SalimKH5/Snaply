@@ -178,7 +178,7 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
                     router.refresh();
                   }
                   if(item.type===2){
-                    setToggle(true)
+                    setToggle((prev:boolean)=>!prev)
                   }
                 }
                 }

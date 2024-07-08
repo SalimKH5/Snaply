@@ -55,9 +55,7 @@ const SingupContent = () => {
                
                   const data=await result.json();
                   alert('account succesfully created')
-                  console.log({
-                    data
-                  })
+                 
                   router.push('/account/Login')
                   router.refresh();
               
@@ -76,7 +74,7 @@ const SingupContent = () => {
 
 
 
-    console.log({register_client:api.register_client})
+   
 
 
   return (

@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
         
        
         await dbConnect();
-        console.log({hashPassword})
+      
         const newUser: IUser = await UserModel.create({
             email,
             hashPassword,
@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
             fullName
         });
 
-        console.log({ newUser });
+      
 
         return NextResponse.json({ message: "User created successfully", newUser }, { status: 201 });
 
@@ -52,7 +52,7 @@ export const PUT = async (req: NextRequest) => {
         return NextResponse.json({error: "not authorized"},{status:401});
       }
 
-      console.log({decode})
+     
    
         const {fullName, username,gender,bio } = await req.json();
         if (!fullName || !username || !gender) {
@@ -63,7 +63,7 @@ export const PUT = async (req: NextRequest) => {
         
        
         await dbConnect();
-        console.log({gender})
+      
         const newUser: IUser | null = await UserModel.findByIdAndUpdate(
             decode?.user?._id,
             {

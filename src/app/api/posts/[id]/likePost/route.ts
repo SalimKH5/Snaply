@@ -6,8 +6,7 @@ export const PUT=async (req: NextRequest,context:any )=>{
         
         const {userId,liked}=await req.json();
         const {params}=context;
-        console.log({params})
-        console.log({userId,liked})
+    
         await dbConnect();
         if(!liked){
             const result = await PostModel.findOneAndUpdate(

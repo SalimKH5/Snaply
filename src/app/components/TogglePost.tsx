@@ -13,10 +13,10 @@ import CommentAction from './CommentAction';
 import Api from "../ApiConfig"
 import LikeContainer from './LikeContainer';
 import { IoShareSocialOutline } from 'react-icons/io5';
-const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes }: {
+const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, likes }: {
 
-    likes?:any[],
-    
+    likes: any[],
+
     toggle: React.ReactNode, userId: string, comments: any[], src: string, title: string,
     postby: {
         _id: string,
@@ -25,14 +25,14 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
-   
+
     const showModal = () => {
-        
+
         setIsModalOpen(true);
     };
 
     const handleModalClose = () => {
-        console.log({isModalOpen})
+
         setIsModalOpen(false);
     };
 
@@ -118,10 +118,10 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes
 
     return (
         <div className='w-full h-full relative cursor-pointer ' onClick={showModal}>
-        
-                    
-                    {toggle}
-                   
+
+
+            {toggle}
+
 
 
             {isModalOpen && (
@@ -164,9 +164,13 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes
                                 </div>
                             ))}
                             <hr />
+
                             <div className="flex gap-3 items-center font-bold ">
-                                <LikeContainer likes={likes} userId={userId} postId={postId} comment_id={null}/>
+                                <LikeContainer likes={likes} userId={userId} postId={postId} comment_id={null} />
                                 <IoShareSocialOutline size={25} className="cursor-pointer hover:text-[#adadad]" />
+                            </div>
+                            <div className="w-full flex items-center gap-3">
+                                <p>{likes?.length} Likes</p>
                             </div>
                             <CommentAction
                                 postId={postId}
@@ -176,7 +180,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId,likes
                     </div>
                 </div>
             )}
-       </div>
+        </div>
     )
 }
 

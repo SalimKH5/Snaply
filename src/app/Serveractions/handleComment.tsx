@@ -5,7 +5,7 @@ import Api from '../ApiConfig';
 import { Dispatch, FormEvent, FormEventHandler, SetStateAction } from "react";
 export const handleSubmitComment = async (userId: string, postId: string,e:FormData,) => {
   'use server'
-  console.log("hello comment")
+  
   const TextComment=e.get('TextComment');
   if(TextComment!=""){
       
@@ -63,7 +63,7 @@ export const handleSubmitLike = async (liked: boolean, userId: string, postId: s
     const updatedData = await response.json(); // Handle success response if needed
     
   
-    console.log({updatedData})
+  
     // Update local state or revalidate cached data here (if applicable)
     revalidateTag("posts"); // Revalidate cache tag
 

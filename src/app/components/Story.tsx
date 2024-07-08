@@ -12,7 +12,7 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex,setSto
 }) => {
 
       const handleToggleStory=()=>{
-        console.log(toggleStory)
+   
           setToggleStory((prev:boolean)=>true)
           setStoryIndex(storyindex)
           setStoryOnClick(true);

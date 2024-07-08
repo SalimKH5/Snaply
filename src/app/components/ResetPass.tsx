@@ -37,7 +37,7 @@ const ResetPass = () => {
 
             if (result.ok) {
                 const data = await result.json();
-                console.log({ data });
+               
 
                 setLoading(false);
                 setResultChecked(true);
@@ -73,7 +73,7 @@ const ResetPass = () => {
 
             if (result.ok) {
                 const data = await result.json();
-                console.log({ data });
+              
                 localStorage.removeItem("email");
                 setLoading(false);
                 setResultChecked(true);
@@ -93,8 +93,7 @@ const ResetPass = () => {
         router.push('/account/Login');
     }
 
-    console.log(email); // Output: example@example.com
-    console.log({ OTP }); // Output: example@example.com
+ 
 
 
 

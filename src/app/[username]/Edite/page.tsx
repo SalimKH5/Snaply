@@ -9,9 +9,9 @@ const page = async ({ params }: { params: { username: string } }) => {
 
     const session = await getServerSession(authOptions);
     if (session?.user.username === params.username) {
-        console.log({ session })
+       
 
-        console.log(session.user.gender)
+        
         return (
 
 

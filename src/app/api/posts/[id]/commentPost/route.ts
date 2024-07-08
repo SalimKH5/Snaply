@@ -5,7 +5,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
     try {
         const {comment}=await req.json();
         const {params}=context;
-        console.log(params.id)
+      
 
        
        const post = await PostModel.findOneAndUpdate(
@@ -20,7 +20,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
             },
             { new: true }, // To
         );
-        console.log({comments:post.comments});
+       
         return NextResponse.json({ Message: "success adding a comment",post},{status: 200});
 
         
