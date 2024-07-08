@@ -18,7 +18,7 @@ const BodyContent =  ({username,posts,session}:{username:string,posts: Post[],se
  
     
   return (
-    <div className="w-full  lg:py-16 md:py-2">
+    <div className="w-full pb-16 lg:py-16 md:py-2">
                             <hr />
                             <div className="w-full flex items-center justify-center gap-10">
                                 <button className='border-t-[1px] py-3 px-5 border-black flex items-center gap-1'>

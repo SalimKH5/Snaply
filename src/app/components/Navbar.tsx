@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import { FaCreativeCommonsShare } from "react-icons/fa6";
 import ApiConfig from '../ApiConfig';
+import Link from 'next/link';
 interface User
 {
   _id: string,
@@ -88,9 +89,9 @@ const Navbar = () => {
         <div className='w-full iniline md:hidden z-[10] px-3 py-2 fixed top-0 border-b-[1px] border-gray-400 bg-white shadow-lg'>
             <div className="flex w-full px-5  items-center justify-between">
                 <div className="flex-[0.4]">
-                    <div className={`w-[80px] h-[40px] flex items-center  relative`}>
+                    <Link href="/" className={`w-[80px] h-[40px] flex items-center  relative`}>
                         <Image src="/instagram-logo-1-1024x366.svg" className={`object-contain   cursor-pointer `} alt="" fill />
-                    </div>
+                    </Link>
                 </div>
                 <AutoComplete
                     popupMatchSelectWidth={true}
