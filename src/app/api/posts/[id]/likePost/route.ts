@@ -18,7 +18,7 @@ export const PUT=async (req: NextRequest,context:any )=>{
                 },
                 { new: true }, // To
             );
-            console.log({result})
+          
             return NextResponse.json({ Message: "successfully upload a post",id:params.id,result},{status: 200});
         }else{
           

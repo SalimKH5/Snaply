@@ -27,7 +27,7 @@ const PostHeader = ({username}:{username:String}) => {
   ]
 
   const handleToggleStory=()=>{
-    console.log(toggleStory)
+    
       setToggleStory((prev:boolean)=>true)
   }
   return (

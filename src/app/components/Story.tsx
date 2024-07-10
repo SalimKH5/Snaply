@@ -33,7 +33,10 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex,setSto
               <div 
              
               className={`${!storyOnClick?"bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-[2px]":"border-gray-300 border-[2px]"} rounded-full  flex items-center justify-center w-16 h-16  `}>
-                <img src={story.img}  className='w-full h-full rounded-full p-[2px] hover:rotate-6 bg-white object-cover  cursor-pointer  '  alt=""/>
+                <div className="w-full h-full relative  flex items-center justify-center">
+                <Image src={story.img} fill className='w-full h-full rounded-full p-[2px] hover:rotate-6 bg-white object-cover  cursor-pointer  '  alt=""/>
+                </div>
+                
               </div>
             <p>Picture</p>
                

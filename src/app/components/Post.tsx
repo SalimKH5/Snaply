@@ -1,5 +1,14 @@
 import React from 'react'
-import PostPicture from "./PostPicture"
+import dynamic from "next/dynamic";
+
+const LazyComponent = dynamic(() => import("./PostPicture"), {
+  loading: () => 
+  <div className='bg-slate-300 rounded-lg animate-pulse w-full h-full min-h-[30rem] relative'>
+
+  </div>, // Optional loading component
+  ssr: false, // Disable server-side rendering for this component
+});
+
 import PostHeader from './PostHeader'
 import PostContent from './PostContent'
 import PostComment from './PostComment'
@@ -15,7 +24,7 @@ const Post =  ({post,userID}:{post:Post,userID:string}) => {
   return (  
     <div className='flex flex-col gap-1'>
         <PostHeader username={post?.postby.username} />
-        <PostPicture src={post.PathFile}/>
+        <LazyComponent src={post.PathFile}/>
         <PostContent
         comments={post.comments}
         src={post.PathFile}

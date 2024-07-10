@@ -7,6 +7,24 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useToggleState } from './SearchToggle'
 
+import dynamic from "next/dynamic";
+const LazyComponent = dynamic(() => import("./StoryContainer"), {
+    loading: () =>
+      <div
+        className={` w-full h-full flex items-center gap-2 sm:gap-3 py-6 px-1 `}>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  hidden lg:flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full  hidden lg:flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse "></div>
+                <div className="rounded-full hidden lg:flex items-center justify-center w-16 h-16 bg-slate-300 animate-pulse  "></div>
+  
+      </div>, // Optional loading component
+    ssr: false, // Disable server-side rendering for this component
+  });
 
 
 const RightContainer = ({ posts, _id, loading, username, fullName }: { posts: Post[], _id: string, loading: boolean, username: string, fullName: string }) => {
@@ -37,7 +55,7 @@ const RightContainer = ({ posts, _id, loading, username, fullName }: { posts: Po
         };
     }, [handleClickOutside]);
 
-   
+
 
 
 
@@ -45,24 +63,26 @@ const RightContainer = ({ posts, _id, loading, username, fullName }: { posts: Po
         <>
             <div className="w-full md:ml-[13%]  lg:ml-[20%] flex-grow flex items-center max-w-[650px] lg:max-w-2xl mx-auto flex-col">
                 <div className="w-full md:max-w-[46rem] flex justify-center items-center flex-col py-9 ">
-                    <StoryContainer />
-                    <div className="w-full  flex justify-center items-center">
-                        <div className="w-full h-full max-w-lg p-1 md:p-3 flex flex-col  justify-center gap-6">
-                            {
-                                loading ?
-                                    <Spin /> :
+                    {
+                        loading ?
+                            <Spin /> :
+                            <>
+                                <LazyComponent />
+                                <div className="w-full  flex justify-center items-center">
+                                    <div className="w-full h-full max-w-lg p-1 md:p-3 flex flex-col  justify-center gap-6">
+                                    {
 
                                     posts?.map((post: Post, index: number) => (
                                         <Post
                                             userID={_id}
                                             key={index}
                                             post={post} />
-                                    ))
-                            }
+                                        ))
 
-
-                        </div>
-                    </div>
+                                    }
+                                    </div>
+                                </div>
+                            </>}
 
                 </div>
 

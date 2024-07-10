@@ -43,7 +43,7 @@ const SavePost = ({userId,postId}:SavePost) => {
             savePost:!saveP
           })
         })
-        console.log("hello wolrd")
+      
         if(result.ok){
           
           const data=await result.json();

@@ -19,7 +19,7 @@ const LikeContainer = ({userId,postId,likes,comment_id}:Likes) => {
 
     
    const [liked,setLiked]=useState<boolean>(false);
-   console.log({likes});
+   
    useEffect(()=>{
     function CheckPostLike(likes:any[],userId:string){
 
@@ -41,7 +41,7 @@ const LikeContainer = ({userId,postId,likes,comment_id}:Likes) => {
 
    const handleLike = async () => {
     const newLiked = await handleSubmitLike(liked, userId, postId);
-    console.log({newLiked})
+   
     if (typeof newLiked === 'boolean') {
       setLiked(newLiked);
     }

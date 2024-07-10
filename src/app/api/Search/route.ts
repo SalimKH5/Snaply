@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import dbConnect from "@/app/lib/mongodb";
 import UserModel, { IUser } from "@/app/lib/model/User";
 import { NextApiRequest } from "next";
-import { Console } from "console";
+
 
 export const GET = async (req: NextRequest,context:any) => {
     try {

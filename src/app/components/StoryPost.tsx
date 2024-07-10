@@ -32,7 +32,7 @@ const StoryPost = ({ setStoryIndex, lengthStories, indexStory, story,setToggleSt
         async function fetchImageSize() {
             try {
                 const dimensions = await getImageSize(story.img);
-                console.log(dimensions)
+               
                 setHeight(dimensions?.height);
                 setWidth(dimensions?.width);
             } catch (error) {

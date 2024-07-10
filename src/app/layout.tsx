@@ -2,8 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { getServerSession } from "next-auth";
+
 import { Providers } from "./components/provider";
 import { ToggleProvider } from "./components/SearchToggle";
 import { AntdRegistry } from "@ant-design/nextjs-registry";

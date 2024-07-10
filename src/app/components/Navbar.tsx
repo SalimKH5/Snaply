@@ -31,7 +31,7 @@ const Navbar = () => {
     
             if(result.ok){
               const data=await result.json();
-              console.log({data});
+            
             const res=data.users.map((user:User) => {
                   
                   return {

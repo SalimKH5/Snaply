@@ -47,7 +47,7 @@ function generateRandomString(length:number) {
         
         let code = generateRandomString(6);
         
-        console.log({ AdminUser });
+       
         
         await dbConnect();
         
