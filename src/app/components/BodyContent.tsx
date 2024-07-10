@@ -3,10 +3,17 @@ import React from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { LiaTableSolid } from 'react-icons/lia'
 import TogglePost from './TogglePost'
-import ImageHover from './ImageHover';
+
+import dynamic from "next/dynamic";
 
 
-
+const LazyComponent = dynamic(() => import('./ImageHover'), {
+    loading: () => 
+    <div className='bg-slate-300 rounded-lg animate-pulse w-full h-full '>
+  
+    </div>, // Optional loading component
+    ssr: false, // Disable server-side rendering for this component
+  });
 
 
 
@@ -42,7 +49,7 @@ const BodyContent =  ({username,posts,session}:{username:string,posts: Post[],se
                                         className='w-full  relative h-32 lg:h-60 cursor-pointer '>
                                             <TogglePost
                                                 likes={post.likes}        
-                                                toggle={<ImageHover likes={post.likes}  comments={post.comments} PathFile={post.PathFile}  />}
+                                                toggle={<LazyComponent likes={post.likes}  comments={post.comments} PathFile={post.PathFile}  />}
                                                 src={post.PathFile}
                                                 comments={post.comments}
                                                 postby={post.postby}

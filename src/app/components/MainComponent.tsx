@@ -32,7 +32,7 @@ async function getPosts(session: any, loading: boolean): Promise<GetPostsRespons
     loading = false
     const result = await getPosts.json();
 
-    return { posts: result?.posts ?? [], loading };
+    return { posts: result?.posts ?? [], loading:false };
   } else if (getPosts.status == 401) {
     loading = false
     signOut();

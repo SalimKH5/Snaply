@@ -30,7 +30,8 @@ const ImageHover = ({ PathFile, likes, comments }: { PathFile: string, likes: an
                     <p className='text-xl text-white'>{comments.length}</p>
                 </div>    
             </div>}
-            <Image src={`${PathFile}`} className={`rounded-sm object-cover cursor-pointer ${hoverComponent && "opacity-35"} `} alt="" fill />
+            <Image src={`${PathFile}`} priority  fill
+        loading='eager'  className={`rounded-sm object-cover cursor-pointer ${hoverComponent && "opacity-35"} `} alt=""  />
         </div>
     )
 }
