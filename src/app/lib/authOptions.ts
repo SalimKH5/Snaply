@@ -57,6 +57,10 @@ pages:{
     signOut: "/account/Login",
     
   },
+  jwt:{
+    maxAge: 60 * 60 * 24 * 30,
+  },
+  
   
 
   callbacks: {
