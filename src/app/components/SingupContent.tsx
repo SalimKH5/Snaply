@@ -83,25 +83,14 @@ const SingupContent = () => {
     className="w-full h-full flex flex-col gap-1 items-center ">
     <div className="py-6 text-center px-8">
            <h1 className={`${croissant_One.className} text-4xl`}>Instagram</h1>
-           <span style={{color:"rgb(115,115,115)"}}>Inscrivez-vous pour voir les photos et vidéos de vos amis.</span>
+           <span style={{color:"rgb(115,115,115)"}}>Sign up to see photos and videos from your friends..</span>
     </div>
-    <div className="w-full px-8 py-1  cursor-pointer  text-lg text-center  flex items-center gap-2 justify-center">
-        <button style={{background:"rgb(0,146,246)"}} className='flex box-border py-2 px-6 rounded-md items-center text-white gap-2 justify-center '>
-        <FaFacebookSquare/>
-        <span className='font-bold text-xs'>Se connecter avec Facebook</span>                   
-        </button>
-        
-    </div>
-    <div className="w-full px-8 py-1 flex items-center">
-               <hr className='w-full'/>
-               <h1 className='px-3'>OR</h1> 
-               <hr className='w-full' /> 
-    </div>
+    
    
     <div className="w-full px-8 flex flex-col gap-1">
         <input type="text" 
         className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
-        placeholder="Num.téléphone, nome d'uilisataeur ou e-mail"
+        placeholder="e-mail"
         value={userData.email}
         onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
           ...prev,
@@ -112,7 +101,7 @@ const SingupContent = () => {
         <input type="text" 
         className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
 
-        placeholder="Nom Complet" 
+        placeholder="FullName" 
         value={userData.fullName}
         onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
           ...prev,
@@ -154,10 +143,10 @@ const SingupContent = () => {
     </div> 
     <div className="w-full py-6 text-xs flex flex-col gap-3 text-center">
                 <span>
-                Les personnes qui utilisent notre service ont pu importer vos coordonnées sur Instagram. 
+                People who use our service may have uploaded your contact information to Instagram.
                 </span>  
                 <span>
-                En vous inscrivant, vous acceptez nos Conditions générales, notre Politique de confidentialité et notre Politique d&apos;utilisation des cookies.
+                By signing up, you agree to our Terms, Privacy Policy, and Cookie Use Policy.
                 </span>   
     </div>
    
@@ -166,7 +155,7 @@ const SingupContent = () => {
                        {
                         loading?
                         <Spin/>:
-                       " S'inscrire"
+                       " Sign up"
                        } 
             </button>      
     </div>

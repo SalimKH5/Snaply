@@ -81,7 +81,7 @@ const LoginContainer = () => {
                                     type="email" 
                                     className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
 
-                                    placeholder="Num.téléphone, nome d'uilisataeur ou e-mail" />  
+                                    placeholder="e-mail" />  
                                     <div className="w-full flex items-center  bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee] py-2 font-light rounded-md text-xs px-3 box-border">
                                           <input 
                                            value={userData.password}
@@ -106,14 +106,14 @@ const LoginContainer = () => {
                                               loading?
                                               <Spin />
                                               :
-                                             "Se connecter"
+                                             "Log in"
                                              } 
                                         </button>      
                                 </div>
                                 
                               
                                 <div className="w-full px-8 pt-4 cursor-pointer text-xs text-center flex items-center gap-2 justify-center text-[#385185]">
-                                   <Link href="/account/ForgetPassword">Mot de passe oublié?</Link>
+                                   <Link href="/account/ForgetPassword">Forgot your password?</Link>
                                 </div>
 
                                
@@ -121,8 +121,8 @@ const LoginContainer = () => {
                       </form>
                </div>
                <div className="flex-[0.1] py-4 w-full text-sm border-[1px] border-[#c1c1cb] text-center rounded-md flex items-center  justify-center">
-                            <p>Vous n&apos;avez pas de compte ? 
-                              <Link href="Signup" style={{color:"rgb(0, 149, 246)"}} className='cursor-pointer'> Inscrivez-vous</Link></p>
+                            <p>Don't have an account? 
+                              <Link href="Signup" style={{color:"rgb(0, 149, 246)"}} className='cursor-pointer'>Sign up</Link></p>
                 </div>
 
 

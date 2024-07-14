@@ -13,8 +13,15 @@ const Signup = () => {
                       <SingupContent/>
                </div>
                <div className="flex-[0.1] py-4 w-full text-sm border-[1px] border-[#c1c1cb] text-center rounded-md flex items-center  justify-center">
-                            <p>Vous avez un compte ? 
-                            <Link href="Login" style={{color:"rgb(0, 149, 246)"}} className='cursor-pointer'> Connectez-vous</Link></p>
+                            <p>Do you have an account?
+
+
+
+
+
+
+ 
+                            <Link href="Login" style={{color:"rgb(0, 149, 246)"}} className='cursor-pointer'> Log in</Link></p>
                 </div>
 
 
