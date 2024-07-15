@@ -102,7 +102,8 @@ declare global {
     username: string,
     saveposts: Post[],
     followers: any[],
-    follwing: any[]
+    follwing: any[],
+    postsLength:number
 }
 
 }

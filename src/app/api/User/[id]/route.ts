@@ -84,12 +84,16 @@ export const GET=async(req:NextRequest,context:any)=>{
                 $limit: 1 // Limit the result to one document
             }
         ]);
+        console.log({userPost})
+
+        const posts=await Post.find({postby:userPost[0]._id})
+        console.log({posts})
         const user=userPost[0]
         if(user){
-            return NextResponse.json({ Message: "sucessfully retrive user",user},{status: 200});
+            return NextResponse.json({ Message: "sucessfully retrive user",user:{...user,postsLength:posts.length}},{status: 200});
         }
       
-        return NextResponse.json({ Message: "client error geting user"},{status: 200});
+        return NextResponse.json({ Message: "client error geting user"},{status: 400});
         
     } catch (error) {
         return NextResponse.json({ Message: "server error geting user",error},{status: 500});

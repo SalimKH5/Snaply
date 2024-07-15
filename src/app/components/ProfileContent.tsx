@@ -100,7 +100,7 @@ const ProfileContent = ({ user, session, username, posts }: { user: User, sessio
                             <HiDotsHorizontal size="" className="cursor-pointer hidden lg:flex " />
                         </div>
                         <div className="w-full  items-center  gap-5 hidden md:flex">
-                            <h1><span className="font-bold">924</span> posts</h1>
+                            <h1><span className="font-bold">{user?.postsLength}</span> posts</h1>
                             <h1><span className="font-bold">{user?.followers?.length}</span> followers</h1>
                             <h1><span className="font-bold">{user?.follwing?.length}</span> following</h1>
                         </div>
@@ -114,7 +114,7 @@ const ProfileContent = ({ user, session, username, posts }: { user: User, sessio
 
                     <div className="w-full  items-center justify-between gap-5 py-1  md:gap-10 flex">
                         <div className="flex items-center flex-col gap-1">
-                            <span className="font-bold text-sm" >924</span>
+                            <span className="font-bold text-sm" >{user?.postsLength}</span>
                             <h1 className='text-sm text-gray-600'>posts</h1>
                         </div>
                         <div className="flex items-center flex-col gap-1">

@@ -124,6 +124,7 @@ export const GET = async (req: NextRequest,) => {
       }
       
      const user = await User.findById(decode?.user?._id).populate('follwing.userId').exec();
+     
       if (!user) {
         throw new Error('User not found');
       }
