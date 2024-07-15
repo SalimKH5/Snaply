@@ -15,7 +15,7 @@ import { revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 import { CiPower } from "react-icons/ci";
 import Link from 'next/link';
-
+import { IoPersonCircleSharp } from "react-icons/io5";
 import Api from '../ApiConfig';
 import SearchContainer from './SearchContainer';
 import { useToggleState } from './SearchToggle';
@@ -35,7 +35,7 @@ interface UploadPost {
 
 
 
-const Sidebar = ({ token }: { token: string | undefined }) => {
+const Sidebar = ({ token,username }: { token: string | undefined,username?:string }) => {
 
   const naigations_Items: ItemNavigation[] = [
     {
@@ -191,6 +191,16 @@ const Sidebar = ({ token }: { token: string | undefined }) => {
               </div>
             ))
           }
+          <div className=" flex min-[1200px]:hidden  ">
+                <div className="w-full h-full flex py-1">
+                    <Link href={`/${username}`} className="w-full  flex gap-3">
+                           <IoPersonCircleSharp size={25}/>
+                           <h1 className={`${toggle ? "hidden" : "hidden lg:inline"} text-base `}>Profile</h1>
+                           <h1></h1>
+
+                    </Link>
+                </div>
+            </div>
         </div>
         <Modal open={isModalOpen} onOk={handleOk} footer={null} onCancel={handleCancel}  >
           <div className="w-full min-h-72 flex items-center flex-col justify-center cursor-pointer">

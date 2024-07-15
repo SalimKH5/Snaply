@@ -88,7 +88,7 @@ const RightContainer = ({ posts, _id, loading, username, fullName }: { posts: Po
 
             </div>
             <div className=" h-full hidden min-[1200px]:flex lg:w-1/6 ">
-                <div className="w-full h-full flex py-8">
+                <div className="w-full items-start  flex py-8">
                     <Link href={`/${username}`} className="w-full  flex  gap-2">
                         <div className="w-16 h-12 relative  flex items-center justify-center">
                             <Image src="/profile.png" alt="" fill objectFit='cover' className='rounded-full border-[0.5px] border-[#000000] ' />

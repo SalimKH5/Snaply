@@ -66,8 +66,8 @@ const MainComponent = async () => {
         :
         <div className="overflow-y-auto flex h-screen gap-5">
           <Navbar />
-          <BottmNavigation token={session?.user?.token} />
-          <Sidebar token={session?.user?.token} />
+          <BottmNavigation token={session?.user?.token}  username={session?.user?.username}/>
+          <Sidebar token={session?.user?.token} username={session?.user?.username} />
           <RightContainer
             _id={session?.user?._id} 
             fullName={session?.user?.fullName} 

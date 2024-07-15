@@ -12,9 +12,10 @@ import { useToggleState } from './SearchToggle'
 import { FaPhotoVideo } from 'react-icons/fa'
 import ApiConfig from '../ApiConfig'
 import { signOut } from 'next-auth/react'
+import { IoPersonCircleSharp } from "react-icons/io5";
 import Image from 'next/image'
 type ItemNavigation = {
-    text: string,
+   
     icon: any,
     path: string,
     type: number
@@ -26,24 +27,30 @@ interface UploadPost {
     filePath: File | null,
     postTitle: string
 }
-const BottmNavigation = ({ token }: { token: string | undefined }) => {
+const BottmNavigation = ({ token,username }: { token: string | undefined,username?:string }) => {
 
     const naigations_Items: ItemNavigation[] = [
         {
-            text: "Home",
+  
             icon: <IoHome width={150} />,
             path: "/Home",
             type: 0,
         },
         
         {
-            text: "Create",
+     
             icon: <IoMdAddCircleOutline width={150} />,
             path: "/Create",
             type: 1,
         },
         {
-            text: "Disconnect",
+       
+            icon: <IoPersonCircleSharp width={150} />,
+            path: `/${username}`,
+            type: 5,
+        },
+        {
+        
             icon: <CiPower width={150} />,
             path: "",
             type: 4,
@@ -158,6 +165,10 @@ const BottmNavigation = ({ token }: { token: string | undefined }) => {
                                 }
                                 if (item.type === 0) {
                                     router.push('/');
+                                    router.refresh();
+                                }
+                                if (item.type === 5) {
+                                    router.push(`/${username}`);
                                     router.refresh();
                                 }
                                 if (item.type === 2) {
