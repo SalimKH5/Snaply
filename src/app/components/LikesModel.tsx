@@ -24,7 +24,7 @@ const LikesModel = ({likes}:{likes:any[]}) => {
        <div className='w-full h-auto flex flex-col gap-3'>
             {likes.map((like:any,index:number)=>(
                 <div key={index} className='w-full flex items-center justify-between'>
-                        <p className='font-bold text-lg capitalize'>{like.userId.username}</p>
+                        <p className='font-bold text-lg capitalize'>{like?.userId?.username}</p>
                         <Button  className="bg-blue-500 text-white hover:bg-white hover:text-blue-500">Follow</Button>
                 </div>
             ))}                                

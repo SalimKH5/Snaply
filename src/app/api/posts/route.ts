@@ -122,13 +122,14 @@ export const GET = async (req: NextRequest,) => {
       if(!decode || typeof(decode)=="string"){
         return NextResponse.json({error: "not authorized"},{status:401});
       }
-
-      const user = await User.findById(decode?.user?._id).populate('follwing.userId').exec();
+      
+     const user = await User.findById(decode?.user?._id).populate('follwing.userId').exec();
       if (!user) {
         throw new Error('User not found');
       }
-      const followedUserIds = user.follwing.map((follow:any) => follow.userId._id);
-      
+
+      const followedUserIds = user.follwing.map((follow:any) => follow?.userId?._id);
+     
       
       
       const posts = await PostModel.find({ postby: { $in: followedUserIds } }).populate('postby',"_id username").populate('comments.userId',"_id username").populate('likes.userId',"_id username").sort({ created: -1 }); // Sort by createdAt field in descending order;
