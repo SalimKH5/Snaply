@@ -191,7 +191,7 @@ const Sidebar = ({ token,username }: { token: string | undefined,username?:strin
               </div>
             ))
           }
-          <div className=" flex min-[1200px]:hidden  ">
+          <div className=" flex  ">
                 <div className="w-full h-full flex py-1">
                     <Link href={`/${username}`} className="w-full  flex gap-3">
                            <IoPersonCircleSharp size={25}/>
