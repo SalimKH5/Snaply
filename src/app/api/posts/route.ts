@@ -5,9 +5,11 @@ import { writeFile } from "fs/promises";
 import { decrypt } from "@/app/lib/Autherisation";
 import jwt from "jsonwebtoken"
 import dbConnect from "@/app/lib/mongodb";
+import User from "@/app/lib/model/User";
 const UserModel =require("@/app/lib/model/User");
 import PostModel from "@/app/lib/model/Post";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+
 import multer from "multer";
 import {storage} from "../../lib/firebase"
 import { initializeApp } from "firebase/app";
@@ -121,11 +123,17 @@ export const GET = async (req: NextRequest,) => {
         return NextResponse.json({error: "not authorized"},{status:401});
       }
 
-    
+      const user = await User.findById(decode?.user?._id).populate('follwing.userId').exec();
+      if (!user) {
+        throw new Error('User not found');
+      }
+      const followedUserIds = user.follwing.map((follow:any) => follow.userId._id);
       
-      const posts = await PostModel.find().populate('postby',"_id username").populate('comments.userId',"_id username").populate('likes.userId',"_id username").sort({ created: -1 }); // Sort by createdAt field in descending order;
+      
+      
+      const posts = await PostModel.find({ postby: { $in: followedUserIds } }).populate('postby',"_id username").populate('comments.userId',"_id username").populate('likes.userId',"_id username").sort({ created: -1 }); // Sort by createdAt field in descending order;
 
-      return NextResponse.json({ Message: "successfully upload a post",posts }, { status: 200 });
+      return NextResponse.json({ Message: "successfully upload a post",posts,followedUserIds }, { status: 200 });
       }
 
       

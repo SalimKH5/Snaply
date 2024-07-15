@@ -45,8 +45,10 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
   },
   username: {
     type: String,
+
     required: true,
     unique: true,
+    index: { unique: true, collation: { locale: 'en', strength: 2 } }
   },
   followers: [
     {

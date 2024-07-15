@@ -8,8 +8,8 @@ export const GET=async (req: NextRequest,context:any )=>{
     try {
         
         const {params}=context;
-        const user_id = req.nextUrl.searchParams.get('user_id') as string;
-        dbConnect();
+       
+      await dbConnect();
 
         const result = await PostModel.findById(params.id);
     return NextResponse.json({ Message: "successfully upload a post",id:params.id,result},{status: 200});

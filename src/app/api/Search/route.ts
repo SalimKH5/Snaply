@@ -6,10 +6,12 @@ import { NextApiRequest } from "next";
 
 
 export const GET = async (req: NextRequest,context:any) => {
+    console.log("hello wolrd");
     try {
 
-     const username=req?.nextUrl.searchParams.get('username')
-
+     const username=req?.nextUrl?.searchParams.get('username')
+        console.log({username});
+      
        await dbConnect();
        if(username!==""){
         const users=await UserModel.find({ username: { $regex: username, $options: 'i' } },  'username email fullName' // Specify the fields you want to retrieve separated by a space

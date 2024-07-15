@@ -39,6 +39,7 @@ const Post =  ({post,userID}:{post:Post,userID:string}) => {
         title={post.title}
         postId={post._id}
         />
+        <hr/>
     </div>
   )
 }
