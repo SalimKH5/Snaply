@@ -31,7 +31,7 @@ export default async function RootLayout({
 
             <div className="overflow-y-auto flex z-10 h-screen gap-5 py-16 md:py-2">
                     <Navbar/>
-                    <Sidebar token={session?.user?.token} />
+                    <Sidebar token={session?.user?.token} username={session?.user?.username} />
                     <BottmNavigation  token={session?.user?.token}/>
                 
                 {children}

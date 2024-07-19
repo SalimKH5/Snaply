@@ -21,11 +21,12 @@ const Story = ({toggleStory,setToggleStory,story,setStoryIndex,storyindex,setSto
 
 
       const [storyOnClick,setStoryOnClick]=useState<boolean>(false);
+      
 
   return (  
     <>
     
-   
+
     <div  
     onClick={()=>handleToggleStory()}
     className="w-full -z-10 flex flex-col items-center gap-1">

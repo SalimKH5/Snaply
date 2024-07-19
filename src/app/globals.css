@@ -9,3 +9,12 @@
   
 
  
+.lock{ display:none; }
+  @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+.lock{ display:block; }
+
+}
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
+ .lock{ display:none; }
+
+}
