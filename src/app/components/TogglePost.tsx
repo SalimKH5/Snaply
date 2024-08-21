@@ -13,6 +13,7 @@ import CommentAction from './CommentAction';
 import Api from "../ApiConfig"
 import LikeContainer from './LikeContainer';
 import { IoShareSocialOutline } from 'react-icons/io5';
+import LikesModel from './LikesModel';
 const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, likes }: {
 
     likes: any[],
@@ -170,7 +171,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
                                 <IoShareSocialOutline size={25} className="cursor-pointer hover:text-[#adadad]" />
                             </div>
                             <div className="w-full flex items-center gap-3">
-                                <p>{likes?.length} Likes</p>
+                                     <LikesModel likes={likes}/>
                             </div>
                             <CommentAction
                                 postId={postId}

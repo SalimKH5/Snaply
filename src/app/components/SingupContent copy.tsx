@@ -95,6 +95,7 @@ const SingupContent = () => {
         className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
         placeholder="e-mail"
         value={userData.email}
+        name="email" 
         onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
           ...prev,
           email:e.target.value
@@ -105,6 +106,7 @@ const SingupContent = () => {
         className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
 
         placeholder="FullName" 
+        name="fullName" 
         value={userData.fullName}
         onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
           ...prev,
@@ -113,7 +115,7 @@ const SingupContent = () => {
         />  
         <input type="text" 
         className='w-full bg-[#fffefe] border-[1px] border-[#dedede] outline-[#f1eeee]  py-2 font-light rounded-md text-xs px-3 box-border'
-
+          name="username"
         placeholder="Nom d'utilisateur"
         value={userData.username}
         onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
@@ -125,6 +127,7 @@ const SingupContent = () => {
               <input type={visible?`text`:"password"} 
               className='flex-1 outline-none w-full'
               placeholder="Mot de passe" 
+              name="password"
               value={userData.password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setUserData((prev:User)=>({
                 ...prev,

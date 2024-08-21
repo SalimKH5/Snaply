@@ -18,9 +18,9 @@ const LikesModel = ({likes}:{likes:any[]}) => {
    
   return (
     <>
-                <p onClick={showModal} className="font-bold cursor-pointer">{likes.length} Likes</p>
+      <p onClick={showModal} className="font-bold cursor-pointer">{likes.length} Likes</p>
 
-      <Modal title="Basic Modal"  open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Likes" footer={null}  open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
        <div className='w-full h-auto flex flex-col gap-3'>
             {likes.map((like:any,index:number)=>(
                 <div key={index} className='w-full flex items-center justify-between'>
