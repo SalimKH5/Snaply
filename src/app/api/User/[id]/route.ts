@@ -50,6 +50,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
         return NextResponse.json({ Message: "error saving a post",error},{status: 500});
     }
 };
+
 export const GET=async(req:NextRequest,context:any)=>{
 
     try {
