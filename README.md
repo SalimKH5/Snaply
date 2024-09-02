@@ -1,33 +1,18 @@
-# Instagram Clone
+##Instagram Clone
+This project is a clone of Instagram, built with Next.js, React, and Firebase.
 
-This is a clone of Instagram built using Next.js, React, and Firebase.
+##Features
+User Authentication: Secure sign-up, login, and logout functionality.
+Post Creation and Deletion: Users can create new posts and delete their own.
+Real-time Comments: Comment on posts with real-time updates.
+Image Uploading: Upload and display images directly in posts.
 
-## Features
-
-- User Authentication
-- Post Creation and Deletion
-- Real-time Comments
-- Image Uploading
-
-## Tech Stack
-
-- Frontend: Next.js, React
-- Backend: Next.js Api
-- Styling: Tailwind CSS
-- DataBase:Mongodb
-
-## Getting Started
-
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Run the development server: `npm run dev`
+##Tech Stack
+Frontend: Next.js, React
+Backend: Next.js API routes
+Styling: Tailwind CSS
+Database: MongoDB
 
 ## Live Demo
-
+Check out the live demo here:
 [Instagram Clone Live Demo](https://instagram-clone-next-git-main-khadir-salims-projects.vercel.app/)
-
-
-
-## License
-
-This project is licensed under the MIT License.
