@@ -1,18 +1,22 @@
-##Instagram Clone
-This project is a clone of Instagram, built with Next.js, React, and Firebase.
 
-##Features
--User Authentication: Secure sign-up, login, and logout functionality.
--Post Creation and Deletion: Users can create new posts and delete their own.
--Real-time Comments: Comment on posts with real-time updates.
--Image Uploading: Upload and display images directly in posts.
-
-##Tech Stack
--Frontend: Next.js, React
--Backend: Next.js API routes
--Styling: Tailwind CSS
--Database: MongoDB
-
-## Live Demo
-Check out the live demo here:
-[Instagram Clone Live Demo](https://instagram-clone-next-git-main-khadir-salims-projects.vercel.app/)
+ <h1>Instagram Clone</h1>
+<p>This project is a clone of Instagram, built with Next.js, React, and Firebase. It replicates core Instagram features, providing a platform for users to share and interact with content in real-time.</p>
+<br/>
+<h2>Features</h2>
+<ul>
+<li><strong>User Authentication:</strong> Secure sign-up, login, and logout functionalities.</li>
+<li><strong>Post Creation and Deletion:</strong> Users can create new posts and delete their own.</li>
+<li><strong>Real-time Comments:</strong> Comment on posts with real-time updates.</li>
+<li><strong>Image Uploading:</strong> Upload and display images directly within posts.</li>
+</ul>
+<h2>Tech Stack</h2>
+<ul>
+<li><strong>Frontend:</strong> Next.js, React</li>
+<li><strong>Backend:</strong> Next.js API Routes</li>
+<li><strong>Styling:</strong> Tailwind CSS</li>
+<li><strong>Database:</strong> MongoDB</li>
+</ul>
+<h2>Live Demo</h2>
+<p>Experience the project in action:</p>
+<a href="https://example.com" target="_blank" rel="noopener noreferrer">Instagram Clone Live Demo</a>
+           
