@@ -48,7 +48,8 @@ async function getPosts(session: any, username: string) {
     })
     if (getposts.ok) {
         const result = await getposts.json();
-     
+        console.log({posts:result?.posts[0]?.comments});
+        console.log({path:`${api.User+username}/posts`})
         return result?.posts;
     } else if (getposts.status == 401) {
         signOut()

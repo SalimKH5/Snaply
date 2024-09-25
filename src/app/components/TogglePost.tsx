@@ -142,8 +142,8 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
                             {comments?.map((comment, index) => (
                                 <div className="w-full flex justify-between gap-2" key={index}>
                                     <div className="w-full flex flex-col gap-1">
-                                        <div className="w-full flex gap-2">
-                                            <p className='font-bold text-lg'>{comment.userId.username}</p>
+                                        <div className="w-full items-center flex gap-2">
+                                            <a href={`/${comment.userId.username}`} className='font-bold text-sm'>{comment.userId.username}</a>
                                             <p className='w-full font-light'>{comment.TextComment}</p>
                                         </div>
                                         <div className="w-full flex gap-3 items-center text-sm">

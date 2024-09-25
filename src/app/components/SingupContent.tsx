@@ -6,7 +6,8 @@ import { MdOutlineVisibility,MdOutlineVisibilityOff } from "react-icons/md";
 import { Croissant_One } from 'next/font/google'
 import { useRouter } from 'next/navigation';
 import api from "../ApiConfig"
-import { Spin } from 'antd';
+import { ConfigProvider, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -157,7 +158,15 @@ const SingupContent = () => {
             <button className="w-full font-extrabold  box-border px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#5376e8]">
                        {
                         loading?
-                        <Spin/>:
+                        <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary:"#fff"
+                        },
+                      }}
+                    >
+                      <Spin indicator={<LoadingOutlined spin className='text-white' />} />
+                    </ConfigProvider>:
                        " Sign up"
                        } 
             </button>      

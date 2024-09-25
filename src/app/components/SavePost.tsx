@@ -73,11 +73,11 @@ const SavePost = ({userId,postId}:SavePost) => {
     <BsFillSaveFill 
     
     onClick={()=>handeSavePost()}
-    size={25} className="cursor-pointer hover:text-[#adadad]" />
+    size={25} className="cursor-pointer hover:scale-105 hover:text-[#adadad]" />
     :
     <BsSave
     onClick={()=>handeSavePost()}
-    size={25} className="cursor-pointer hover:text-[#adadad]" />
+    size={25} className="cursor-pointer hover:scale-105 hover:text-[#4e4e4e]" />
     
 
   )

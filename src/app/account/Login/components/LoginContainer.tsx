@@ -7,7 +7,8 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { MdOutlineVisibility,MdOutlineVisibilityOff } from "react-icons/md";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Spin } from 'antd';
+import { ConfigProvider, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -104,7 +105,15 @@ const LoginContainer = () => {
                                         <button className="w-full font-extrabold  box-border  px-6 rounded-xl text-xs text-white py-2 bg-blue-500 hover:bg-[#9aadec]">
                                              {
                                               loading?
-                                              <Spin />
+                                              <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary:"#fff"
+                        },
+                      }}
+                    >
+                      <Spin indicator={<LoadingOutlined spin className='text-white' />} />
+                    </ConfigProvider>
                                               :
                                              "Log in"
                                              } 
