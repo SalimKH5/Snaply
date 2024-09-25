@@ -26,6 +26,8 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
+    const [isLoaded,setIsLoaded]=useState<boolean>(false);
+
 
     const showModal = () => {
 
@@ -129,7 +131,10 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
                 <div className="fixed inset-0 bg-[#0000005b] w-screen h-screen flex items-center p-8 lg:py-7 lg:px-28 justify-center z-[1000]">
                     <div ref={modalRef} className='w-full h-full rounded-xl bg-white flex flex-row'>
                         <div className=" hidden  md:flex-[0.6] md:flex relative bg-[#00005]">
-                            <Image src={`${src}`} alt="" fill className=' bg-black object-contain md:object-fill lg:aspect-[16/11] rounded-l-xl h-full w-full ' />
+                            <Image 
+                              onLoad={()=>{setIsLoaded(true)}}
+                            src={`${src}`} alt="" fill 
+                            className={` bg-black object-contain md:object-fill lg:aspect-[16/11] rounded-l-xl h-full w-full  ${isLoaded ? 'blur-0 opacity-100' : 'blur-lg opacity-100'} `} />
                         </div>
                         <div className="w-full md:flex-[0.4] overflow-y-auto bg-white flex flex-col py-3 px-6 rounded-r-xl gap-4">
                             <PostHeader username={postby.username} />

@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { LiaTableSolid } from 'react-icons/lia'
 import TogglePost from './TogglePost'
@@ -20,9 +20,6 @@ const LazyComponent = dynamic(() => import('./ImageHover'), {
 
 const BodyContent =  ({username,posts,session}:{username:string,posts: Post[],session:any}) => {
 
-   
-
- 
     
   return (
     <div className="w-full pb-16 lg:py-16 md:py-2">

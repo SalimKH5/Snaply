@@ -9,7 +9,7 @@ const PostPicture = ({ src }: { src: string }) => {
 
   const [height, setHeight] = useState<number>(0);
   const [width, setWidth] = useState<number>(0);
-
+  const [isLoaded,setIsLoaded]=useState<boolean>(false);
 
 
   useEffect(() => {
@@ -35,9 +35,10 @@ const PostPicture = ({ src }: { src: string }) => {
         src={src}
         quality={50}
         alt={src}
+        onLoad={()=>{setIsLoaded(true)}}
         fill
         loading='eager'
-        className={`${width > 500 ? "object-fill" : "object-contain"} w-full absolute left-0 right-0 h-full rounded-lg`}
+        className={`${width > 500 ? "object-cover" : "object-fill"}  w-full absolute left-0 right-0 h-full rounded-lg ${isLoaded ? 'blur-0 opacity-100' : 'blur-lg opacity-100'}`}
       />
     </div>
   )
