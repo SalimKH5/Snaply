@@ -34,7 +34,7 @@ const SearchContainer = () => {
       setLoading(false);
     } else {
       setLoading(true);
-      console.log(`${Api.SearchUser}?username=${value}`);
+    
       searchTimeout.current = setTimeout(async () => {
         try {
           const result = await fetch(`${Api.SearchUser}?username=${value}`, {
