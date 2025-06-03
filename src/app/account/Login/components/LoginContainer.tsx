@@ -73,7 +73,7 @@ const LoginContainer = () => {
                           onSubmit={handleSubmit}
                       className="w-full h-full flex flex-col gap-1 items-center ">
                                 <div className="py-6">
-                                       <h1 className={`${croissant_One.className} text-4xl`}>Instagram</h1>
+                                       <h1 className={`${croissant_One.className} text-4xl`}>Snaply</h1>
                                 </div>
                                 <div className="w-full px-8 flex flex-col gap-1">
                                     <input 

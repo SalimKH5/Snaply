@@ -28,14 +28,13 @@ export default async function RootLayout({
                 <li>Privacy</li>
                 <li>Terms</li>
                 <li>Locations</li>
-                <li>Instagram Lite</li>
                 <li>Threads</li>
                 <li>Importing contacts and non-users</li>
                 <li>Meta Verified</li>
               </ul>
               <ul style={{color:"rgb(115, 115, 115)"}} className="w-full flex items-center justify-center gap-3 py-2  text-[11px]">
                 <li>English</li>
-                <li>© 2024 Instagram Clone</li>
+                <li>© 2024 Snaply </li>
               </ul>
             </div>
           </div>
