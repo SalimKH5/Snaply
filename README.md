@@ -1,6 +1,6 @@
 
- <h1>Instagram Clone</h1>
-<p>This project is a clone of Instagram, built with Next.js, React, and Firebase. It replicates core Instagram features, providing a platform for users to share and interact with content in real-time.</p>
+ <h1>Snaply</h1>
+<p>This project Snaply is a clone of Instagram, built with Next.js, React, and Firebase. It replicates core Instagram features, providing a platform for users to share and interact with content in real-time.</p>
 <br/>
 <h2>Features</h2>
 <ul>
@@ -18,5 +18,5 @@
 </ul>
 <h2>Live Demo</h2>
 <p>Experience the project in action:</p>
-<a href="https://example.com" target="_blank" rel="noopener noreferrer">Instagram Clone Live Demo</a>
+<a href="https://example.com" target="_blank" rel="noopener noreferrer">Snaply Live Demo</a>
            
