@@ -66,7 +66,7 @@ const ToggleStory = ({ toggleStory, setToggleStory, storyIndex, stories, setStor
         <div className='w-screen h-screen  py-2 z-[99999999] fixed top-0 bottom-0 left-0 right-0 bg-[#0f0202] '>
             <div className="w-full py-2 hidden sm:flex items-center justify-between ">
                 <Link href="/" >
-                    <Image src="/instagram-logo-white.png" alt="" width={120} height={60} />
+                    <Image src="/snaply-desk.png" alt="" width={120} height={60} />
                 </Link>
                 <div onClick={() => handleModalClose()} className="w-8 h-8 z-[9999999] rounded-full cursor-pointer justify-center flex items-center bg-white">
                     <IoIosClose size={30} />

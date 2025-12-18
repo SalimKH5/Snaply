@@ -156,8 +156,8 @@ const Sidebar = ({ token,username }: { token: string | undefined,username?:strin
         <div className={` ${toggle ?"w-20 border-r-[2px]":"w-full  border-[1px]"}  h-full flex overflow-y-auto relative hide-scroll-bar items-center lg:items-center flex-col gap-8  py-4 px-2 `}>
         <Link href="/" className="w-full  ">
           <div className={`w-[120px] h-[80px] flex items-center  relative`}>
-            <Image src="/logo.png" className={`object-contain  ${toggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
-           <BsInstagram size={25} className={`${toggle? "inline":"inline lg:hidden"} `}/> 
+            <Image src="/snaply-desk.png" className={`object-contain  ${toggle ? "hidden" : " hidden lg:inline"} cursor-pointer `} alt="" fill />
+           <Image src="/snaply-mob.png" alt=""  width="60" height="60" className={`${toggle? "inline":"inline lg:hidden"} `}/> 
           </div>
         </Link>
         <div className="w-full flex flex-col gap-4 ">

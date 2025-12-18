@@ -23,7 +23,6 @@ const ImageHover = ({ PathFile, likes, comments }: { PathFile: string, likes: an
      return () => window.removeEventListener("resize", handleResize);
    }, []); // Empty array ensures this effect runs once on mount
  
-   console.log({widthSize})
     const handleMouseEnter = () => {
         setHoverComponent(true);
     };

@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import api from "../ApiConfig"
 import { ConfigProvider, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import Image from 'next/image';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -82,8 +83,8 @@ const SingupContent = () => {
     <form 
     onSubmit={onHandleSubmit}
     className="w-full h-full flex flex-col gap-1 items-center ">
-    <div className="py-6 text-center px-8">
-           <h1 className={`${croissant_One.className} text-4xl`}>Snaply</h1>
+    <div className="py-6 text-center px-8 flex items-center justify-center flex-col">
+           <Image src="/snaply-desk.png"  width={60} height={80} alt="logo snaply" />
            <span style={{color:"rgb(115,115,115)"}}>Sign up to see photos and videos from your friends..</span>
     </div>
     

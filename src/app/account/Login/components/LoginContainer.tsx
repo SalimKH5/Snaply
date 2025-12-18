@@ -9,6 +9,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ConfigProvider, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import Image from 'next/image';
 const croissant_One = Croissant_One({
   weight: "400",
   subsets: ["latin"],
@@ -73,7 +74,9 @@ const LoginContainer = () => {
                           onSubmit={handleSubmit}
                       className="w-full h-full flex flex-col gap-1 items-center ">
                                 <div className="py-6">
-                                       <h1 className={`${croissant_One.className} text-4xl`}>Snaply</h1>
+                                       <h1 className={`${croissant_One.className} text-4xl`}>
+                                        <Image src="/snaply-desk.png" width="100" height="40" alt="snaply desk"/>
+                                       </h1>
                                 </div>
                                 <div className="w-full px-8 flex flex-col gap-1">
                                     <input 

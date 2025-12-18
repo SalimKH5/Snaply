@@ -90,7 +90,7 @@ const Navbar = () => {
             <div className="flex w-full px-5  items-center justify-between">
                 <div className="flex-[0.4]">
                     <Link href="/" className={`w-[80px] h-[40px] flex items-center  relative`}>
-                        <Image src="/instagram-logo-1-1024x366.svg" className={`object-contain   cursor-pointer `} alt="" fill />
+                        <Image src="/snaply-mob.png" className={`object-contain   cursor-pointer `} alt="" fill />
                     </Link>
                 </div>
                 <AutoComplete
