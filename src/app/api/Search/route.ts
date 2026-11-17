@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import dbConnect from "@/app/lib/mongodb";
 import UserModel, { IUser } from "@/app/lib/model/User";
-import { NextApiRequest } from "next";
+import { escapeRegex } from "@/app/lib/security";
 
 
 export const GET = async (req: NextRequest,context:any) => {
@@ -13,10 +13,11 @@ export const GET = async (req: NextRequest,context:any) => {
         console.log({username});
       
        await dbConnect();
-       if(username!==""){
-        const users=await UserModel.find({ username: { $regex: username, $options: 'i' } },  'username email fullName' // Specify the fields you want to retrieve separated by a space
+       if(username){
+        // Escaped so a crafted search string cannot run an expensive (ReDoS) pattern.
+        const users=await UserModel.find({ username: { $regex: escapeRegex(username), $options: 'i' } },  'username email fullName' // Specify the fields you want to retrieve separated by a space
 
-    )
+    ).limit(20)
             return NextResponse.json({ message: "geting user succesfully", users}, { status: 201 });
        }else{
         return NextResponse.json({ message: "need to have usernmae",}, { status: 401 });
@@ -26,6 +27,6 @@ export const GET = async (req: NextRequest,context:any) => {
 
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: "Server Error", error:error }, { status: 500 });
+        return NextResponse.json({ message: "Server Error" }, { status: 500 });
     }
 };

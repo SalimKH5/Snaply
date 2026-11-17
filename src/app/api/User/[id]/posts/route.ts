@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 const UserModel= require("@/app/lib/model/User");
 import User from "@/app/lib/model/User";
 import Post from "@/app/lib/model/Post";
+import { escapeRegex } from "@/app/lib/security";
 const  PostModel=require("@/app/lib/model/Post");
 
 export const GET=async(req:NextRequest,context:any)=>{
@@ -10,7 +11,7 @@ export const GET=async(req:NextRequest,context:any)=>{
         
         const {params}=context;
 
-        const user=await User.findOne({ username: { $regex: new RegExp('^' + params.id + '$', 'i') }});
+        const user=await User.findOne({ username: { $regex: new RegExp('^' + escapeRegex(String(params.id)) + '$', 'i') }});
       
                 if(user){
                     

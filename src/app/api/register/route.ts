@@ -5,11 +5,16 @@ import UserModel, { IUser } from "@/app/lib/model/User";
 const userModel = require("@/app/lib/model/User");
 import jwt from "jsonwebtoken"
 import { decrypt } from "@/app/lib/Autherisation";
+import { emailQuery, MIN_PASSWORD_LENGTH, toPublicUser } from "@/app/lib/security";
 export const POST = async (req: NextRequest) => {
     try {
         const { email, password, fullName, username } = await req.json();
         if (!email || !password || !fullName || !username) {
             return NextResponse.json({ message: "Invalid Data" }, { status: 422 });
+        }
+        const query = emailQuery(email);
+        if (!query || typeof password !== "string" || password.length < MIN_PASSWORD_LENGTH) {
+            return NextResponse.json({ message: `Invalid Data: password must contain at least ${MIN_PASSWORD_LENGTH} characters` }, { status: 422 });
         }
 
         const hashPassword = await bcrypt.hash(password, 10);
@@ -17,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 
         await dbConnect();
 
-        const user: IUser | null = await UserModel.findOne({ email: { $regex: new RegExp('^' + email + '$', 'i') } })
+        const user: IUser | null = await UserModel.findOne({ email: query })
         if (!user) {
             const newUser: IUser = await UserModel.create({
                 email,
@@ -25,13 +30,13 @@ export const POST = async (req: NextRequest) => {
                 username,
                 fullName
             });
-            return NextResponse.json({ message: "User created successfully", newUser }, { status: 201 });
+            return NextResponse.json({ message: "User created successfully", newUser: toPublicUser(newUser) }, { status: 201 });
         } else {
             return NextResponse.json({ message: "the email does' alerdy exist" }, { status: 300 });
         }
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: "Server Error", error: error }, { status: 500 });
+        return NextResponse.json({ message: "Server Error" }, { status: 500 });
     }
 };
 export const PUT = async (req: NextRequest) => {
@@ -77,7 +82,7 @@ export const PUT = async (req: NextRequest) => {
 
 
 
-        return NextResponse.json({ message: "User Updated successfully", newUser }, { status: 201 });
+        return NextResponse.json({ message: "User Updated successfully", newUser: toPublicUser(newUser) }, { status: 201 });
 
     } catch (error) {
         console.error(error);

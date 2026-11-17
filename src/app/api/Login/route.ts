@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dbConnect from "@/app/lib/mongodb";
 import UserModel, { IUser } from "@/app/lib/model/User";
-const  PostModel=require("@/app/lib/model/Post");
+import { emailQuery, toPublicUser } from "@/app/lib/security";
 export const POST = async (req: Request) => {
 
     try {
@@ -13,13 +13,14 @@ export const POST = async (req: Request) => {
         const { email, password } = await req.json();
 
 
-        if (!email || !email) {
+        const query = emailQuery(email);
+        if (!query || typeof password !== "string" || !password) {
             return NextResponse.json({ message: "Invalid Data" }, { status: 422 })
         }
 
 
         await dbConnect();
-        const user: IUser | null = await UserModel.findOne({ email: { $regex: new RegExp('^' + email + '$', 'i') } })
+        const user: IUser | null = await UserModel.findOne({ email: query })
         //const user: IUser | null = await UserModel.findOne({ email: { $regex: new RegExp('^' + email + '$', 'i') } }).populate('saveposts.postId') as IUser | null;
 
 
@@ -36,7 +37,8 @@ export const POST = async (req: Request) => {
 
                 try {
                     if (secret) {
-                        const userObject = user.toObject();
+                        // JWT payloads are only base64-encoded: never put the password hash or reset code in them.
+                        const userObject = toPublicUser(user);
                         const payload = {
                             user: {
                                 ...userObject
@@ -68,7 +70,7 @@ export const POST = async (req: Request) => {
 
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "server Error", error }, { status: 500 })
+        return NextResponse.json({ message: "server Error" }, { status: 500 })
 
     }
 }

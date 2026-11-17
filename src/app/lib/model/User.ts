@@ -14,6 +14,7 @@ export interface IUser extends Document {
   followers: Followers[];
   follwing: Follwing[];
   code?:string;
+  codeExpires?: Date;
 
 }
 
@@ -73,7 +74,10 @@ const UserSchema: Schema<IUser> = new Schema<IUser>({
   },
   code:{
     type:String,
-    
+
+  },
+  codeExpires: {
+    type: Date,
   },
   saveposts: [
     {

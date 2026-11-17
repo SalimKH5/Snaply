@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 const UserModel= require("@/app/lib/model/User");
 import User from "@/app/lib/model/User";
 import Post from "@/app/lib/model/Post";
-const  PostModel=require("@/app/lib/model/Post");
+import { escapeRegex } from "@/app/lib/security";
 export const PUT=async(req:NextRequest,context:any)=>{
 
     try {
@@ -60,7 +60,15 @@ export const GET=async(req:NextRequest,context:any)=>{
         const userPost = await User.aggregate([
             {
                 $match: {
-                    username: { $regex: new RegExp('^' + params.id + '$', 'i') }
+                    username: { $regex: new RegExp('^' + escapeRegex(String(params.id)) + '$', 'i') }
+                }
+            },
+            {
+                $project: {
+                    hashPassword: 0, // never expose secrets on a public profile endpoint
+                    code: 0,
+                    codeExpires: 0,
+                    token: 0
                 }
             },
             {
@@ -85,12 +93,9 @@ export const GET=async(req:NextRequest,context:any)=>{
                 $limit: 1 // Limit the result to one document
             }
         ]);
-        console.log({userPost})
-
-        const posts=await Post.find({postby:userPost[0]._id})
-        console.log({posts})
         const user=userPost[0]
         if(user){
+            const posts=await Post.find({postby:user._id})
             return NextResponse.json({ Message: "sucessfully retrive user",user:{...user,postsLength:posts.length}},{status: 200});
         }
       

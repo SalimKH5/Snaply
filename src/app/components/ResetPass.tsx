@@ -19,6 +19,8 @@ const ResetPass = () => {
     const email: string | null = localStorage.getItem('email');
     const [password, setPassword] = useState<string>("");
     const [visible, setVisible] = useState<boolean>(false);
+    // Short-lived token returned once the emailed code is verified; required to set a new password.
+    const [resetToken, setResetToken] = useState<string>("");
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(false);
@@ -37,7 +39,7 @@ const ResetPass = () => {
 
             if (result.ok) {
                 const data = await result.json();
-               
+                setResetToken(data?.resetToken ?? "");
 
                 setLoading(false);
                 setResultChecked(true);
@@ -66,7 +68,7 @@ const ResetPass = () => {
                     "Content-type": "application/json"
                 },
                 body: JSON.stringify({
-                    email,
+                    resetToken,
                     password
                 })
             })

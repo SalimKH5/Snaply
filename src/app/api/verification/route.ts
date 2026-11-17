@@ -1,91 +1,62 @@
 import dbConnect from "@/app/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import UserModel, { IUser } from "@/app/lib/model/User";
-const fs = require("fs");
-const readFile = promisify(fs.readFile);
+import UserModel from "@/app/lib/model/User";
+import { readFile } from "fs/promises";
 import path from "path";
-import { promisify } from "util";
-import { SentMessageInfo } from "nodemailer";
+import { emailQuery, generateVerificationCode, VERIFICATION_CODE_TTL_MS } from "@/app/lib/security";
 
 const nodemailer = require("nodemailer");
 
-function generateRandomString(length:number) {
-    const characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-    let randomString = '';
-  
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      randomString += characters.charAt(randomIndex);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  secure: false, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: process.env.NODEMAILER_EMAIL,
+    pass: process.env.NODEMAILER_PASS,
+  },
+});
+
+// Same answer whether or not the account exists, so the endpoint cannot be
+// used to discover which emails are registered.
+const GENERIC_RESPONSE = { Message: "If this account exists, a verification code has been sent" };
+
+export const POST = async (req: NextRequest) => {
+  try {
+    const { email } = await req.json();
+    const query = emailQuery(email);
+    if (!query) {
+      return NextResponse.json({ Message: "Email is required" }, { status: 422 });
     }
-  
-    return randomString;
+
+    await dbConnect();
+
+    const code = generateVerificationCode();
+    const user = await UserModel.findOneAndUpdate(
+      { email: query },
+      { $set: { code, codeExpires: new Date(Date.now() + VERIFICATION_CODE_TTL_MS) } },
+      { new: true }
+    );
+
+    if (user) {
+      let htmlContent = await readFile(path.join(process.cwd(), "public", "client-email-validation.html"), "utf8");
+      htmlContent = htmlContent.replace(/\$\$VALIDATION_LINK\$\$/g, code);
+
+      try {
+        await transporter.sendMail({
+          from: "Snaply",
+          to: user.email,
+          subject: "Snaply email verification",
+          html: htmlContent,
+        });
+      } catch (error) {
+        console.error("Failed to send verification email", error);
+        return NextResponse.json({ Message: "Failed to send email" }, { status: 500 });
+      }
+    }
+
+    return NextResponse.json(GENERIC_RESPONSE, { status: 200 });
+  } catch (error) {
+    console.error("Verification error", error);
+    return NextResponse.json({ Message: "Failed" }, { status: 500 });
   }
-  
-
-  
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    secure: false, // Use `true` for port 465, `false` for all other ports
-    auth: {
-      user: process.env.NODEMAILER_EMAIL,
-      pass: process.env.NODEMAILER_PASS,
-    },
-  
-  });
-  
-
-
-
-  export const POST = async (req: NextRequest) => {
-    try {
-        const { email } = await req.json();
-        
-        const AdminUser = {
-            user: process.env.NODEMAILER_EMAIL,
-            pass: process.env.NODEMAILER_PASS,
-        };
-        
-        let code = generateRandomString(6);
-        
-       
-        
-        await dbConnect();
-        
-        let user: IUser | null = await UserModel.findOne({ email: { $regex: new RegExp('^' + email + '$', 'i') } });
-        
-        if (user) {
-            const updateUser: IUser | null  = await UserModel.findOneAndUpdate(
-                { email: { $regex: new RegExp('^' + email + '$', 'i') } },
-                { $set: { code: code } },
-                { new: true }
-            );
-
-            if (updateUser) {
-                let htmlContent = await readFile(path.join(process.cwd(), 'public', 'client-email-validation.html'), 'utf8');
-                htmlContent = htmlContent.replace(/\$\$VALIDATION_LINK\$\$/g, code);
-
-                const mailOptions = {
-                    from: "Instagram clone",
-                    to: email,
-                    subject: "Instagram clone Email verification",
-                    html: htmlContent,
-                };
-
-                try {
-                    await transporter.sendMail(mailOptions);
-                    return NextResponse.json({ Message: "Successfully updated user", user }, { status: 200 });
-                } catch (error) {
-                    console.error({ error });
-                    return NextResponse.json({ Message: "Failed to send email", error }, { status: 500 });
-                }
-            } else {
-                return NextResponse.json({ Message: "Failed to update user" }, { status: 400 });
-            }
-        } else {
-            return NextResponse.json({ Message: "User not found" }, { status: 400 });
-        }
-    } catch (error) {
-        console.log("Error occurred", error);
-        return NextResponse.json({ Message: "Failed", error }, { status: 500 });
-    }
 };
