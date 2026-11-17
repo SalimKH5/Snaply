@@ -81,14 +81,24 @@ Never commit `.env*` files; they are ignored by `.gitignore`.
 | `npm run lint` | ESLint |
 | `npx tsc --noEmit` | Type check |
 
+## Security
+
+- Every write route verifies the API token and uses the authenticated user id
+  (ids sent in the URL or body cannot be used to act as another user).
+- Password hashes and reset codes are never returned by the API or stored in tokens.
+- User input used in MongoDB regex queries is escaped.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs lint, type-check and a production build on every
+push and pull request. Dependabot keeps npm packages and actions up to date.
+
 ## Roadmap
 
-- Require authentication and ownership checks on every write route (likes, comments, follows, saved posts, profile).
 - Input validation with a schema library (e.g. Zod) on all route handlers.
-- Automated tests (route handlers, Cypress end-to-end) and a GitHub Actions CI workflow.
+- Automated tests (route handlers with an in-memory MongoDB, Cypress end-to-end).
 - Real-time updates (WebSockets or Firebase listeners) and post deletion.
-- Remove unused dependencies (Prisma, `@vercel/blob`, `sharp`).
 
 ## License
 
-No license has been chosen yet. All rights reserved by the author until a license file is added.
+[MIT](LICENSE)
