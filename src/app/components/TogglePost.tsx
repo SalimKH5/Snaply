@@ -14,6 +14,7 @@ import Api from "../ApiConfig"
 import LikeContainer from './LikeContainer';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import LikesModel from './LikesModel';
+import { useSession } from 'next-auth/react';
 const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, likes }: {
 
     likes: any[],
@@ -24,6 +25,7 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
         username: string,
     }, postId: string
 }) => {
+    const { data: session } = useSession();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
     const [isLoaded,setIsLoaded]=useState<boolean>(false);
@@ -88,7 +90,8 @@ const TogglePost = ({ toggle, userId, comments, src, title, postby, postId, like
             const result = await fetch(`${Api.posts + postId}/likeComment`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.user?.token}`,
                 },
                 body: JSON.stringify(
                     {

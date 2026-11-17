@@ -19,6 +19,7 @@ const Following = ({ userId, FollowingUser }: { userId: string, FollowingUser: s
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.user?.token}`,
                 },
                 body: JSON.stringify({
                         userId: FollowingUser,

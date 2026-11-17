@@ -54,3 +54,30 @@ export function verifyResetToken(token: unknown): string | null {
 }
 
 export const MIN_PASSWORD_LENGTH = 8;
+
+/**
+ * Verifies the `Authorization: Bearer <jwt>` header issued by /api/Login and
+ * returns the authenticated user id, or null. Routes must use this id as the
+ * acting user instead of any id sent in the URL or body.
+ */
+export function getAuthUserId(req: Request): string | null {
+  const secret = process.env.JWT_SECRET;
+  const header = req.headers.get("authorization");
+  const token = header?.startsWith("Bearer ") ? header.slice(7) : undefined;
+  if (!secret || !token) return null;
+  try {
+    const payload = jwt.verify(token, secret);
+    const id = typeof payload === "object" ? payload?.user?._id : undefined;
+    return id ? String(id) : null;
+  } catch {
+    return null;
+  }
+}
+
+export const unauthorized = () => ({ body: { Message: "Unauthorized" }, init: { status: 401 } });
+export const forbidden = () => ({ body: { Message: "Forbidden" }, init: { status: 403 } });
+
+/** Builds the Authorization header for server-side calls from the NextAuth session. */
+export function bearer(token: string | undefined | null): Record<string, string> {
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}

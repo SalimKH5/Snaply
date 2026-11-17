@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 const UserModel= require("@/app/lib/model/User");
 import User from "@/app/lib/model/User";
 import Post from "@/app/lib/model/Post";
-import { escapeRegex } from "@/app/lib/security";
+import { escapeRegex, forbidden, getAuthUserId, toPublicUser, unauthorized } from "@/app/lib/security";
 export const PUT=async(req:NextRequest,context:any)=>{
 
     try {
+        // Only the authenticated user can change their own saved posts.
+        const authId = getAuthUserId(req);
+        if (!authId) {
+            const { body, init } = unauthorized();
+            return NextResponse.json(body, init);
+        }
         const {postId,savePost}=await req.json();
         const {params}=context;
+        if (String(params.id) !== authId) {
+            const { body, init } = forbidden();
+            return NextResponse.json(body, init);
+        }
 
        
         if(savePost){
@@ -22,7 +32,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
             ).populate('saveposts.postId');
 
            
-            return NextResponse.json({ Message: "success save post",user},{status: 200});
+            return NextResponse.json({ Message: "success save post",user: toPublicUser(user)},{status: 200});
     
           
         }else{
@@ -37,7 +47,7 @@ export const PUT=async(req:NextRequest,context:any)=>{
                 { new: true }
             ).populate('saveposts.postId');
             
-            return NextResponse.json({ Message: "success removing asave post",user},{status: 200});
+            return NextResponse.json({ Message: "success removing asave post",user: toPublicUser(user)},{status: 200});
     
 
         
@@ -47,7 +57,8 @@ export const PUT=async(req:NextRequest,context:any)=>{
       
         
     } catch (error:any) {
-        return NextResponse.json({ Message: "error saving a post",error},{status: 500});
+        console.error("save post error", error);
+        return NextResponse.json({ Message: "error saving a post"},{status: 500});
     }
 };
 

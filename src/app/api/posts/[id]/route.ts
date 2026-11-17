@@ -1,7 +1,7 @@
 import dbConnect from "@/app/lib/mongodb";
 import PostModel from "@/app/lib/model/Post";
 import UserModel from "@/app/lib/model/User";
-import { NextApiRequest } from "next";
+import { getAuthUserId, unauthorized } from "@/app/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET=async (req: NextRequest,context:any )=>{
@@ -22,22 +22,28 @@ export const GET=async (req: NextRequest,context:any )=>{
 export const PUT=async (req: NextRequest,context:any )=>{
     try {
         
+        const authId = getAuthUserId(req);
+        if (!authId) {
+            const { body, init } = unauthorized();
+            return NextResponse.json(body, init);
+        }
         const {params}=context;
-        
+
         const {like,comment}=await req.json();
-       
-        dbConnect();
+
+        await dbConnect();
 
         const result = await PostModel.findById(params.id);
 
+        // Likes and comments are always recorded for the authenticated user.
         if(result){
             if(like){
                 result.likes.push({
-                    userId:like
+                    userId:authId
                 })
             }
-            if(comment){
-                result.comments.push(comment)
+            if(comment && typeof comment.TextComment === "string"){
+                result.comments.push({ userId: authId, TextComment: comment.TextComment })
             }
         }
 

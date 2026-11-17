@@ -2,7 +2,16 @@
 "use server"
 import { revalidateTag } from "next/cache";
 import Api from '../ApiConfig';
-import { Dispatch, FormEvent, FormEventHandler, SetStateAction } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../lib/authOptions";
+import { bearer } from "../lib/security";
+
+// Server actions read the API token from the NextAuth session so that the
+// API can identify the acting user (it ignores user ids sent in the body).
+async function authHeaders(): Promise<Record<string, string>> {
+  const session = await getServerSession(authOptions);
+  return { "Content-Type": "application/json", ...bearer(session?.user?.token) };
+}
 export const handleSubmitComment = async (userId: string, postId: string,e:FormData,) => {
   'use server'
   
@@ -12,9 +21,7 @@ export const handleSubmitComment = async (userId: string, postId: string,e:FormD
       try {
     const response = await fetch(`${Api.posts+postId}/commentPost`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: await authHeaders(),
       body: JSON.stringify({
         comment:{
           TextComment:TextComment,
@@ -47,9 +54,7 @@ export const handleSubmitLike = async (liked: boolean, userId: string, postId: s
 
     const response = await fetch(`${Api.posts+postId}/likePost`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: await authHeaders(),
       body: JSON.stringify({
         userId,
         liked: !liked,
@@ -82,9 +87,7 @@ export const handleFollow = async (userId: string, FollowingUser: string, isFoll
       e.preventDefault();
       const response = await fetch(`${Api.User+userId}/following`, {
           method: "PUT",
-          headers: {
-              "Content-Type": "application/json",
-          },
+          headers: await authHeaders(),
           body: JSON.stringify({
                   userId: FollowingUser,
                   following: !isFollow

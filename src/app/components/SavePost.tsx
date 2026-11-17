@@ -36,7 +36,8 @@ const SavePost = ({userId,postId}:SavePost) => {
         const result=await fetch(api.User+userId,{
           method:"PUT",
           headers:{
-            "Content-type":"application/json"
+            "Content-type":"application/json",
+            Authorization: `Bearer ${session?.user?.token}`,
           },
           body:JSON.stringify({
             postId:postId,

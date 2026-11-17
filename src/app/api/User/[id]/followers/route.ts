@@ -1,56 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
-const UserModel= require("@/app/lib/model/User");
+import dbConnect from "@/app/lib/mongodb";
 import User from "@/app/lib/model/User";
-import Post from "@/app/lib/model/Post";
-const  PostModel=require("@/app/lib/model/Post");
-export const PUT=async(req:NextRequest,context:any)=>{
+import { getAuthUserId, toPublicUser, unauthorized } from "@/app/lib/security";
 
+// PUT /api/User/:id/followers  { following: boolean }
+// :id is the account being followed; the follower is always the authenticated user.
+export const PUT = async (req: NextRequest, context: any) => {
     try {
-        const {userId,following}=await req.json();
-        const {params}=context;
-        if(following){
-            const user=await User.findOneAndUpdate(                
-                { _id: params.id, },
-                {
-                    $addToSet: {
-                        followers: { "userId": userId }, // Remove like based on userId
-                    }
-                },
-            { new: true })
-
-            const followerUser=await User.findOneAndUpdate(                
-                { _id: userId },
-                {
-                    $addToSet: {
-                        follwing: { "userId": params.id }, // Remove like based on userId
-                    }
-                },
-            { new: true })
-            return NextResponse.json({ Message: "success save post",user,followerUser,id:params.id},{status: 200});
-        }else{
-            const user=await User.findOneAndUpdate(                
-                { _id: params.id, },
-                {
-                    $pull: {
-                        followers: { "userId": userId }, // Remove like based on userId
-                    }
-                },
-            { new: true })
-            
-            const unfollowerUser=await User.findOneAndUpdate(                
-                { _id: userId },
-                {
-                    $pull: {
-                        follwing: { "userId": params.id }, // Remove like based on userId
-                    }
-                },
-            { new: true })    
-
-            return NextResponse.json({ Message: "success save post",user,unfollowerUser},{status: 200});
-    
+        const authId = getAuthUserId(req);
+        if (!authId) {
+            const { body, init } = unauthorized();
+            return NextResponse.json(body, init);
         }
-        
+        const { params } = context;
+        const { following } = await req.json();
+        if (String(params.id) === authId) {
+            return NextResponse.json({ Message: "Invalid user to follow" }, { status: 422 });
+        }
+
+        await dbConnect();
+        const op = following ? "$addToSet" : "$pull";
+        const user = await User.findOneAndUpdate(
+            { _id: params.id },
+            { [op]: { followers: { userId: authId } } },
+            { new: true }
+        );
+        const other = await User.findOneAndUpdate(
+            { _id: authId },
+            { [op]: { follwing: { userId: params.id } } },
+            { new: true }
+        );
+
+        return NextResponse.json(
+            following
+                ? { Message: "success follow", user: toPublicUser(user), followerUser: toPublicUser(other), id: params.id }
+                : { Message: "success unfollow", user: toPublicUser(user), unfollowerUser: toPublicUser(other) },
+            { status: 200 }
+        );
     } catch (error) {
-        return NextResponse.json({ Message: "error saving a post",error},{status: 500});
+        console.error("followers error", error);
+        return NextResponse.json({ Message: "error updating followers" }, { status: 500 });
     }
 };

@@ -1,52 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
-const UserModel= require("@/app/lib/model/User");
+import dbConnect from "@/app/lib/mongodb";
 import User from "@/app/lib/model/User";
-import Post from "@/app/lib/model/Post";
-const  PostModel=require("@/app/lib/model/Post");
-export const PUT=async(req:NextRequest,context:any)=>{
+import { forbidden, getAuthUserId, toPublicUser, unauthorized } from "@/app/lib/security";
 
+// PUT /api/User/:id/profile  { postId, savePost } — same contract as PUT /api/User/:id.
+export const PUT = async (req: NextRequest, context: any) => {
     try {
-        const {postId,savePost}=await req.json();
-        const {params}=context;
-
-       
-        if(savePost){
-            const user = await User.findOneAndUpdate(
-                { _id: params.id, },
-                    {
-                        $addToSet: {
-                            saveposts: { "postId": postId }, // Remove like based on userId
-                        }
-                    },
-                { new: true }
-            ).populate('saveposts.postId');
-
-          
-            return NextResponse.json({ Message: "success save post",user},{status: 200});
-    
-          
-        }else{
-            
-            const user = await User.findOneAndUpdate(
-                { _id: params.id, },
-                    {
-                        $pull: {
-                            saveposts: { "postId": postId }, // Remove like based on userId
-                        }
-                    },
-                { new: true }
-            ).populate('saveposts.postId');
-            
-            return NextResponse.json({ Message: "success removing asave post",user},{status: 200});
-    
-
-        
-    
-          
+        const authId = getAuthUserId(req);
+        if (!authId) {
+            const { body, init } = unauthorized();
+            return NextResponse.json(body, init);
         }
-      
-        
-    } catch (error:any) {
-        return NextResponse.json({ Message: "error saving a post",error},{status: 500});
+        const { params } = context;
+        if (String(params.id) !== authId) {
+            const { body, init } = forbidden();
+            return NextResponse.json(body, init);
+        }
+
+        const { postId, savePost } = await req.json();
+        await dbConnect();
+        const op = savePost ? "$addToSet" : "$pull";
+        const user = await User.findOneAndUpdate(
+            { _id: authId },
+            { [op]: { saveposts: { postId } } },
+            { new: true }
+        ).populate("saveposts.postId");
+
+        return NextResponse.json(
+            { Message: savePost ? "success save post" : "success removing asave post", user: toPublicUser(user) },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error("profile save post error", error);
+        return NextResponse.json({ Message: "error saving a post" }, { status: 500 });
     }
 };
